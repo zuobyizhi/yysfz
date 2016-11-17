@@ -1,0 +1,62 @@
+//RunApp "com.tencent.tmgp.asura"
+//Delay 2000
+Dim i = 0
+Dim bBoss = -1
+Dim bContinun = -1
+Dim bBloodFull = -1
+Do
+	
+	If bBloodFull = -1 Then 
+		role2()
+	End If
+	
+	autoFire()
+	Delay 300
+Loop
+
+Sub autoFire()
+	Call attack()
+	Delay 100
+	If i = 0 Then 
+		Call skill1()
+		i = 1
+	ElseIf i = 1 Then
+		Call skill2()
+		i = 2
+	Else 
+		Call skill3()
+		i = 0
+	End If	
+End Sub
+
+Sub attack()
+	Tap 1100,530
+End Sub
+
+Sub skill1()
+	Tap 1060,380
+End Sub
+
+Sub skill2()
+	Tap 950,500
+End Sub
+
+Sub skill3()
+	Tap 1000,650
+End Sub
+
+Sub somersault()
+	Tap 1200,650
+End Sub
+
+Sub role1()
+	Tap 50,50
+End Sub
+
+Sub role2()
+	Tap 50,150
+End Sub
+
+Sub playAgain()
+	Tap 970,635
+End Sub

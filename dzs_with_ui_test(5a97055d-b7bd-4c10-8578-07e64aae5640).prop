@@ -1,0 +1,17 @@
+{
+   "BestResolution" : {
+      "X" : 0,
+      "Y" : 0
+   },
+   "ChangeFileList" : 0,
+   "Description" : "",
+   "FileVersion" : {
+      ".atc" : 0,
+      ".mq" : 0,
+      ".prop" : 0,
+      ".rtd" : 0,
+      ".ui" : 0
+   },
+   "Name" : "dzs_with_ui_test",
+   "id" : "5a97055d-b7bd-4c10-8578-07e64aae5640"
+}

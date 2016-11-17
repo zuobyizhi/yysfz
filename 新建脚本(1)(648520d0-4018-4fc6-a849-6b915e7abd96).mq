@@ -1,0 +1,2 @@
+ShowMessage "hello", 3000, 350, 350
+RunApp "com.tencent.tmgp.asura"

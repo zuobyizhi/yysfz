@@ -1,0 +1,17 @@
+{
+   "BestResolution" : {
+      "X" : 0,
+      "Y" : 0
+   },
+   "ChangeFileList" : 0,
+   "Description" : "",
+   "FileVersion" : {
+      ".atc" : 0,
+      ".mq" : 0,
+      ".prop" : 0,
+      ".rtd" : 0,
+      ".ui" : 0
+   },
+   "Name" : "dzs_tst2",
+   "id" : "5e3c5bfa-d28f-4ff6-8742-616d081f13bc"
+}

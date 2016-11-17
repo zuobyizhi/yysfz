@@ -1,0 +1,443 @@
+UI.NewLayout ("main",1,800,200)
+UI.AddButton("main", "btnCyc", "循环")
+UI.SetOnClick("btnCyc", onClickCyc)
+UI.AddButton("main", "btnAtt", "a地板")
+UI.SetOnClick("btnAtt", onClickAtt)
+UI.AddButton("main", "btnTramform", "变身试练")
+UI.SetOnClick("btnTramform", onClickTramform)
+UI.AddButton("main", "btnHunt", "神之猎场")
+UI.SetOnClick("btnHunt", onClickHunt)
+UI.AddButton("main", "btnGetIdol", "取偶人")
+UI.SetOnClick("btnGetIdol", onClickGetIdol)
+UI.AddButton("main", "btnAddIdol", "加偶人")
+UI.SetOnClick("btnAddIdol", onClickAddIdol)
+UI.AddButton("main", "btnCycN", "循环n次")
+UI.SetOnClick("btnCycN", onClickCycN)
+UI.Show ("main")
+
+
+Dim i = 0
+Dim bBoss = -1
+Dim bContinun = -1
+Dim bBloodFull = -1
+
+
+Dim iHole = 0
+
+Dim iCycN = 10
+
+
+Function onClickCyc()
+UI.Close("main")
+Do
+	//bBoss = CmpColor(620, 26, "446486", 0.9)
+	bContinun = CmpColorEx("970|635|72bcdd,1160|635|6eb8d9,770|635|71bbdc", 0.9)
+	bBloodFull = CmpColor(140, 20, "2211b8", 0.9)
+	If bContinun = 1 Then
+		Call playAgain()
+		//Goto doNoThing
+	End If
+	
+	If bBloodFull = -1 Then 
+		role2()
+	End If
+	
+//	Dim bAss = ass()	
+//	If bAss < 1 Then 
+//		keyAss()
+//	End If	
+	If notAss() = 1 Then 
+		keyAss()
+	End If
+	
+	Dim bCarom = carom()	
+	If bCarom = 1 Then 
+		autoSkill()
+	End If
+	
+Rem doNoThing
+	Delay 1000
+Loop
+End Function
+
+//-----------------循环n次----------------------//
+Function onClickCycN()
+UI.Close("main")
+UI.NewLayout("loCycN", 1, 800, 200)
+UI.AddEditText("loCycN","循环次数", "",300)
+UI.AddButton("loCycN", "btnOK_loCycN", "确定")
+UI.SetOnClick("btnOK_loCycN", onClickOK_loCycN)
+UI.Show("loCycN")
+End Function
+
+Function onClickOK_loCycN()
+Dim tx = UI.GetText("循环次数")
+iCycN = CInt(tx)
+If IsNumeric(iCycN) <> True Then
+	Goto return
+End If
+UI.Close("loCycN")
+Do
+	//bBoss = CmpColor(620, 26, "446486", 0.9)
+	bContinun = CmpColorEx("970|635|72bcdd,1160|635|6eb8d9,770|635|71bbdc", 0.9)
+	bBloodFull = CmpColor(140, 20, "2211b8", 0.9)
+	If bContinun = 1 Then 
+		Delay 1000
+		iCycN = iCycN - 1
+		If iCycN < 0 Then 
+			Goto return
+		End If
+		ShowMessage "剩余" & (iCycN+1) & "次", 1000
+		Call playAgain()
+		//Goto doNoThing
+	End If
+	
+	If bBloodFull = -1 Then // 没血换变身
+		role2()
+	End If
+	
+//	Dim bAss = ass()	
+//	If bAss < 1 Then 
+//		keyAss()
+//	End If	
+	If notAss() = 1 Then // 打开辅助战斗
+		keyAss()
+	End If
+	
+	Dim bCarom = carom()	
+	If bCarom = 1 Then 
+		autoSkill()
+	End If
+	
+Rem doNoThing
+	Delay 1000
+Loop
+	
+Rem return
+End Function
+//-----------------循环n次----------------------//
+
+Function onClickAtt()
+UI.Close("main")
+Do
+		
+	If fighting() = 1 Then 
+	
+		If notAss() = 1 Then 
+			keyAss()
+		End If 
+	
+		bBloodFull = CmpColor(140, 20, "2211b8", 0.9)
+		If bBloodFull = -1 Then 
+			role2()
+		End If
+	
+		//autoFire()
+		//autoSkill()	
+		Dim bCarom = carom()	
+		If bCarom = 1 Then 
+			autoSkill()
+		End If
+	End If
+	
+	Delay 200
+Loop
+End Function
+
+Function onClickHunt() // 神之猎场
+UI.Close("main")
+Do
+		
+	If fighting() = 1 Then 
+	
+		If notAss() = 1 Then 
+			keyAss()
+		End If 
+	
+		bBloodFull = CmpColor(140, 20, "2211b8", 0.9)
+		If bBloodFull = -1 Then 
+			role2()
+		End If
+	
+		autoFire()
+	ElseIf hunt_Is_Sel() = 1 Then
+		selhole()
+	End If
+	
+	Delay 200
+Loop
+End Function
+
+Function onClickGetIdol() // 取偶人按钮
+	UI.Close("main")
+	getIdol()
+End Function
+
+Function onClickAddIdol() // 加偶人按钮
+	UI.Close("main")
+	addIdol()
+End Function
+
+Function onClickTramform()
+TracePrint "111"
+Delay 5000
+Do
+	tramform_Active()
+	TracePrint "222"
+	Delay 1000
+	If tramform_Is_Quick() = 1 Then 
+		TracePrint "333"
+		tramform_Quick()
+		Delay 2000
+		tramform_Fire_End()
+		Delay 2000
+	Else 
+		TracePrint "444"
+		tramform_Start()
+		TracePrint "4441"
+		Delay 3000
+		tramform_Fire()
+		TracePrint "4442"
+		Delay 1000
+		Dim ii=-1
+		Do Until ii=1
+			autoFire 
+			ii = tramform_Fire_Is_End()
+			TracePrint "666 "&ii
+			Delay 500
+		Loop
+		TracePrint "555"
+		tramform_Fire_End()
+		Delay 1000
+	End If
+	
+	Delay 1000
+Loop
+End Function
+
+Sub autoFire()
+	Call attack()
+	Delay 100
+	Call autoSkill()
+End Sub
+
+Sub autoSkill()
+	If i = 0 Then 
+		Call skill1()
+		i = 1
+	ElseIf i = 1 Then
+		Call skill2()
+		i = 2
+	ElseIf i = 2 Then
+		Call skill3()
+		i = 3
+	ElseIf i = 3 Then
+		Call skill4()
+		i = 4
+	Else
+		If boss() = 1 Then 
+			Call skill5()
+		End If 
+		i = 0
+	End If	
+End Sub
+
+Sub attack()
+	Tap 1100,530
+End Sub
+
+Sub skill1()
+	Tap 1060,380
+End Sub
+
+Sub skill2()
+	Tap 950,500
+End Sub
+
+Sub skill3()
+	Tap 1000,650
+End Sub
+
+Sub skill4()
+	Tap 1220,430
+End Sub
+
+Sub skill5() // 大招
+	Tap 870,650
+End Sub
+
+Sub somersault() // 翻筋斗
+	Tap 1200,650
+End Sub
+
+Sub role1()
+	Tap 50,50
+End Sub
+
+Sub role2()
+	Tap 50,150
+End Sub
+
+Sub keyAss() // 点辅助战斗
+	Tap 649,564
+End Sub
+
+//------------------------------------------------------------
+Sub selhole()
+//    If iHole = 0 Then
+//        Tap 640,250
+//        iHole = 1
+//    ElseIf iHole = 1 Then
+//        Tap 760,300
+//        iHole = 2
+//    ElseIf iHole = 2 Then
+//        Tap 820,425
+//        iHole = 3
+//    ElseIf iHole = 3 Then
+//        Tap 765,555
+//        iHole = 4
+//    ElseIf iHole = 4 Then
+//        Tap 650,595
+//        iHole = 5
+//    ElseIf iHole = 5 Then
+//        Tap 500,555
+//        iHole = 6
+//    ElseIf iHole = 6 Then
+//        Tap 460,420
+//        iHole = 7
+//    Else 
+//        Tap 500,300
+//        iHole = 0	
+//    End If
+	Tap 640, 250
+	Delay 100
+	Tap 760, 300
+	Delay 100
+	Tap 820, 425
+	Delay 100
+	Tap 765, 555
+	Delay 100
+	Tap 650, 595
+	Delay 100
+	Tap 500, 555
+	Delay 100
+	Tap 460, 420
+	Delay 100
+	Tap 500, 300
+	TracePrint "111"
+End Sub
+
+Function hunt_Is_Sel() // 是否在神之猎场选洞
+	//hunt_Is_Sel = CmpColorEx("990|170|353e4e,940|675|363e4e,260|670|353e4d,664|418|71abcc", 0.8)
+	hunt_Is_Sel = CmpColorEx("990|170|353e4e,940|675|363e4e,260|670|353e4d,664|418|71abcc,950|640|498bb4", 0.8)
+End Function
+//------------------------------------------------------------
+
+//------------------------------------------------------------
+Sub tramform_Active() // 变身试练_激活
+	If CmpColor(1130, 367, "5baecf", 0.9) = 1 Then
+		Tap 1130,367
+	End If
+End Sub
+
+Function tramform_Is_Quick() // 变身试练_快速挑战
+	tramform_Is_Quick = CmpColorEx("218|625|c5f1ff,333|618|dbf6ff,284|615|e5f8ff", 0.9)
+End Function
+
+Sub tramform_Quick() // 变身试练_快速挑战
+	Tap 218,625
+End Sub
+
+Sub tramform_Start() // 变身试练_挑战
+	Tap 218,625
+End Sub
+
+Sub tramform_Quick_End() // 变身试练_快速_结束
+	//If CmpColor(639, 613, "11257d", 0.9) = 1 Then
+		//Tap 639,613
+	//End If
+	Tap 639,613
+End Sub
+
+Sub tramform_Fire() // 变身试练_战斗
+	Dim xx=1112
+	Dim yy=653
+	//If CmpColor(xx, yy, "112a81", 0.8) = 1 Then
+		//Tap xx,yy
+	//End If
+	Tap xx,yy
+End Sub
+
+Function tramform_Fire_Is_End() // 变身试练_战斗_判断是否结束
+	tramform_Fire_Is_End = CmpColorEx("776|610|d8ffff,491|88|0811ac,777|97|5ffefe", 0.7)
+End Function
+
+Sub tramform_Fire_End() // 变身试练_战斗_结束
+	Dim xx=774
+	Dim yy=610
+	If CmpColor(xx, yy, "112a80", 0.9) = 1 Then
+		Tap xx,yy
+	End If
+End Sub
+//------------------------------------------------------------
+
+Sub playAgain()
+	Tap 970,635
+End Sub
+
+Sub playNext()
+	Tap 1160,635
+End Sub
+
+Function carom() // 是否正在连击状态
+	carom = CmpColorEx("1236|168|010203,1231|204|010110,1202|165|030408", 0.9)
+End Function
+
+Function ass() // 是否正在用官方辅助
+	ass = CmpColorEx("649|564|edfef0,615|563|fefffc,684|565|3f9730", 0.9)
+End Function
+
+Function notAss() // 是否正在用官方辅助
+	notAss = CmpColorEx("683|564|fafafa,602|562|fcfefc,592|562|367627", 0.9)
+End Function
+
+Function fighting() // 是否正在战斗中
+	fighting = CmpColorEx("140|6|3d6892,180|6|3d6892,760|670|8be7fe,450|550|92f3fe", 0.9)
+End Function
+
+Function boss() // 是否大怪
+	boss = CmpColor(620, 26, "446486", 0.8)
+	// CmpColor(620, 26, "446486", 0.9)
+End Function
+
+Sub getIdol()
+	Dim n_getIdol = 0
+	Delay 2000
+	Do
+		Tap 340, 355
+		n_getIdol = n_getIdol + 1
+		Delay 200
+	Loop While n_getIdol < 24	
+End Sub
+
+Sub addIdol()
+	Delay 2000
+	Dim n_addIdol = 0
+	Do
+		Tap 460, 420
+		n_addIdol = n_addIdol + 1
+		Delay 200
+	Loop While n_addIdol < 24
+	n_addIdol = 0
+	Do
+		Tap 710, 420
+		n_addIdol = n_addIdol + 1
+		Delay 200
+	Loop While n_addIdol < 24
+	n_addIdol = 0
+	Do
+		Tap 960, 420
+		n_addIdol = n_addIdol + 1
+		Delay 200
+	Loop While n_addIdol < 24
+End Sub

@@ -1,0 +1,17 @@
+{
+   "BestResolution" : {
+      "X" : 0,
+      "Y" : 0
+   },
+   "ChangeFileList" : 0,
+   "Description" : "",
+   "FileVersion" : {
+      ".atc" : 0,
+      ".mq" : 0,
+      ".prop" : 0,
+      ".rtd" : 0,
+      ".ui" : 0
+   },
+   "Name" : "dzs_auto_tst",
+   "id" : "2e338136-1714-4968-bf77-f4052270b378"
+}
