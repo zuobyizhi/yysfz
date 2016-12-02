@@ -1,0 +1,241 @@
+UI.NewLayout ("main",1,1000,200)
+UI.AddButton("main", "btnCycYH", "御魂循环")
+UI.SetOnClick("btnCycYH", onClickCyc)
+UI.AddButton("main", "btnCycNYH", "御魂循环n次")
+UI.SetOnClick("btnCycNYH", onClickCycN)
+UI.AddButton("main", "btnCycJX", "觉醒循环")
+UI.SetOnClick("btnCycJX", onClickCyc)
+UI.AddButton("main", "btnCycNJX", "觉醒循环n次")
+UI.SetOnClick("btnCycNJX", onClickCycN)
+UI.AddButton("main", "btnCycJJ", "结界循环")
+UI.SetOnClick("btnCycJJ", onClickCycJJ)
+//UI.AddButton("main", "btnTeam", "组队")
+//UI.SetOnClick("btnTeam", onClickTeam)
+UI.AddButton("main", "btnChapter", "n章")
+UI.SetOnClick("btnChapter", onClickChapter)
+UI.Show ("main")
+
+Dim iCycN = 10
+
+Function onClickCyc()
+UI.Close("main")
+Do
+	//
+	If yuhunStart() = 1 Then 
+		//
+		Tap 950,540 // 挑战按钮的位置
+	Else
+		//
+		Tap 1100,505 // 准备的位置
+		If mannal() > -1 Then 
+			Tap 49, 670 // 点自动
+		End If
+	End If
+	
+Rem doNoThing
+	Delay 3000
+Loop
+End Function
+
+//-----------------循环n次----------------------//
+Function onClickCycN()
+UI.Close("main")
+UI.NewLayout("loCycN", 1, 800, 200)
+UI.AddEditText("loCycN","循环次数", "",300)
+UI.AddButton("loCycN", "btnOK_loCycN", "确定")
+UI.SetOnClick("btnOK_loCycN", onClickOK_loCycN)
+UI.Show("loCycN")
+End Function
+
+Function onClickOK_loCycN()
+Dim tx = UI.GetText("循环次数")
+iCycN = CInt(tx)
+If IsNumeric(iCycN) <> True Then
+	Goto return
+End If
+UI.Close("loCycN")
+
+Do
+	//
+	If yuhunStart() = 1 Then 
+		//
+		iCycN = iCycN - 1
+		If iCycN < 0 Then 
+			Goto return
+		End If
+		ShowMessage "剩余" & (iCycN + 1) & "次", 1000
+		
+		Tap 950,540 // 挑战按钮的位置
+	Else
+		//
+		Tap 1100,505 // 准备的位置
+		If mannal() > -1 Then 
+			Tap 49, 670 // 点自动
+		End If
+	End If
+	
+Rem doNoThing
+	Delay 3000
+Loop
+	
+Rem return
+End Function
+//-----------------循环n次----------------------//
+
+//-----------------结界begin----------------------//
+Function onClickCycJJ()
+UI.Close("main")
+Do
+	//
+	If jieJieStart() = 1 Then // 在结界面板
+		// 
+		Dim bFinish = 0
+		Do While bFinish = 0
+			If CmpColor(450, 420-2*120, "b1c1ca", 0.9) > -1 Then 
+				Tap 450, 420 - 2 * 120
+				Delay 300
+				Tap 450, 420 - 2 * 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(450, 420-120, "b1c1ca", 0.9) > -1 Then
+				Tap 450, 420 - 120
+				Delay 300
+				Tap 450, 420 - 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(450, 420, "b1c1ca", 0.9) > -1 Then
+				Tap 450, 420
+				Delay 300
+				Tap 450, 420 + 50
+				bFinish = 1
+			ElseIf CmpColor(780, 420-2*120, "b1c1ca", 0.9) > -1 Then //
+				Tap 780, 420 - 2 * 120
+				Delay 300
+				Tap 780, 420 - 2 * 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(780, 420-120, "b1c1ca", 0.9) > -1 Then
+				Tap 780, 420 - 120
+				Delay 300
+				Tap 780, 420 - 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(780, 420, "b1c1ca", 0.9) > -1 Then
+				Tap 780, 420
+				Delay 300
+				Tap 780, 420 + 50
+				bFinish = 1
+			ElseIf CmpColor(1100, 420-2*120, "b1c1ca", 0.9) > -1 Then //
+				Tap 1100, 420 - 2 * 120
+				Delay 300
+				Tap 1100, 420 - 2 * 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(1100, 420-120, "b1c1ca", 0.9) > -1 Then
+				Tap 1100, 420 - 120
+				Delay 300
+				Tap 1100, 420 - 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(1100, 420, "b1c1ca", 0.9) > -1 Then
+				Tap 1100, 420
+				Delay 300
+				Tap 1100, 420 + 50
+				bFinish = 1
+			End If
+		Loop
+	Else
+		//
+		Tap 1100,505 // 准备的位置
+		If mannal() > -1 Then 
+			Tap 49, 670 // 点自动
+		End If
+	End If
+	
+Rem doNoThing
+	Delay 3000
+Loop
+End Function
+//-----------------结界end----------------------//
+
+//-----------------组队beg----------------------//
+Function onClickTeam()
+UI.Close("main")
+Do
+	//
+	If CmpColor(700, 630, "5fb2f4", 0.9) > -1 Then 
+		//
+		Tap 700,630 // 挑战按钮的位置
+		Delay 500
+		Tap 1060,200
+	Else
+		//
+		Tap 1100,505 // 准备的位置
+		If mannal() > -1 Then 
+			Tap 49, 670 // 点自动
+		End If
+	End If
+	
+Rem doNoThing
+	Delay 3000
+Loop
+End Function
+//-----------------组队end----------------------//
+
+//-----------------n章beg----------------------//
+Function onClickChapter()
+UI.Close ("main")
+//Dim ttt = 0
+Do
+	//
+	If inChapter() = 1 Then 
+		//
+		Dim intX,intY
+		FindMultiColor 0, 0, 0, 0, "4b9dc7", "21|38|fad9d9", 0, 0.9, intX, intY
+		If intX > -1 Then 
+			Tap intX,intY // 挑战按钮的位置
+		Else 
+			/*If ttt > 150 Then 
+				Goto myReturn
+			End If
+			
+			Dim nnn
+			nnn = ttt Mod 18
+			If nnn > 9 Then 
+				Swipe 500, 300, 100, 300, 500
+				ttt = ttt + 1
+			Else  
+				Swipe 100, 300, 500, 300, 500
+				ttt = ttt + 1
+			End If*/
+			Swipe 500, 300, 100, 300, 500
+			
+		End If
+		
+	Else
+		//
+		Tap 1100,505 // 准备的位置
+		If mannal() > -1 Then 
+			Tap 49, 670 // 点自动
+		End If
+	End If
+	
+Rem doNoThing
+	Delay 3000
+Loop
+
+//Rem myReturn
+
+End Function
+//-----------------n章end----------------------//
+
+Function yuhunStart() // 是否正在御魂开始面板
+	yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
+End Function
+
+Function mannal() // 是否正在手动状态
+	//mannal = CmpColor(49, 670, "e0f3f8", 0.8)
+	mannal = CmpColor(43, 662, "dbeef3", 0.8)
+End Function
+
+Function jieJieStart() // 是否正在结界开始面板
+	jieJieStart = CmpColorEx("75|25|273f60,1200|25|243c5d,1000|535|5fb2f4,170|625|5fb2f4", 0.9)
+End Function
+
+Function inChapter()
+	inChapter = CmpColorEx("44|65|fef6ee,1150|20|a2c4d5,1070|670|1d161a", 0.8)
+End Function

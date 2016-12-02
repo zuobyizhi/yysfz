@@ -7,12 +7,14 @@ UI.AddButton("main", "btnTramform", "变身试练")
 UI.SetOnClick("btnTramform", onClickTramform)
 UI.AddButton("main", "btnHunt", "神之猎场")
 UI.SetOnClick("btnHunt", onClickHunt)
-UI.AddButton("main", "btnGetIdol", "取偶人")
-UI.SetOnClick("btnGetIdol", onClickGetIdol)
-UI.AddButton("main", "btnAddIdol", "加偶人")
-UI.SetOnClick("btnAddIdol", onClickAddIdol)
+//UI.AddButton("main", "btnGetIdol", "取偶人")
+//UI.SetOnClick("btnGetIdol", onClickGetIdol)
+//UI.AddButton("main", "btnAddIdol", "加偶人")
+//UI.SetOnClick("btnAddIdol", onClickAddIdol)
 UI.AddButton("main", "btnCycN", "循环n次")
 UI.SetOnClick("btnCycN", onClickCycN)
+UI.AddButton("main", "btnTT", "天梯")
+UI.SetOnClick("btnTT", onClickTT)
 UI.Show ("main")
 
 
@@ -136,9 +138,18 @@ Do
 		//autoSkill()	
 		Dim bCarom = carom()	
 		If bCarom = 1 Then 
-			autoSkill()
+			autoSkill() 
 		End If
 	End If
+	
+	Delay 200
+Loop
+End Function
+
+Function onClickTT()
+UI.Close("main")
+Do
+	autoFire()
 	
 	Delay 200
 Loop
@@ -440,4 +451,36 @@ Sub addIdol()
 		n_addIdol = n_addIdol + 1
 		Delay 200
 	Loop While n_addIdol < 24
+End Sub
+
+Sub selStage(nChapter)
+If nChapter = 2 Then
+	Tap 400, 580 // 1
+	Delay 100
+	Tap 530, 450 // 2
+	Delay 100
+	Tap 730, 400 // 3
+	Delay 100
+	Tap 1050, 335 // 4
+	Delay 100
+	Tap 850, 230 // 5
+ElseIf nChapter = 3 Then
+	Tap 230, 430 // 1
+	Delay 100
+	Tap 560, 350 // 2
+	Delay 100
+	Tap 850, 525 // 3
+	Delay 100
+	Tap 890, 270 // 4
+ElseIf nChapter = 4 Then
+	Tap 200, 425 // 1
+	Delay 100
+	Tap 530, 450 // 2
+	Delay 100
+	Tap 730, 400 // 3
+	Delay 100
+	Tap 1050, 335 // 4
+	Delay 100
+	Tap 850, 230 // 5
+End If
 End Sub
