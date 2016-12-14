@@ -1,4 +1,4 @@
-UI.NewLayout ("main",1,1000,200)
+UI.NewLayout("main",1,800,200)
 UI.AddButton("main", "btnCycYH", "御魂循环")
 UI.SetOnClick("btnCycYH", onClickCyc)
 UI.AddButton("main", "btnCycNYH", "御魂循环n次")
@@ -8,12 +8,12 @@ UI.SetOnClick("btnCycJX", onClickCyc)
 UI.AddButton("main", "btnCycNJX", "觉醒循环n次")
 UI.SetOnClick("btnCycNJX", onClickCycN)
 UI.AddButton("main", "btnCycJJ", "结界循环")
-UI.SetOnClick("btnCycJJ", onClickCycJJ)
+//UI.SetOnClick("btnCycJJ", onClickCycJJ)
 //UI.AddButton("main", "btnTeam", "组队")
 //UI.SetOnClick("btnTeam", onClickTeam)
-UI.AddButton("main", "btnChapter", "n章")
-UI.SetOnClick("btnChapter", onClickChapter)
-UI.Show ("main")
+//UI.AddButton("main", "btnChapter", "n章")
+//UI.SetOnClick("btnChapter", onClickChapter)
+UI.Show("main")
 
 Dim iCycN = 10
 
@@ -178,8 +178,8 @@ End Function
 
 //-----------------n章beg----------------------//
 Function onClickChapter()
-UI.Close ("main")
-//Dim ttt = 0
+//UI.Close("main")
+Dim ttt = 0
 Do
 	//
 	If inChapter() = 1 Then 
@@ -189,7 +189,7 @@ Do
 		If intX > -1 Then 
 			Tap intX,intY // 挑战按钮的位置
 		Else 
-			/*If ttt > 150 Then 
+			If ttt > 150 Then 
 				Goto myReturn
 			End If
 			
@@ -201,8 +201,8 @@ Do
 			Else  
 				Swipe 100, 300, 500, 300, 500
 				ttt = ttt + 1
-			End If*/
-			Swipe 500, 300, 100, 300, 500
+			End If
+			//Swipe 500, 300, 100, 300, 500
 			
 		End If
 		
@@ -218,7 +218,7 @@ Rem doNoThing
 	Delay 3000
 Loop
 
-//Rem myReturn
+Rem myReturn
 
 End Function
 //-----------------n章end----------------------//

@@ -1,0 +1,17 @@
+{
+   "BestResolution" : {
+      "X" : 0,
+      "Y" : 0
+   },
+   "ChangeFileList" : 0,
+   "Description" : "",
+   "FileVersion" : {
+      ".atc" : 0,
+      ".mq" : 0,
+      ".prop" : 0,
+      ".rtd" : 0,
+      ".ui" : 0
+   },
+   "Name" : "yys_auto_tst2",
+   "id" : "537e89b1-8fcf-461b-9878-4607e42d1f76"
+}
