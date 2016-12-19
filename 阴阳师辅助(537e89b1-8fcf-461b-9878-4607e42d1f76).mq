@@ -151,6 +151,10 @@ Do
 		If iCycN < 0 Then 
 			Goto return
 		End If
+		
+		// 选层数beg
+		// 选层数end
+		
 		ShowMessage "剩余" & (iCycN + 1) & "次", 1000
 		
 		Tap 950,540 // 挑战按钮的位置
@@ -177,7 +181,13 @@ Do
 	If inChapter() = 1 Then 
 		//
 		Dim intX,intY
-		FindMultiColor 0, 0, 0, 0, "4b9dc7", "21|38|fad9d9", 0, 0.85, intX, intY
+		
+		//FindMultiColor 100, 140, 1100, 500, "4b9dc7", "21|38|fad9d9", 0, 0.85, intX, intY
+		FindMultiColor 100, 140, 1100, 500, "4c94b6", "19|21|76453d,26|25|f7d5d5,35|35|67352d,43|17|f7dfdf", 0, 0.8, intX, intY // 一般怪
+		If intX > -1 Then 
+			FindMultiColor 100, 140, 1100, 500, "0a1223", "0|34|f5ffff,12|25|f9ffff,8|19|3232ae,35|24|152640", 0, 0.8, intX, intY // 首领
+		End If
+		
 		If intX > -1 Then 
 			Tap intX + 20,intY + 20 // 挑战按钮的位置
 			//Touch intX + 20,intY + 20,100
@@ -187,6 +197,7 @@ Do
 			//If ttt > 150 Then 
 			//	Goto myReturn
 			//End If
+			
 			FindMultiColor 0, 0, 0, 0, "0a141b", "0|15|d4f6ff,20|15|d3f4ff,20|30|d3f4ff,20|50|091111", 0, 0.9, intX, intY
 			If intX > -1 Then 
 				Tap intX,intY // 挑战按钮的位置
