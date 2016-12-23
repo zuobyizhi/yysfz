@@ -112,7 +112,8 @@ If Trim(txt_srk6) <> "" and Trim(txt_srk61) Then
 			Swipe 1200, 200, 1200, 600, 500
 			Delay 2000
 		
-			Dim zs1 = 0
+			// 找章beg
+			/*Dim zs1 = 0
 			Dim zs2 = zs
 			If zs > 4 Then 
 				zs1 = zs Mod 4
@@ -130,9 +131,35 @@ If Trim(txt_srk6) <> "" and Trim(txt_srk61) Then
 			Loop
 			//Tap 1200, 200+150 // 最顶部章
 			Delay 2000
-			Tap 1170, 200+118*(zs1-1)
+			Tap 1170, 200+118*(zs1-1)*/
+			
+			Dim zs2 = zs - 1
+			Do While zs2 > 0
+				Swipe 1145, 261-15, 1145, 143, 1000
+				zs2 = zs2 - 1
+				Delay 500
+			Loop
+			
+			// 找图
+			Delay 500
+			Dim nX,nY
+			Dim picName = "Attachment:" & zs & ".png"
+			//FindPic 1100, 140, 1230, 640, "Attachment:"&(zs+1)&".png", "000000", 0, 0.8, nX, nY
+			FindPic 1100, 140, 1230, 640, picName, "000000", 0, 0.6, nX, nY
+			Delay 500
+			If nX > -1 Then 
+				ShowMessage "找到" & picName, 2000
+				Tap nX, nY
+			Else 
+				ShowMessage "没有找到" & picName, 2000
+				Delay 2000
+				n4 = n4 - 1
+				ShowMessage "剩余" & n4 & "次", 1000
+				Goto myContinue
+			End If
 			
 			Delay 4000
+			// 找章beg
 	
 			// 普通困难beg
 			If txt_srk62 = 0 Then 
@@ -151,6 +178,8 @@ If Trim(txt_srk6) <> "" and Trim(txt_srk61) Then
 			ShowMessage "剩余" & n4 & "次", 1000
 			onClickChapter()
 			n4 = n4 - 1
+	
+Rem myContinue
 
 			Delay 5000
 		Loop 
