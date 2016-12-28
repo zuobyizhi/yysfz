@@ -26,7 +26,13 @@ txt_srk61 = ReadUIConfig("输入框61","")
 txt_srk62 = ReadUIConfig("下拉框62", 0)
 
 Dim val_dxk
-val_dxk=ReadUIConfig("一键练级")
+val_dxk = ReadUIConfig("一键练级")
+
+Dim val_dxk2
+val_dxk2=ReadUIConfig("赠送红心")
+
+Dim val_srk11
+val_srk11=ReadUIConfig("输入框11")
 
 If Trim(txt_srk1) <> "" Then 
 	ShowMessage "御魂", 1000
@@ -191,6 +197,26 @@ Rem myContinue
 
 	Delay 5000
 	
+End If
+
+If Trim(val_srk11) <> "" Then 
+	Tap 400, 660 // 结界按钮
+	Delay 2000
+	JieJie(val_srk11)
+	Delay 2000
+	Tap 1180, 70 // 关闭按钮
+	Delay 2000
+	Tap 1180, 70 // 关闭按钮
+
+	Delay 5000
+End If
+
+If val_dxk2 = True Then 
+	Delay 5000
+	HongXin() 
+	Delay 5000
+	Tap 1180, 80
+	Delay 2000
 End If
 
 If val_dxk = True Then 
@@ -360,7 +386,8 @@ Function JuQing() // 是否正在御魂开始面板
 			//FindPic 1100, 140, 1230, 640, "Attachment:"&(zs+1)&".png", "000000", 0, 0.8, nX, nY
 			//FindPic 0, 140, 1280, 500, "Attachment:dlg.png", "000000", 0, 0.8, intX, intY
 			//FindMultiColor 0, 140, 1280, 500, "4c94b6", "19|21|76453d,26|25|f7d5d5,35|35|67352d,43|17|f7dfdf", 0, 0.8, intX, intY // 一般怪
-			FindPic 0, 140, 1280, 500, "Attachment:fire.png", "000000", 0, 0.7, intX, intY
+			FindPic 0, 140, 1280, 500, "Attachment:fire3.png", "000000", 0, 0.7, intX, intY
+			//FindMultiColor 100, 140, 1100, 500, "4c94b6", "19|21|76453d,26|25|f7d5d5,35|35|67352d,43|17|f7dfdf", 0, 0.8, intX, intY
 			
 			zstate = 1
 			
@@ -393,6 +420,142 @@ Function JuQing() // 是否正在御魂开始面板
 	
 End Function
 //-----------------剧情end----------------------//
+
+//-----------------红心beg----------------------//
+Function HongXin() // 是否正在御魂开始面板
+	//
+	If inProbe() = 1 Then 
+		Tap  55,55 // 进入庭院
+		Delay 5000
+	End If
+	
+	Dim intX,intY
+	intX = -1
+	intY = -1
+	FindPic 760, 580, 850, 660, "Attachment:friend.png", "000000", 0, 0.8, intX, intY
+	If intX = -1 Then 
+		Tap 1200, 640 // 卷轴未打开，打开它
+		Delay 3000
+	End If
+	Tap 760, 580 // 点好友按钮
+	Delay 3000
+	
+	// 主逻辑
+	Dim n5 = 0
+	Do
+		//
+		FindPic 390, 140, 490, 500, "Attachment:hongxin1.png", "000000", 0, 0.8, intX, intY
+		If intX = -1 Then 
+			//
+			FindPic 390, 140, 490, 500, "Attachment:hongxin2.png", "000000", 0, 0.8, intX, intY
+			If intX = -1 Then 
+				//
+				Swipe 330, 509, 330, 138, 5000
+				Delay 500
+			Else 
+				Tap intX, intY
+				Delay 3000
+			End If
+		Else 
+			Tap intX, intY
+			Delay 3000
+		End If
+		
+		n5 = n5 + 1
+		Delay 1000
+	Loop While n5 < 20
+	
+End Function
+//-----------------红心end----------------------//
+
+//-----------------结界beg----------------------//
+Function JieJie(nTime)
+Dim tx = nTime
+Dim iCycN = CInt(tx)
+If IsNumeric(iCycN) <> True Then
+	//Goto return2
+End If
+	
+	// 主逻辑
+	Dim n5 = iCycN
+	Do
+		//
+		Dim nX, nY
+		FindPic 560, 35, 710, 80, "Attachment:jiejietupo2.png", "000000", 0, 0.8, nX, nY
+		If nX > -1 Then 
+			// 
+			Dim bFinish = 0
+			Do While bFinish = 0
+			If CmpColor(435, 450, "b1c2d2", 0.9) > -1 Then 
+				Tap 435, 450
+				Delay 1000
+				//Tap 450, 420 - 2 * 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(435, 315, "b1c2d2", 0.9) > -1 Then
+				Tap 435, 315
+				Delay 1000
+				//Tap 450, 420 - 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(435, 180, "b1c2d2", 0.9) > -1 Then
+				Tap 435, 180
+				Delay 1000
+				//Tap 450, 420 + 50
+				bFinish = 1
+			ElseIf CmpColor(780, 180, "b1c2d2", 0.9) > -1 Then //
+				Tap 780, 180
+				Delay 1000
+				//Tap 780, 420 - 2 * 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(780, 315, "b1c2d2", 0.9) > -1 Then
+				Tap 780, 315
+				Delay 1000
+				//Tap 780, 420 - 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(780, 450, "b1c2d2", 0.9) > -1 Then
+				Tap 780, 450
+				Delay 1000
+				//Tap 780, 420 + 50
+				bFinish = 1
+			ElseIf CmpColor(1130, 180, "b1c2d2", 0.9) > -1 Then //
+				Tap 1130, 180
+				Delay 1000
+				//Tap 1100, 420 - 2 * 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(1130, 315, "b1c2d2", 0.9) > -1 Then
+				Tap 1130, 315
+				Delay 1000
+				//Tap 1100, 420 - 120 + 50
+				bFinish = 1
+			ElseIf CmpColor(1130, 450, "b1c2d2", 0.9) > -1 Then
+				Tap 1130, 450
+				Delay 1000
+				//Tap 1100, 420 + 50
+				bFinish = 1
+			End If
+			Loop
+		
+			FindPic 0, 0, 0, 0, "Attachment:jiejiezhandou.png", "000000", 0, 0.8, nX, nY
+			If nX > -1 Then 
+				n5 = n5 - 1
+				If n5 > -1 Then 
+					Tap nX, nY
+					Delay 3000
+				End If
+			End If
+		Else 
+			
+			Tap 1100,505 // 准备的位置
+			If mannal() > -1 Then 
+				Delay 500
+				Tap 49, 670 // 点自动
+				Delay 3000
+			End If
+		End If
+	Loop While n5 > -1
+		
+//Rem return2
+End Function
+//-----------------结界end----------------------//
 
 Function yuhunStart() // 是否正在御魂开始面板
 	yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
