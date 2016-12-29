@@ -34,6 +34,9 @@ val_dxk2=ReadUIConfig("赠送红心")
 Dim val_srk11
 val_srk11=ReadUIConfig("输入框11")
 
+Dim val_srk12
+val_srk12=ReadUIConfig("输入框12")
+
 If Trim(txt_srk1) <> "" Then 
 	ShowMessage "御魂", 1000
 	Tap 200, 655 // 御魂按钮
@@ -211,6 +214,20 @@ If Trim(val_srk11) <> "" Then
 	Delay 5000
 End If
 
+If Trim(val_srk12) <> "" Then 
+	Tap 400, 660 // 结界按钮
+	Delay 2000
+	Tap 1230, 350 // 结界按钮
+	Delay 2000
+	LiaoJieJie(val_srk12)
+	Delay 2000
+	Tap 1180, 70 // 关闭按钮
+	Delay 2000
+	Tap 1180, 70 // 关闭按钮
+
+	Delay 5000
+End If
+
 If val_dxk2 = True Then 
 	Delay 5000
 	HongXin() 
@@ -367,9 +384,11 @@ Function JuQing() // 是否正在御魂开始面板
 		Delay 5000
 		
 		Tap 860, 260
+		Delay 2000
 	End If
 	
 	// 主逻辑
+	Dim jqFin = 0
 	Do
 		//
 		Dim intX,intY
@@ -395,7 +414,12 @@ Function JuQing() // 是否正在御魂开始面板
 				//FindPic 0, 140, 1280, 500, "Attachment:lingshi.png", "000000", 0, 0.7, intX, intY
 				FindPic 0, 100, 1280, 500, "Attachment:lingshi2.png", "000000", 0, 0.6, intX, intY
 				
-				zstate = 2
+				If intX = -1 Then 
+					FindPic 0, 100, 1280, 500, "Attachment:wenhao.png", "000000", 0, 0.6, intX, intY
+					zstate = 4
+				Else 
+					zstate = 2
+				End If
 				
 			Else 
 				zstate = 3
@@ -406,17 +430,25 @@ Function JuQing() // 是否正在御魂开始面板
 			ShowMessage "找到。状态："& zstate, 1000
 			Tap intX, intY
 		Else 
+			FindPic 1135, 15, 1195, 55, "Attachment:mail2.png", "000000", 0, 0.8, intX, intY
+			If intX > -1 Then 
+				//
+				jqFin = 1
+				Delay 2000
+			Else 
+				//
 			
-			ShowMessage "没有找到。", 1000
-			Tap 1100,505 // 准备的位置
-			If mannal() > -1 Then 
-				ShowMessage "开自动。", 1000
-				Tap 49, 670 // 点自动
+				ShowMessage "没有找到。", 1000
+				Tap 1100,505 // 准备的位置
+				If mannal() > -1 Then 
+					ShowMessage "开自动。", 1000
+					Tap 49, 670 // 点自动
+				End If
 			End If
 		End If
 		
 		Delay 3000
-	Loop
+	Loop while jqFin = 0
 	
 End Function
 //-----------------剧情end----------------------//
@@ -556,6 +588,89 @@ End If
 //Rem return2
 End Function
 //-----------------结界end----------------------//
+
+//-----------------阴阳寮结界beg----------------------//
+Function LiaoJieJie(nTime)
+Dim tx = nTime
+Dim iCycN = CInt(tx)
+If IsNumeric(iCycN) <> True Then
+	//Goto return2
+End If
+	
+	// 主逻辑
+	Dim n5 = iCycN
+	Dim nState = 0 // 三个阴阳寮选那个的状态
+	Do
+		//
+		Dim nX, nY
+		nX = -1
+		nY = -1
+		FindPic 560, 35, 710, 80, "Attachment:jiejietupo2.png", "000000", 0, 0.8, nX, nY
+		If nX > -1 Then 
+			// 
+			Dim bFinish = 0
+			Do While bFinish = 0
+				//
+				Dim nn2 = nState Mod 3
+				Tap 270, 190 + nn2*190
+				Delay 1000
+				
+				FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
+				If nX > -1 Then 
+					Tap nX, nY
+					Delay 1000
+					
+					bFinish = 1
+					
+					ShowMessage "1", 1000
+				Else 
+					// 
+					Swipe 815, 651, 815, 112, 5000
+					Delay 1000
+					FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
+					If nX > -1 Then 
+						Tap nX, nY
+						Delay 1000
+						
+						bFinish = 1
+					
+						ShowMessage "2", 1000
+					End If
+				End If
+			Loop
+		
+			Delay 1000
+			FindPic 0, 0, 0, 0, "Attachment:liaogongji.png", "000000", 0, 0.8, nX, nY
+			If nX > -1 Then 
+				n5 = n5 - 1
+				ShowMessage "3", 1000
+				If n5 > -1 Then 
+					Tap nX, nY
+					Delay 3000
+				End If
+			Else 
+				ShowMessage "4", 1000
+				
+				Tap 100, 100
+				Delay 1000
+			End If
+		Else 
+			ShowMessage "5", 1000
+			
+			Tap 1100,505 // 准备的位置
+			If mannal() > -1 Then 
+				Delay 500
+				Tap 49, 670 // 点自动
+				Delay 3000
+			End If
+		End If
+		
+		nState = nState + 1
+	Loop While n5 > -1
+		
+//Rem return2
+End Function
+//-----------------阴阳寮结界end----------------------//
 
 Function yuhunStart() // 是否正在御魂开始面板
 	yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
