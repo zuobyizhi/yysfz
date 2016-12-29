@@ -31,6 +31,12 @@ val_dxk = ReadUIConfig("一键练级")
 Dim val_dxk2
 val_dxk2=ReadUIConfig("赠送红心")
 
+Dim val_dxk3
+val_dxk3=ReadUIConfig("准备间隔")
+
+Dim val_dxk4
+val_dxk4=ReadUIConfig("收邮件")
+
 Dim val_srk11
 val_srk11=ReadUIConfig("输入框11")
 
@@ -236,6 +242,14 @@ If val_dxk2 = True Then
 	Delay 2000
 End If
 
+If val_dxk4 = True Then 
+	Delay 5000
+	GetMail() 
+	Delay 5000
+	Tap 1170, 80
+	Delay 2000
+End If
+
 If val_dxk = True Then 
 	Delay 5000
 	JuQing() 
@@ -292,6 +306,12 @@ Do
 		ShowMessage "剩余" & (iCycN + 1) & "次", 1000
 		
 		Tap 950,540 // 挑战按钮的位置
+		
+		Delay 3000
+		If val_dxk3 = true Then 
+			ShowMessage "30秒准备", 1000
+			Delay 30*1000
+		End If
 	Else
 		//
 		Tap 1100,505 // 准备的位置
@@ -500,6 +520,43 @@ Function HongXin() // 是否正在御魂开始面板
 End Function
 //-----------------红心end----------------------//
 
+//-----------------收邮件beg----------------------//
+Function GetMail() // 是否正在御魂开始面板
+	//
+	If inProbe() = 1 Then 
+		Tap  55,55 // 进入庭院
+		Delay 5000
+	End If
+	
+	Dim intX,intY
+	intX = -1
+	intY = -1
+	Tap 1160, 30 // 点邮件按钮
+	Delay 3000
+	
+	// 主逻辑
+	Dim n5 = 0
+	Do
+		//
+		Tap 340, 170
+		Delay 2000
+		FindPic 700, 570, 1000, 640, "Attachment:shouqu.png", "000000", 0, 0.8, intX, intY
+		If intX = -1 Then 
+			//
+			Swipe 350, 235, 350, 115, 1000
+			Delay 1000
+		Else 
+			Tap intX, intY // 找到，点击收取
+			Delay 3000
+		End If
+		
+		n5 = n5 + 1
+		Delay 1000
+	Loop While n5 < 20
+	
+End Function
+//-----------------收邮件end----------------------//
+
 //-----------------结界beg----------------------//
 Function JieJie(nTime)
 Dim tx = nTime
@@ -611,7 +668,17 @@ End If
 			Dim bFinish = 0
 			Do While bFinish = 0
 				//
-				Dim nn2 = nState Mod 3
+				
+				Dim mmod = 3
+				If CmpColor(250, 350, "506981", 0.8) > -1 Then 
+					mmod = 1
+				Else 
+					If CmpColor(250, 530, "506981", 0.8) > -1 Then 
+						mmod = 2
+					End If
+				End If
+				Dim nn2 = nState Mod mmod
+				
 				Tap 270, 190 + nn2*190
 				Delay 1000
 				
