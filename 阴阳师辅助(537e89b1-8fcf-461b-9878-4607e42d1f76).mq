@@ -42,6 +42,8 @@ val_srk11=ReadUIConfig("输入框11")
 
 Dim val_srk12
 val_srk12=ReadUIConfig("输入框12")
+Dim val_srk121
+val_srk121=ReadUIConfig("下拉框寮结界")
 
 If Trim(txt_srk1) <> "" Then 
 	ShowMessage "御魂", 1000
@@ -240,7 +242,7 @@ If Trim(val_srk12) <> "" Then
 	Delay 2000
 	Tap 1230, 350 // 结界按钮
 	Delay 2000
-	LiaoJieJie(val_srk12)
+	LiaoJieJie(val_srk12, val_srk121)
 	Delay 2000
 	Tap 1180, 70 // 关闭按钮
 	Delay 2000
@@ -667,7 +669,7 @@ End Function
 //-----------------结界end----------------------//
 
 //-----------------阴阳寮结界beg----------------------//
-Function LiaoJieJie(nTime)
+Function LiaoJieJie(nTime, nLv)
 Dim tx = nTime
 Dim iCycN = CInt(tx)
 If IsNumeric(iCycN) <> True Then
@@ -686,23 +688,43 @@ End If
 		If nX > -1 Then 
 			// 
 			Dim bFinish = 0
-			Do While bFinish = 0
+			Dim nState2 = 0
+			Do While bFinish = 0 And nState2 < 3
 				//
+				nState2 = nState2 + 1
 				
 				Dim mmod = 3
-				If CmpColor(250, 350, "506981", 0.8) > -1 Then 
+				If CmpColor(250, 350, "506981", 0.9) = 0 Then 
 					mmod = 1
 				Else 
-					If CmpColor(250, 530, "506981", 0.8) > -1 Then 
+					If CmpColor(250, 530, "506981", 0.9) = 0 Then 
 						mmod = 2
 					End If
 				End If
+				mmod = 3
 				Dim nn2 = nState Mod mmod
+				
+				ShowMessage "mmod:" & mmod & " nState:" & nState & " nn2:" & nn2, 1000
+				Delay 1000
 				
 				Tap 270, 190 + nn2*190
 				Delay 1000
 				
-				FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
+				Dim picname
+				If nLv = 0 Then 
+					picname = "Attachment:0ji.png"
+				ElseIf nLv = 1 Then
+					picname = "Attachment:10ji.png"
+				ElseIf nLv = 2 Then
+					picname = "Attachment:20ji.png"
+				ElseIf nLv = 3 Then
+					picname = "Attachment:30ji.png"
+				Else	
+					picname = "Attachment:zerostar.png"
+				End If
+				
+				//FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
+				FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.8, nX, nY
 				If nX > -1 Then 
 					Tap nX, nY
 					Delay 1000
@@ -714,7 +736,8 @@ End If
 					// 
 					Swipe 815, 651, 815, 112, 5000
 					Delay 1000
-					FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
+					//FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
+					FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.8, nX, nY
 					If nX > -1 Then 
 						Tap nX, nY
 						Delay 1000
@@ -727,15 +750,15 @@ End If
 			Loop
 		
 			Delay 1000
-			FindPic 0, 0, 0, 0, "Attachment:liaogongji.png", "000000", 0, 0.8, nX, nY
-			If nX > -1 Then 
+			FindPic 0, 0, 0, 0, "Attachment:liaogongji.png", "000000", 0, 0.8, nX, nY // 攻击按钮
+			If nX > -1 Then // 点击战斗按钮
 				n5 = n5 - 1
 				ShowMessage "3", 1000
 				If n5 > -1 Then 
 					Tap nX, nY
 					Delay 3000
 				End If
-			Else 
+			Else  // 冷却中
 				ShowMessage "4", 1000
 				
 				Tap 100, 100
@@ -743,7 +766,7 @@ End If
 			End If
 		Else 
 			ShowMessage "5", 1000
-			
+			// 战斗状态
 			Tap 1100,505 // 准备的位置
 			If mannal() > -1 Then 
 				Delay 500
