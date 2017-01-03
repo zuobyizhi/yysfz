@@ -91,7 +91,7 @@
 						<i class="scriptExp"></i>
 						<h2>其他说明</h2>
 					</div>
-					<p><!--##exp Begin#-->1.仅支持1280*720分辨率。<br>2.请先调好各副本的阵容再启动本辅助。<!--#exp End##--></p></div></div>
+					<p><!--##exp Begin#-->1.仅支持1280*720分辨率。<br>2.本脚本只支持阴阳师最新版本，使用前请先将阴阳师更新到最新版本。<!--#exp End##--></p></div></div>
 <script type='text/javascript'>(function() {
 	var Slide = function(ele, leftClick, rightClick) {
 		this.index = 0;

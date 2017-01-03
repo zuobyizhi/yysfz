@@ -679,6 +679,7 @@ End If
 	// 主逻辑
 	Dim n5 = iCycN
 	Dim nState = 0 // 三个阴阳寮选那个的状态
+	Dim cannotfind = 0
 	Do
 		//
 		Dim nX, nY
@@ -689,19 +690,24 @@ End If
 			// 
 			Dim bFinish = 0
 			Dim nState2 = 0
-			Do While bFinish = 0 And nState2 < 3
+			// 寻找攻击按钮
+			Do While bFinish = 0 And nState2 < 2
 				//
 				nState2 = nState2 + 1
 				
 				Dim mmod = 3
-				If CmpColor(250, 350, "506981", 0.9) = 0 Then 
+				FindPic 200, 380, 250, 420, "Attachment:meiyouliao.png", "000000", 0, 0.8, nX, nY
+				//If CmpColor(250, 350, "506981", 0.9) = 0 Then
+				If nX > -1 Then
 					mmod = 1
 				Else 
-					If CmpColor(250, 530, "506981", 0.9) = 0 Then 
+					FindPic 200, 560, 250, 590, picname, "Attachment:meiyouliao.png", 0, 0.8, nX, nY
+					//If CmpColor(250, 530, "506981", 0.9) = 0 Then
+					 If nX > -1 Then
 						mmod = 2
 					End If
 				End If
-				mmod = 3
+				//mmod = 3
 				Dim nn2 = nState Mod mmod
 				
 				ShowMessage "mmod:" & mmod & " nState:" & nState & " nn2:" & nn2, 1000
@@ -711,20 +717,52 @@ End If
 				Delay 1000
 				
 				Dim picname
+				Dim picname2
+				Dim picname3
+				Dim picname4
 				If nLv = 0 Then 
 					picname = "Attachment:0ji.png"
+					picname2 = "Attachment:0ji.png"
+					picname3 = "Attachment:0ji.png"
+					picname4 = "Attachment:0ji.png"
 				ElseIf nLv = 1 Then
 					picname = "Attachment:10ji.png"
+					picname2 = "Attachment:10ji2.png"
+					picname3 = "Attachment:10ji3.png"
+					picname4 = "Attachment:10ji4.png"
 				ElseIf nLv = 2 Then
 					picname = "Attachment:20ji.png"
+					picname2 = "Attachment:20ji.png"
+					picname3 = "Attachment:20ji.png"
+					picname4 = "Attachment:20ji.png"
 				ElseIf nLv = 3 Then
 					picname = "Attachment:30ji.png"
+					picname2 = "Attachment:30ji.png"
+					picname3 = "Attachment:30ji.png"
+					picname4 = "Attachment:30ji.png"
+				ElseIf nLv = 4 Then
+					picname = "Attachment:40ji.png"
+					picname2 = "Attachment:40ji.png"
+					picname3 = "Attachment:40ji.png"
+					picname4 = "Attachment:40ji.png"
 				Else	
 					picname = "Attachment:zerostar.png"
+					picname2 = "Attachment:zerostar.png"	
+					picname3 = "Attachment:zerostar.png"
+					picname4 = "Attachment:zerostar.png"
 				End If
 				
 				//FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
-				FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.8, nX, nY
+				FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.6, nX, nY
+				If nX = -1 Then 
+					FindPic 560, 111, 1150, 650, picname2, "000000", 0, 0.6, nX, nY
+				End If
+				If nX = -1 Then 
+					FindPic 560, 111, 1150, 650, picname3, "000000", 0, 0.6, nX, nY
+				End If
+				If nX = -1 Then 
+					FindPic 560, 111, 1150, 650, picname4, "000000", 0, 0.6, nX, nY
+				End If
 				If nX > -1 Then 
 					Tap nX, nY
 					Delay 1000
@@ -737,7 +775,7 @@ End If
 					Swipe 815, 651, 815, 112, 5000
 					Delay 1000
 					//FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
-					FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.8, nX, nY
+					FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.6, nX, nY
 					If nX > -1 Then 
 						Tap nX, nY
 						Delay 1000
@@ -745,6 +783,9 @@ End If
 						bFinish = 1
 					
 						ShowMessage "2", 1000
+					Else 
+						ShowMessage "没有找到对应等级。", 1000
+						cannotfind = cannotfind + 1
 					End If
 				End If
 			Loop
@@ -762,8 +803,11 @@ End If
 				ShowMessage "4", 1000
 				
 				Tap 100, 100
-				Delay 1000
+				Delay 30000
 			End If
+		
+			nState = nState + 1
+			Delay 2000
 		Else 
 			ShowMessage "5", 1000
 			// 战斗状态
@@ -773,10 +817,9 @@ End If
 				Tap 49, 670 // 点自动
 				Delay 3000
 			End If
+			Delay 3000
 		End If
-		
-		nState = nState + 1
-	Loop While n5 > -1
+	Loop While n5 > -1 And cannotfind < 90
 		
 //Rem return2
 End Function
