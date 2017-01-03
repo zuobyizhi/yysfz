@@ -454,7 +454,8 @@ Function JuQing() // 是否正在御魂开始面板
 			
 			If intX = -1 Then 
 				//FindPic 0, 140, 1280, 500, "Attachment:lingshi.png", "000000", 0, 0.7, intX, intY
-				FindPic 0, 100, 1280, 500, "Attachment:lingshi2.png", "000000", 0, 0.6, intX, intY
+				//FindPic 0, 100, 1280, 500, "Attachment:lingshi2.png", "000000", 0, 0.6, intX, intY
+				FindPic 0, 100, 1280, 500, "Attachment:lingshi3.png", "000000", 0, 0.6, intX, intY
 				
 				If intX = -1 Then 
 					FindPic 0, 100, 1280, 500, "Attachment:wenhao.png", "000000", 0, 0.6, intX, intY
