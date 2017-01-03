@@ -732,7 +732,7 @@ End If
 					picname4 = "Attachment:10ji4.png"
 				ElseIf nLv = 2 Then
 					picname = "Attachment:20ji.png"
-					picname2 = "Attachment:20ji.png"
+					picname2 = "Attachment:20ji2.png"
 					picname3 = "Attachment:20ji.png"
 					picname4 = "Attachment:20ji.png"
 				ElseIf nLv = 3 Then
