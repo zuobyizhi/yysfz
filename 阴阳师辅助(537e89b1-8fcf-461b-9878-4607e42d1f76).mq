@@ -11,6 +11,9 @@ Dim txt_srk52
 Dim txt_srk6
 Dim txt_srk61
 Dim txt_srk62
+Dim txt_srk7
+Dim txt_srk71
+Dim txt_srk72
 txt_srk1 = ReadUIConfig("输入框1","")
 txt_srk12 = ReadUIConfig("下拉框12",0)
 txt_srk2 = ReadUIConfig("输入框2","")
@@ -24,6 +27,9 @@ txt_srk52 = ReadUIConfig("下拉框52",0)
 txt_srk6 = ReadUIConfig("输入框6","")
 txt_srk61 = ReadUIConfig("输入框61","")
 txt_srk62 = ReadUIConfig("下拉框62", 0)
+txt_srk7 = ReadUIConfig("输入框7","")
+txt_srk71 = ReadUIConfig("输入框71","")
+txt_srk72 = ReadUIConfig("下拉框72", 0)
 
 Dim val_dxk
 val_dxk = ReadUIConfig("一键练级")
@@ -184,10 +190,10 @@ If Trim(txt_srk6) <> "" and Trim(txt_srk61) Then
 			FindPic 1100, 140, 1230, 640, picName, "000000", 0, 0.6, nX, nY
 			Delay 500
 			If nX > -1 Then 
-				ShowMessage "找到" & picName, 2000
+				ShowMessage "找到目标章节" & picName, 2000
 				Tap nX, nY
 			Else 
-				ShowMessage "没有找到" & picName, 2000
+				ShowMessage "没有找到目标章节" & picName, 2000
 				Delay 2000
 				n4 = n4 - 1
 				ShowMessage "剩余" & n4 & "次", 1000
@@ -225,7 +231,9 @@ Rem myContinue
 	
 End If
 
-If Trim(val_srk11) <> "" Then 
+DoubleExp() // 双倍经验
+
+If Trim(val_srk11) <> "" Then // 个人结界突破
 	Tap 400, 660 // 结界按钮
 	Delay 2000
 	JieJie(val_srk11)
@@ -237,7 +245,7 @@ If Trim(val_srk11) <> "" Then
 	Delay 5000
 End If
 
-If Trim(val_srk12) <> "" Then 
+If Trim(val_srk12) <> "" Then  // 阴阳寮结界突破
 	Tap 400, 660 // 结界按钮
 	Delay 2000
 	Tap 1230, 350 // 结界按钮
@@ -251,7 +259,7 @@ If Trim(val_srk12) <> "" Then
 	Delay 5000
 End If
 
-If val_dxk2 = True Then 
+If val_dxk2 = True Then // 收发红心
 	Delay 5000
 	HongXin() 
 	Delay 5000
@@ -259,7 +267,7 @@ If val_dxk2 = True Then
 	Delay 2000
 End If
 
-If val_dxk4 = True Then 
+If val_dxk4 = True Then // 收邮件
 	Delay 5000
 	GetMail() 
 	Delay 5000
@@ -267,7 +275,7 @@ If val_dxk4 = True Then
 	Delay 2000
 End If
 
-If val_dxk = True Then 
+If val_dxk = True Then // 过主线剧情
 	Delay 5000
 	JuQing() 
 	Delay 5000
@@ -481,7 +489,7 @@ Function JuQing() // 是否正在御魂开始面板
 			Else 
 				//
 			
-				ShowMessage "没有找到。", 1000
+				ShowMessage "没有找到战斗、灵视或对话按钮。", 1000
 				Tap 1100,505 // 准备的位置
 				If mannal() > -1 Then 
 					ShowMessage "开自动。", 1000
@@ -825,6 +833,176 @@ End If
 //Rem return2
 End Function
 //-----------------阴阳寮结界end----------------------//
+
+//-----------------双倍经验beg----------------------//
+Sub DoubleExp()
+If Trim(txt_srk7) <> "" and Trim(txt_srk71) Then 
+
+	ShowMessage "双倍经验", 1000
+	Dim n4 = CInt(txt_srk7)
+	Dim zs = CInt(txt_srk71)
+	If IsNumeric(n4) = True And IsNumeric(zs) = True And zs > 0 Then
+
+		ShowMessage "循环" & n4 & "次", 1000
+		Do While n4 > 0
+			// 拖到最顶
+			Swipe 1200, 200, 1200, 600, 500
+			Delay 2000
+			Swipe 1200, 200, 1200, 600, 500
+			Delay 2000
+			Swipe 1200, 200, 1200, 600, 500
+			Delay 2000
+			Swipe 1200, 200, 1200, 600, 500
+			Delay 2000
+			
+			Dim zs2 = zs - 1
+			Do While zs2 > 0
+				Swipe 1145, 261-15, 1145, 143, 1000
+				zs2 = zs2 - 1
+				Delay 500
+			Loop
+			
+			// 找图
+			Delay 500
+			Dim nX,nY
+			Dim picName = "Attachment:" & zs & ".png"
+			//FindPic 1100, 140, 1230, 640, "Attachment:"&(zs+1)&".png", "000000", 0, 0.8, nX, nY
+			FindPic 1100, 140, 1230, 640, picName, "000000", 0, 0.6, nX, nY
+			Delay 500
+			If nX > -1 Then 
+				ShowMessage "找到目标章节" & picName, 2000
+				Tap nX, nY
+			Else 
+				ShowMessage "没有找到目标章节" & picName, 2000
+				Delay 2000
+				n4 = n4 - 1
+				ShowMessage "剩余" & n4 & "次", 1000
+				//Goto myContinue4
+			End If
+			
+			Delay 4000
+			// 找章beg
+	
+			// 普通困难beg
+			If txt_srk62 = 0 Then 
+				Tap 345, 220 // "普通"
+			ElseIf txt_srk62 = 1 Then
+				Tap 480, 220 // "困难"
+			Else 
+				//Tap 345, 220 //
+			End If
+			
+			Delay 2000
+			// 普通困难end
+			
+			Tap 950, 530 // 探索按钮
+			Delay 4000
+			ShowMessage "剩余" & n4 & "次", 1000
+			//ChapterExp()
+			Dim n5 = 0
+			n5 = ChapterExp(n4)
+			n4 = n4 - n5
+	
+			//Rem myContinue4
+
+			Delay 5000
+		Loop 
+	End If
+
+	Delay 5000
+	
+End If
+End Sub
+
+Function ChapterExp(nTm)
+Dim ttt = 0
+Dim tim = 0
+Dim fristIn = 0
+Do
+	//
+	If inChapter() = 1 Then 
+		
+		If tim > 3 or tim >= nTm or ttt > 23 Then 
+			ShowMessage "退出本次探索", 1000
+			Tap 50, 65 // 退出
+			Delay 4000
+			Tap 780, 400 // 退出
+			Delay 4000
+			Goto myReturn
+		End If
+		
+		//
+		Dim intX,intY
+		
+		KeepCapture
+		//FindMultiColor 100, 140, 1100, 500, "4b9dc7", "21|38|fad9d9", 0, 0.85, intX, intY
+		FindPic 0, 200, 1280, 640, "Attachment:exp2.png", "000000", 0, 0.7, intX, intY // 找经验图标
+		If intX = -1 Then 
+			FindPic 0, 200, 1280, 640, "Attachment:exp3.png", "000000", 0, 0.7, intX, intY // 找经验图标
+			If intX = -1 Then 
+				FindPic 0, 200, 1280, 640, "Attachment:exp4.png", "000000", 0, 0.7, intX, intY // 找经验图标
+			End If
+		End If // 远近大小有区别
+		
+		If intX > -1 Then 
+			FindPic intX-300, intY-230, intX+250, intY, "Attachment:fireexp.png", "000000", 0, 0.6, intX, intY // 在经验图标附近找战斗图标
+			If intX > -1 Then 
+			
+				Tap intX, intY // 挑战按钮的位置
+				//tim = tim + 1
+				fristIn = 1
+				ShowMessage "点击战斗按钮", 1000
+				Delay 4000
+			Else 
+				ShowMessage "没有找到战斗按钮", 1000
+				Delay 4000
+			End If
+		Else 
+			
+			ShowMessage "没有经验图标", 1000
+			
+			Dim nnn
+			nnn = ttt Mod 16
+			If nnn < 9 Then 
+				Swipe 500, 550, 100, 550, 1000
+				ttt = ttt + 1
+			Else  
+				Swipe 100, 550, 500, 550, 1000
+				ttt = ttt + 1
+			End If
+			
+		End If
+		ReleaseCapture
+		
+	ElseIf inProbe() = 1 Then
+	
+		//
+		ShowMessage "进入探索界面", 1000
+		Goto myReturn
+		
+	Else
+		//
+		If fristIn = 1 Then // 记录战斗次数
+			tim = tim + 1
+			fristIn = 0
+		End If
+		
+		Tap 1100,505 // 准备的位置
+		If mannal() > -1 Then 
+			Tap 49, 670 // 点自动
+		End If
+	End If
+	
+Rem doNoThing
+	Delay 3000
+Loop
+
+Rem myReturn
+
+ChapterExp = tim
+
+End Function
+//-----------------双倍经验end----------------------//
 
 Function yuhunStart() // 是否正在御魂开始面板
 	//yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
