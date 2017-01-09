@@ -655,6 +655,9 @@ End If
 			Loop
 		
 			FindPic 0, 0, 0, 0, "Attachment:jiejiezhandou.png", "000000", 0, 0.8, nX, nY
+			If nX = -1 Then 
+				FindPic 0, 0, 0, 0, "Attachment:jiejiezhandou2.png", "000000", 0, 0.8, nX, nY
+			End If
 			If nX > -1 Then 
 				n5 = n5 - 1
 				If n5 > -1 Then 
