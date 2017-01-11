@@ -457,6 +457,10 @@ Function JuQing() // 是否正在御魂开始面板
 		//FindMultiColor 0, 140, 1280, 500, "4c94b6", "19|21|76453d,26|25|f7d5d5,35|35|67352d,43|17|f7dfdf", 0, 0.8, intX, intY // 一般怪
 		FindPic 0, 140, 1280, 500, "Attachment:dlg.png", "000000", 0, 0.8, intX, intY
 		If intX = -1 Then 
+			FindPic 0, 140, 1280, 500, "Attachment:dlg2.png", "000000", 0, 0.8, intX, intY
+		End If
+		
+		If intX = -1 Then 
 			//
 			//FindPic 1100, 140, 1230, 640, "Attachment:"&(zs+1)&".png", "000000", 0, 0.8, nX, nY
 			//FindPic 0, 140, 1280, 500, "Attachment:dlg.png", "000000", 0, 0.8, intX, intY
@@ -469,7 +473,8 @@ Function JuQing() // 是否正在御魂开始面板
 			If intX = -1 Then 
 				//FindPic 0, 140, 1280, 500, "Attachment:lingshi.png", "000000", 0, 0.7, intX, intY
 				//FindPic 0, 100, 1280, 500, "Attachment:lingshi2.png", "000000", 0, 0.6, intX, intY
-				FindPic 0, 100, 1280, 500, "Attachment:lingshi3.png", "000000", 0, 0.6, intX, intY
+				//FindPic 0, 100, 1280, 500, "Attachment:lingshi3.png", "000000", 0, 0.6, intX, intY
+				FindPic 0, 100, 1280, 500, "Attachment:lingshi4.png", "000000", 0, 0.8, intX, intY
 				
 				If intX = -1 Then 
 					FindPic 0, 100, 1280, 500, "Attachment:wenhao.png", "000000", 0, 0.6, intX, intY
@@ -484,8 +489,8 @@ Function JuQing() // 是否正在御魂开始面板
 		End If
 		
 		If intX > -1 Then 
-			ShowMessage "找到。状态："& zstate, 1000
-			Tap intX, intY
+			//ShowMessage "找到。状态："& zstate, 1000
+			Tap intX+10, intY
 		Else 
 			FindPic 1135, 15, 1195, 55, "Attachment:mail2.png", "000000", 0, 0.8, intX, intY
 			If intX > -1 Then 
@@ -568,6 +573,11 @@ Function GetMail() // 是否正在御魂开始面板
 	Dim intX,intY
 	intX = -1
 	intY = -1
+	FindPic 1100, 550, 1280, 700, "Attachment:juanzhou_close.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+		Delay 2000
+	End If
 	Tap 1160, 30 // 点邮件按钮
 	Delay 3000
 	
@@ -728,7 +738,7 @@ End If
 				//mmod = 3
 				Dim nn2 = nState Mod mmod
 				
-				ShowMessage "mmod:" & mmod & " nState:" & nState & " nn2:" & nn2, 1000
+				//ShowMessage "mmod:" & mmod & " nState:" & nState & " nn2:" & nn2, 1000
 				Delay 1000
 				
 				Tap 270, 190 + nn2*190
@@ -787,7 +797,7 @@ End If
 					
 					bFinish = 1
 					
-					ShowMessage "1", 1000
+					ShowMessage "找到对应等级", 1000
 				Else 
 					// 
 					Swipe 815, 651, 815, 112, 5000
@@ -800,9 +810,9 @@ End If
 						
 						bFinish = 1
 					
-						ShowMessage "2", 1000
+						ShowMessage "找到对应等级", 1000
 					Else 
-						ShowMessage "没有找到对应等级。", 1000
+						ShowMessage "没有找到对应等级", 1000
 						cannotfind = cannotfind + 1
 					End If
 				End If
@@ -812,13 +822,13 @@ End If
 			FindPic 0, 0, 0, 0, "Attachment:liaogongji.png", "000000", 0, 0.8, nX, nY // 攻击按钮
 			If nX > -1 Then // 点击战斗按钮
 				n5 = n5 - 1
-				ShowMessage "3", 1000
+				ShowMessage "点击战斗按钮", 1000
 				If n5 > -1 Then 
 					Tap nX, nY
 					Delay 3000
 				End If
 			Else  // 冷却中
-				ShowMessage "4", 1000
+				ShowMessage "冷却中", 1000
 				
 				Tap 100, 100
 				Delay 30000
@@ -827,7 +837,7 @@ End If
 			nState = nState + 1
 			Delay 2000
 		Else 
-			ShowMessage "5", 1000
+			ShowMessage "战斗状态", 1000
 			// 战斗状态
 			Tap 1100,505 // 准备的位置
 			If mannal() > -1 Then 
@@ -1090,10 +1100,10 @@ Sub YaoQi()
 					FindPic 530, 160, 650, 580, picname, "000000", 0, 0.8, intX, intY
 					If intX > -1 Then 
 						// 点战斗
-						ShowMessage "找到妖怪", 1000
+						ShowMessage "找到该妖怪", 1000
 						Tap intX + 470, intY + 30
 					Else 
-						ShowMessage "没有找到妖怪", 1000
+						ShowMessage "没有找到该妖怪", 1000
 						Tap 760, 630
 					End If
 				Else 
@@ -1110,6 +1120,7 @@ Sub YaoQi()
 						// 战斗中
 						If firefrist = 1 Then 
 							firefrist = 0
+							Delay 2000
 							ShowMessage "20秒准备，可点准备立即开始。", 3000
 							Delay 20000
 						End If
