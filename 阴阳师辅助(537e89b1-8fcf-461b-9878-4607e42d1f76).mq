@@ -14,6 +14,8 @@ Dim txt_srk62
 Dim txt_srk7
 Dim txt_srk71
 Dim txt_srk72
+Dim txt_srk8
+Dim txt_srk81
 txt_srk1 = ReadUIConfig("输入框1","")
 txt_srk12 = ReadUIConfig("下拉框12",0)
 txt_srk2 = ReadUIConfig("输入框2","")
@@ -30,6 +32,8 @@ txt_srk62 = ReadUIConfig("下拉框62", 0)
 txt_srk7 = ReadUIConfig("输入框7","")
 txt_srk71 = ReadUIConfig("输入框71","")
 txt_srk72 = ReadUIConfig("下拉框72", 0)
+txt_srk8 = ReadUIConfig("输入框8","")
+txt_srk81 = ReadUIConfig("下拉框82", 0)
 
 Dim val_dxk
 val_dxk = ReadUIConfig("一键练级")
@@ -232,6 +236,8 @@ Rem myContinue
 End If
 
 DoubleExp() // 双倍经验
+
+YaoQi() // 妖气
 
 If Trim(val_srk11) <> "" Then // 个人结界突破
 	Tap 400, 660 // 结界按钮
@@ -1007,6 +1013,129 @@ ChapterExp = tim
 End Function
 //-----------------双倍经验end----------------------//
 
+//-----------------妖气封印beg----------------------//
+Sub YaoQi()
+	//
+	ShowMessage "妖气封印", 1000
+	Dim n4 = CInt(txt_srk8)
+	Dim zs = CInt(txt_srk81)
+	If IsNumeric(n4) = True And IsNumeric(zs) = True And zs > 0 And n4 > 0 Then 
+		//
+		
+		If inProbe() = 1 Then 
+			Tap  55,55 // 进入庭院
+			Delay 5000
+		End If
+		
+		Dim n_yq = 0
+		Do
+			Tap 250, 640 // 组队按钮
+			Delay 3000
+			
+			Tap 240, 600 // 妖气封印按钮
+			Delay 3000
+		
+			Dim picname = ""
+			If zs = 0 Then 
+				//
+				picname = "Attachment:yq_xiaohei.png"
+				ShowMessage "鬼使黑", 1000
+			ElseIf zs = 1 Then
+				//
+				picname = "Attachment:yq_exp.png"
+				ShowMessage "经验妖怪", 1000
+			ElseIf zs = 2 Then
+				//
+				picname = "Attachment:yq_jinbi.png"
+				ShowMessage "金币妖怪", 1000
+			ElseIf zs = 3 Then
+				//
+				picname = "Attachment:yq_haifangzhu.png"
+				ShowMessage "海坊主", 1000
+			ElseIf zs = 4 Then
+				//
+				picname = "Attachment:yq_tiaoge.png"
+				ShowMessage "跳跳哥哥", 1000
+			ElseIf zs = 5 Then
+				//
+				picname = "Attachment:yq_gunv.png"
+				ShowMessage "骨女", 1000
+			ElseIf zs = 6 Then
+				//
+				picname = "Attachment:yq_egui.png"
+				ShowMessage "饿鬼", 1000
+			ElseIf zs = 7 Then
+				//
+				picname = "Attachment:yq_jiaotu.png"
+				ShowMessage "椒图", 1000
+			ElseIf zs = 8 Then
+				//
+				picname = "Attachment:yq_jiaotu.png"
+				ShowMessage "二口女", 1000
+			Else
+				//
+				picname = "Attachment:yq_jiaotu.png"
+				ShowMessage "其他", 1000
+			End If
+			
+			Delay 2000
+		
+			Dim firefrist = 1	
+			Dim bfinish = 0
+			Do
+				Dim intX, intY
+				FindPic 400, 100, 450, 150, "Attachment:yaoqi.png", "000000", 0, 0.8, intX, intY
+				If intX > -1 Then 
+					// 进入战斗
+					FindPic 530, 160, 650, 580, picname, "000000", 0, 0.8, intX, intY
+					If intX > -1 Then 
+						// 点战斗
+						ShowMessage "找到妖怪", 1000
+						Tap intX + 470, intY + 30
+					Else 
+						ShowMessage "没有找到妖怪", 1000
+						Tap 760, 630
+					End If
+				Else 
+					FindPic 400, 100, 450, 150, "Attachment:duiwu.png", "000000", 0, 0.8, intX, intY
+					If intX > -1 Then
+						// 队伍中
+						//FindPic 600, 40, 680, 60, picname, "000000", 0, 0.8, intX, intY
+						//If intX > -1 Then 
+						//	// 点战斗
+						//	Tap 1000, 600
+						//End If
+						Tap 1000, 600
+					Else 
+						// 战斗中
+						If firefrist = 1 Then 
+							firefrist = 0
+							ShowMessage "20秒准备，可点准备立即开始。", 3000
+							Delay 20000
+						End If
+						
+						If inTingYuan() = 1 Then 
+							bfinish = 1
+						End If
+						
+						Tap 1100,505 // 准备的位置
+						ShowMessage "战斗状态", 1000
+						If mannal() > -1 Then 
+							Tap 49, 670 // 点自动
+						End If
+					End If
+				End If
+				
+				Delay 3760
+			Loop While bfinish = 0
+		
+			n_yq = n_yq + 1
+			Delay 3000	
+		Loop While n_yq < n4
+	End If
+End Sub
+//-----------------妖气封印end----------------------//
+
 Function yuhunStart() // 是否正在御魂开始面板
 	//yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
 	Dim intX, intY
@@ -1029,4 +1158,18 @@ End Function
 
 Function inProbe()
 	inProbe = CmpColorEx("590|30|0c1c35,965|30|0c1c35,550|710|13131c,10|710|13131c,1145|20|a2c4d5,179|677|e0f3f8", 0.8)
+End Function
+
+Function inTingYuan() // 是否正在御魂开始面板
+	//yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
+	Dim intX, intY
+	FindPic 1100, 550, 1280, 700, "Attachment:juanzhou.png", "000000", 0, 0.8, intX, intY
+	If intX = -1 Then 
+		FindPic 1100, 550, 1280, 700, "Attachment:juanzhou_close.png", "000000", 0, 0.8, intX, intY
+	End If
+	If intX > -1 Then 
+		inTingYuan = 1
+	Else 
+		inTingYuan = -1
+	End If
 End Function
