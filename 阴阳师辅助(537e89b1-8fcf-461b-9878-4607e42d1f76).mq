@@ -194,10 +194,10 @@ If Trim(txt_srk6) <> "" and Trim(txt_srk61) Then
 			FindPic 1100, 140, 1230, 640, picName, "000000", 0, 0.6, nX, nY
 			Delay 500
 			If nX > -1 Then 
-				ShowMessage "找到目标章节" & picName, 2000
+				ShowMessage "找到目标章节:第" & zs & "章", 2000
 				Tap nX, nY
 			Else 
-				ShowMessage "没有找到目标章节" & picName, 2000
+				ShowMessage "没有找到目标章节:第" & zs & "章", 2000
 				Delay 2000
 				n4 = n4 - 1
 				ShowMessage "剩余" & n4 & "次", 1000
@@ -900,10 +900,10 @@ If Trim(txt_srk7) <> "" and Trim(txt_srk71) Then
 			FindPic 1100, 140, 1230, 640, picName, "000000", 0, 0.6, nX, nY
 			Delay 500
 			If nX > -1 Then 
-				ShowMessage "找到目标章节" & picName, 2000
+				ShowMessage "找到目标章节:第" & zs & "章", 2000
 				Tap nX, nY
 			Else 
-				ShowMessage "没有找到目标章节" & picName, 2000
+				ShowMessage "没有找到目标章节:第" & zs & "章", 2000
 				Delay 2000
 				n4 = n4 - 1
 				ShowMessage "剩余" & n4 & "次", 1000
