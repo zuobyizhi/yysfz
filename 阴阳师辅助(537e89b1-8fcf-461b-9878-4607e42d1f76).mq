@@ -244,7 +244,7 @@ If Trim(val_srk11) <> "" Then // 个人结界突破
 	Delay 2000
 	JieJie(val_srk11)
 	Delay 2000
-	Tap 1180, 70 // 关闭按钮
+	Tap 1180, 70 // 退出打开某个结界
 	Delay 2000
 	Tap 1180, 70 // 关闭按钮
 
@@ -258,7 +258,7 @@ If Trim(val_srk12) <> "" Then  // 阴阳寮结界突破
 	Delay 2000
 	LiaoJieJie(val_srk12, val_srk121)
 	Delay 2000
-	Tap 1180, 70 // 关闭按钮
+	Tap 1180, 70 // 退出打开某个结界
 	Delay 2000
 	Tap 1180, 70 // 关闭按钮
 
@@ -269,7 +269,7 @@ If val_dxk2 = True Then // 收发红心
 	Delay 5000
 	HongXin() 
 	Delay 5000
-	Tap 1180, 80
+	Tap 1180, 80 // 关闭红心按钮
 	Delay 2000
 End If
 
@@ -277,7 +277,7 @@ If val_dxk4 = True Then // 收邮件
 	Delay 5000
 	GetMail() 
 	Delay 5000
-	Tap 1170, 80
+	Tap 1170, 80 // 关闭邮件按钮
 	Delay 2000
 End If
 
@@ -459,6 +459,9 @@ Function JuQing() // 是否正在御魂开始面板
 		If intX = -1 Then 
 			FindPic 0, 140, 1280, 500, "Attachment:dlg2.png", "000000", 0, 0.8, intX, intY
 		End If
+		If intX = -1 Then 
+			FindPic 0, 140, 1280, 500, "Attachment:dlg3.png", "000000", 0, 0.8, intX, intY
+		End If
 		
 		If intX = -1 Then 
 			//
@@ -538,14 +541,22 @@ Function HongXin() // 是否正在御魂开始面板
 	Dim n5 = 0
 	Do
 		//
-		FindPic 390, 140, 490, 500, "Attachment:hongxin1.png", "000000", 0, 0.8, intX, intY
+		FindPic 390, 120, 490, 560, "Attachment:hongxin1.png", "000000", 0, 0.7, intX, intY
 		If intX = -1 Then 
 			//
-			FindPic 390, 140, 490, 500, "Attachment:hongxin2.png", "000000", 0, 0.8, intX, intY
+			FindPic 390, 120, 490, 560, "Attachment:hongxin2.png", "000000", 0, 0.7, intX, intY
 			If intX = -1 Then 
 				//
-				Swipe 330, 509, 330, 138, 5000
-				Delay 500
+				Dim mmod = n5 Mod 3
+				
+				ShowMessage "mmod:" & mmod & " n5:" & n5, 1000
+				
+				If mmod > 1 Then 
+					//Swipe 330, 509, 330, 138, 5000
+					Swipe 330, 189, 330, 138, 5000
+					Delay 500
+				End If
+				//Swipe 330, 509, 330, 138, 5000
 			Else 
 				Tap intX, intY
 				Delay 3000
@@ -557,7 +568,7 @@ Function HongXin() // 是否正在御魂开始面板
 		
 		n5 = n5 + 1
 		Delay 1000
-	Loop While n5 < 20
+	Loop While n5 < 120
 	
 End Function
 //-----------------红心end----------------------//
@@ -566,7 +577,7 @@ End Function
 Function GetMail() // 是否正在御魂开始面板
 	//
 	If inProbe() = 1 Then 
-		Tap  55,55 // 进入庭院
+		Tap 55,55 // 进入庭院
 		Delay 5000
 	End If
 	
