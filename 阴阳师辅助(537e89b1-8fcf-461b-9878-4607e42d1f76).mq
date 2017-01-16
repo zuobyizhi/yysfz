@@ -58,9 +58,9 @@ val_srk121=ReadUIConfig("下拉框寮结界")
 If Trim(txt_srk1) <> "" Then 
 	ShowMessage "御魂", 1000
 	Tap 200, 655 // 御魂按钮
-	Delay 2000
+	Delay 4000
 	Tap 370, 350 // 御魂按钮
-	Delay 2000
+	Delay 3000
 	onClickOK_loCycN(txt_srk1, txt_srk12)
 	Delay 2000
 	//Tap 1050, 160 // 御魂关闭按钮
@@ -237,6 +237,7 @@ End If
 
 DoubleExp() // 双倍经验
 
+Delay 2000
 YaoQi() // 妖气
 
 If Trim(val_srk11) <> "" Then // 个人结界突破
@@ -1039,8 +1040,9 @@ Sub YaoQi()
 	//
 	ShowMessage "妖气封印", 1000
 	Dim n4 = CInt(txt_srk8)
-	Dim zs = CInt(txt_srk81)
-	If IsNumeric(n4) = True And IsNumeric(zs) = True And zs > 0 And n4 > 0 Then 
+	//Dim zs = CInt(txt_srk81)
+	//If IsNumeric(n4) = True And IsNumeric(zs) = True And zs > 0 And n4 > 0 Then
+	If IsNumeric(n4) = True And n4 > 0 Then
 		//
 		
 		If inProbe() = 1 Then 
@@ -1056,48 +1058,48 @@ Sub YaoQi()
 			Tap 240, 600 // 妖气封印按钮
 			Delay 3000
 		
-			Dim picname = ""
-			If zs = 0 Then 
-				//
-				picname = "Attachment:yq_xiaohei.png"
-				ShowMessage "鬼使黑", 1000
-			ElseIf zs = 1 Then
-				//
-				picname = "Attachment:yq_exp.png"
-				ShowMessage "经验妖怪", 1000
-			ElseIf zs = 2 Then
-				//
-				picname = "Attachment:yq_jinbi.png"
-				ShowMessage "金币妖怪", 1000
-			ElseIf zs = 3 Then
-				//
-				picname = "Attachment:yq_haifangzhu.png"
-				ShowMessage "海坊主", 1000
-			ElseIf zs = 4 Then
-				//
-				picname = "Attachment:yq_tiaoge.png"
-				ShowMessage "跳跳哥哥", 1000
-			ElseIf zs = 5 Then
-				//
-				picname = "Attachment:yq_gunv.png"
-				ShowMessage "骨女", 1000
-			ElseIf zs = 6 Then
-				//
-				picname = "Attachment:yq_egui.png"
-				ShowMessage "饿鬼", 1000
-			ElseIf zs = 7 Then
-				//
-				picname = "Attachment:yq_jiaotu.png"
-				ShowMessage "椒图", 1000
-			ElseIf zs = 8 Then
-				//
-				picname = "Attachment:yq_jiaotu.png"
-				ShowMessage "二口女", 1000
-			Else
-				//
-				picname = "Attachment:yq_jiaotu.png"
-				ShowMessage "其他", 1000
-			End If
+			//Dim picname = ""
+			//If zs = 0 Then 
+			//	//
+			//	picname = "Attachment:yq_xiaohei.png"
+			//	ShowMessage "鬼使黑", 1000
+			//ElseIf zs = 1 Then
+			//	//
+			//	picname = "Attachment:yq_exp.png"
+			//	ShowMessage "经验妖怪", 1000
+			//ElseIf zs = 2 Then
+			//	//
+			//	picname = "Attachment:yq_jinbi.png"
+			//	ShowMessage "金币妖怪", 1000
+			//ElseIf zs = 3 Then
+			//	//
+			//	picname = "Attachment:yq_haifangzhu.png"
+			//	ShowMessage "海坊主", 1000
+			//ElseIf zs = 4 Then
+			//	//
+			//	picname = "Attachment:yq_tiaoge.png"
+			//	ShowMessage "跳跳哥哥", 1000
+			//ElseIf zs = 5 Then
+			//	//
+			//	picname = "Attachment:yq_gunv.png"
+			//	ShowMessage "骨女", 1000
+			//ElseIf zs = 6 Then
+			//	//
+			//	picname = "Attachment:yq_egui.png"
+			//	ShowMessage "饿鬼", 1000
+			//ElseIf zs = 7 Then
+			//	//
+			//	picname = "Attachment:yq_jiaotu.png"
+			//	ShowMessage "椒图", 1000
+			//ElseIf zs = 8 Then
+			//	//
+			//	picname = "Attachment:yq_jiaotu.png"
+			//	ShowMessage "二口女", 1000
+			//Else
+			//	//
+			//	picname = "Attachment:yq_jiaotu.png"
+			//	ShowMessage "其他", 1000
+			//End If
 			
 			Delay 2000
 		
@@ -1107,15 +1109,35 @@ Sub YaoQi()
 				Dim intX, intY
 				FindPic 400, 100, 450, 150, "Attachment:yaoqi.png", "000000", 0, 0.8, intX, intY
 				If intX > -1 Then 
-					// 进入战斗
-					FindPic 530, 160, 650, 580, picname, "000000", 0, 0.8, intX, intY
+					//FindPic 530, 160, 650, 580, picname, "000000", 0, 0.8, intX, intY
+					
+					If ReadUIConfig("鬼使黑") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_xiaohei.png", "000000", 0, 0.8, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("经验妖怪") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_exp.png", "000000", 0, 0.8, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("金币妖怪") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_jinbi.png", "000000", 0, 0.8, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("海坊主") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_haifangzhu.png", "000000", 0, 0.8, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("跳跳哥哥") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_tiaoge.png", "000000", 0, 0.8, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("骨女") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_gunv.png", "000000", 0, 0.8, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("饿鬼") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_egui.png", "000000", 0, 0.8, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("椒图") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_jiaotu.png", "000000", 0, 0.8, intX, intY
+					Else 
+						FindPic 530, 160, 650, 580, "Attachment:yq_jiaotu.png", "000000", 0, 0.8, intX, intY
+					End If
+					
 					If intX > -1 Then 
 						// 点战斗
 						ShowMessage "找到该妖怪", 1000
 						Tap intX + 470, intY + 30
 					Else 
 						ShowMessage "没有找到该妖怪", 1000
-						Tap 760, 630
+						Tap 760, 630 // 刷新按钮
 					End If
 				Else 
 					FindPic 400, 100, 450, 150, "Attachment:duiwu.png", "000000", 0, 0.8, intX, intY
