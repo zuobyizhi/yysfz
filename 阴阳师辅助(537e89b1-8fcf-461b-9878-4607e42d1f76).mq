@@ -17,6 +17,7 @@ Dim txt_srk72
 Dim txt_srk8
 Dim txt_srk81
 Dim txt_srk9
+Dim txt_srka
 txt_srk1 = ReadUIConfig("输入框1","")
 txt_srk12 = ReadUIConfig("下拉框12",0)
 txt_srk2 = ReadUIConfig("输入框2","")
@@ -36,6 +37,7 @@ txt_srk72 = ReadUIConfig("下拉框72", 0)
 txt_srk8 = ReadUIConfig("输入框8","")
 txt_srk81 = ReadUIConfig("下拉框82", 0)
 txt_srk9 = ReadUIConfig("输入框9","")
+txt_srka = ReadUIConfig("输入框a","")
 
 Dim val_dxk
 val_dxk = ReadUIConfig("一键练级")
@@ -165,7 +167,17 @@ If Trim(txt_srk6) <> "" and Trim(txt_srk61) Then
 			// 找宝箱end
 			
 			// 找妖气beg
+			FindPic 0, 0, 0, 0, "Attachment:youyaoqi.png", "000000", 0, 0.7, nX, nY
+			If nX > -1 Then 
+				Tap nX, nY
+				Delay 2000
+				//Tap 1200, 600
+				//Delay 2000
+				YouYaoQi()
+			End If
 			// 找妖气end
+			
+			ShowMessage "章节寻找中，请稍候", 1000
 		
 			// 拖到最顶
 			Swipe 1200, 200, 1200, 600, 500
@@ -261,6 +273,8 @@ YaoQi() // 妖气
 
 Zudui() // 组队御魂或者觉醒
 
+Zudui2() // 组队御魂或者觉醒 做队长
+
 If Trim(val_srk11) <> "" Then // 个人结界突破
 	Tap 400, 660 // 结界按钮
 	Delay 2000
@@ -328,7 +342,8 @@ Do
 			Goto return
 		End If
 	
-		// TODO		
+		
+		ShowMessage "层寻找中，请稍候", 1000	
 		// 选层数beg
 		Swipe 400, 200, 400, 200 + 5*74, 500
 		Delay 1000
@@ -575,27 +590,61 @@ Function HongXin() // 是否正在御魂开始面板
 	
 	// 主逻辑
 	Dim n5 = 0
+	Dim mmod = 0
+	// 先黄后红
+	ShowMessage "赠送友情点", 1000
 	Do
 		//
 		FindPic 390, 120, 490, 560, "Attachment:hongxin1.png", "000000", 0, 0.7, intX, intY
 		If intX = -1 Then 
 			//
-			FindPic 390, 120, 490, 560, "Attachment:hongxin2.png", "000000", 0, 0.7, intX, intY
-			If intX = -1 Then 
-				//
-				Dim mmod = n5 Mod 3
+			mmod = n5 Mod 3
 				
-				ShowMessage "mmod:" & mmod & " n5:" & n5, 1000
+			//ShowMessage "mmod:" & mmod & " n5:" & n5, 1000
+			ShowMessage "寻找中", 1000
 				
-				If mmod > 1 Then 
-					//Swipe 330, 509, 330, 138, 5000
-					Swipe 330, 189, 330, 138, 5000
-					Delay 500
-				End If
-				//Swipe 330, 509, 330, 138, 5000
-			Else 
-				Tap intX, intY
-				Delay 3000
+			If mmod > 1 Then 
+				Swipe 330, 509, 330, 138, 5000
+				//Swipe 330, 189, 330, 138, 5000
+				Delay 500
+			End If
+			//Swipe 330, 509, 330, 138, 5000
+		Else 
+			Tap intX, intY
+			Delay 3000
+		End If
+		
+		n5 = n5 + 1
+		Delay 1000
+	Loop While n5 < 30
+	
+	// 回到顶部
+	ShowMessage "正在回到顶部，请稍候", 1000
+	Swipe 330, 138, 330, 509, 3000
+	Swipe 330, 138, 330, 509, 3000
+	Swipe 330, 138, 330, 509, 3000
+	Swipe 330, 138, 330, 509, 3000
+	Swipe 330, 138, 330, 509, 3000
+	Swipe 330, 138, 330, 509, 3000
+	Swipe 330, 138, 330, 509, 3000
+	Swipe 330, 138, 330, 509, 3000
+
+	ShowMessage "收取友情点", 1000
+	n5 = 0 // 清零	
+	Do
+		//
+		FindPic 390, 120, 490, 560, "Attachment:hongxin2.png", "000000", 0, 0.7, intX, intY
+		If intX = -1 Then 
+			//
+			mmod = n5 Mod 3
+				
+			//ShowMessage "mmod:" & mmod & " n5:" & n5, 1000
+			ShowMessage "寻找中", 1000
+				
+			If mmod > 1 Then 
+				Swipe 330, 509, 330, 138, 5000
+				//Swipe 330, 189, 330, 138, 5000
+				Delay 500
 			End If
 		Else 
 			Tap intX, intY
@@ -604,7 +653,7 @@ Function HongXin() // 是否正在御魂开始面板
 		
 		n5 = n5 + 1
 		Delay 1000
-	Loop While n5 < 120
+	Loop While n5 < 30
 	
 End Function
 //-----------------红心end----------------------//
@@ -1222,12 +1271,12 @@ End Sub
 //-----------------组队beg----------------------//
 Sub Zudui()
 	//
-	ShowMessage "组队", 1000
 	Dim n4 = CInt(txt_srk9)
 	//Dim zs = CInt(txt_srk81)
 	//If IsNumeric(n4) = True And IsNumeric(zs) = True And zs > 0 And n4 > 0 Then
 	If IsNumeric(n4) = True And n4 > 0 Then
 		//
+		ShowMessage "组队", 1000
 		
 		If inProbe() = 1 Then 
 			Tap  55,55 // 进入庭院
@@ -1294,7 +1343,7 @@ Sub Zudui()
 						ShowMessage "点加入", 1000
 						Tap intX, intY
 					Else 
-						ShowMessage "没有找到该妖怪", 1000
+						ShowMessage "暂无队伍", 1000
 						Tap 760, 630 // 刷新按钮
 					End If
 				Else 
@@ -1339,13 +1388,207 @@ Sub Zudui()
 End Sub
 //-----------------组队end----------------------//
 
+//-----------------组队(队长)beg----------------------//
+Sub Zudui2()
+	//
+	Dim n4 = CInt(txt_srka)
+	If IsNumeric(n4) = True And n4 > 0 Then
+		//
+		ShowMessage "组队(队长)", 1000
+		
+		If inProbe() = 1 Then 
+			Tap  55,55 // 进入庭院
+			Delay 5000
+		End If
+		
+		Dim n_yq = 0
+		Do
+			Tap 250, 640 // 组队按钮
+			Delay 3000
+			
+			Tap 1050, 630 // 创建队伍按钮
+			Delay 3000
+			
+			// 进入创建队伍界面
+			
+			Dim typ = ReadUIConfig("下拉框a1")
+			Dim state = ReadUIConfig("下拉框a2")
+		
+			// 选类型	
+			Swipe 400, 450, 400, 250, 4000
+			Delay 1000
+			Swipe 400, 250, 400, 450, 4000
+			Delay 1000
+			If typ = 0 Then 
+				//
+				Swipe 400, 450, 400, 250, 4000
+			ElseIf typ = 1 Then
+				//
+				//Tap 240, 220
+			ElseIf typ = 2 Then
+				//
+				Swipe 400, 290, 400, 250, 4000
+			ElseIf typ = 3 Then
+				//
+				Swipe 400, 330, 400, 250, 4000
+			ElseIf typ = 4 Then
+				//
+				Swipe 400, 370, 400, 250, 4000
+			End If
+			Delay 2000
+			
+			// 选层	
+			Swipe 640, 250, 640, 450, 4000
+			Delay 1000
+			Swipe 640, 250, 640, 450, 4000
+			Delay 1000
+			Swipe 640, 250, 640, 450, 4000
+			Delay 1000
+			Dim na = state
+			Do While na > 0
+				Swipe 640, 290, 640, 250, 4000
+				na = na -1
+			Loop
+			Delay 2000
+			
+			Tap 870, 570 // 创建队伍按钮
+			
+			// 进入队伍界面
+			// TODO
+			Dim bFull = 0
+			Do
+				Delay 2000
+				If CmpColor(520, 270, "bdc6ce", 0.8)>-1 And CmpColor(850, 270, "bdc6ce", 0.8)>-1 Then 
+					bFull = 1
+				End If
+			Loop While bFull = 0
+			//Delay 2000
+			Tap 980, 600 // 开始战斗
+			Delay 2000
+		
+			Dim firefrist = 1	
+			Dim bfinish = 0
+			Do
+				Dim intX, intY
+				FindPic 400, 100, 450, 150, "Attachment:zuduiyuhun.png", "000000", 0, 0.8, intX, intY
+				If intX = -1 Then 
+					FindPic 400, 100, 450, 150, "Attachment:zuduijuexing.png", "000000", 0, 0.8, intX, intY
+				End If
+				If intX > -1 Then 
+				
+					// 寻找加入按钮
+					FindPic 980, 160, 1110, 570, "Attachment:jiaru.png", "000000", 0, 0.8, intX, intY
+					
+					If intX > -1 Then 
+						// 点战斗
+						ShowMessage "点加入", 1000
+						Tap intX, intY
+					Else 
+						ShowMessage "暂无队伍", 1000
+						Tap 760, 630 // 刷新按钮
+					End If
+				Else 
+					FindPic 400, 100, 450, 150, "Attachment:duiwu.png", "000000", 0, 0.8, intX, intY
+					If intX > -1 Then
+						// 队伍中
+						//FindPic 600, 40, 680, 60, picname, "000000", 0, 0.8, intX, intY
+						//If intX > -1 Then 
+						//	// 点战斗
+						//	Tap 1000, 600
+						//End If
+						Tap 1000, 600
+					Else 
+						// 战斗中
+						If firefrist = 1 Then 
+							firefrist = 0
+							Delay 2000
+							ShowMessage "20秒准备，可点准备立即开始。", 3000
+							Delay 20000
+						End If
+						
+						If inTingYuan() = 1 Then 
+							ShowMessage "庭院中。", 3000
+							bfinish = 1
+						End If
+						
+						FindPic 480, 400, 520, 450, "Attachment:chongzu.png", "000000", 0, 0.8, intX, intY // 邀请队友继续战斗
+						If intX > -1 Then 
+							ShowMessage "邀请队友界面。", 3000
+							Tap intX, intY
+							bfinish = 1
+							Delay 500
+						End If
+						
+						fighting()
+					End If
+				End If
+				
+				Delay 3760
+			Loop While bfinish = 0
+		
+			n_yq = n_yq + 1
+			Delay 3000	
+		Loop While n_yq < n4
+	End If
+End Sub
+//-----------------组队(队长)end----------------------//
+
+//-----------------探索出妖气beg----------------------//
+Sub YouYaoQi()
+	//
+	Tap 1080, 530 // 组队挑战按钮
+	Delay 3000
+	
+	// 进入创建队伍界面		
+	Tap 640, 500 // 创建队伍按钮
+	Delay 3000
+			
+	// 进入队伍界面
+	// TODO
+	Dim bFull = 0
+	Do
+		Delay 2000
+		If CmpColor(520, 270, "bdc6ce", 0.8)>-1 And CmpColor(850, 270, "bdc6ce", 0.8)>-1 Then 
+			bFull = 1
+		End If
+	Loop While bFull = 0
+	//Delay 2000
+	Tap 980, 600 // 开始战斗
+	Delay 2000
+		
+	Dim firefrist = 1	
+	Dim bfinish = 0
+	Do
+		Dim intX, intY
+		If inProbe() = 1 Then 
+				
+			bfinish = 1
+		Else 
+			// 战斗中
+			If firefrist = 1 Then 
+				firefrist = 0
+				Delay 2000
+				ShowMessage "20秒准备，可点准备立即开始。", 3000
+				Delay 20000
+			End If
+				
+			fighting()
+		End If
+				
+		Delay 3760
+	Loop While bfinish = 0
+
+	Delay 3000	
+End Sub
+//-----------------探索出妖气end----------------------//
+
 Function yuhunStart() // 是否正在御魂开始面板
 	//yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
 	Dim intX, intY
-	FindPic 860, 430, 1000, 550, "Attachment:tiaozhan.png", "000000", 0, 0.7, intX, intY
-	If intX = -1 Then 
-		FindPic 860, 430, 1000, 550, "Attachment:tiaozhan2.png", "000000", 0, 0.7, intX, intY
-	End If
+	FindPic 860, 430, 1000, 550, "Attachment:tiaozhan.png", "000000", 0, 0.8, intX, intY
+	//If intX = -1 Then 
+	//	FindPic 610, 480, 670, 520, "Attachment:tiaozhan3.png", "000000", 0, 0.7, intX, intY
+	//End If
 	If intX > -1 Then 
 		yuhunStart = 1
 	Else 
