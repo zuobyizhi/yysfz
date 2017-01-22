@@ -580,7 +580,8 @@ Function HongXin() // 是否正在御魂开始面板
 	Dim intX,intY
 	intX = -1
 	intY = -1
-	FindPic 760, 580, 850, 660, "Attachment:friend.png", "000000", 0, 0.8, intX, intY
+	//FindPic 760, 580, 850, 660, "Attachment:friend.png", "000000", 0, 0.8, intX, intY
+	FindPic 760, 580, 850, 660, "Attachment:friend2.png", "000000", 0, 0.8, intX, intY // 170121阴阳师样式更新
 	If intX = -1 Then 
 		Tap 1200, 640 // 卷轴未打开，打开它
 		Delay 3000
