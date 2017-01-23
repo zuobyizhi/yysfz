@@ -462,6 +462,29 @@ Do
 	
 		//
 		ShowMessage "进入探索界面", 1000
+		
+		
+		// 找宝箱beg
+		FindPic 0, 0, 0, 0, "Attachment:baoxiang.png", "000000", 0, 0.7, nX, nY
+		If nX > -1 Then 
+			Tap nX, nY
+			Delay 2000
+			Tap 1200, 600
+			Delay 2000
+		End If
+		// 找宝箱end
+			
+		// 找妖气beg
+		FindPic 0, 0, 0, 0, "Attachment:youyaoqi.png", "000000", 0, 0.7, nX, nY
+		If nX > -1 Then 
+			Tap nX, nY
+			Delay 2000
+			//Tap 1200, 600
+			//Delay 2000
+			YouYaoQi()
+		End If
+		// 找妖气end
+		
 		Goto myReturn
 		
 	Else
@@ -1126,12 +1149,14 @@ End Function
 //-----------------妖气封印beg----------------------//
 Sub YaoQi()
 	//
-	ShowMessage "妖气封印", 1000
+	//ShowMessage "妖气封印", 1000
 	Dim n4 = CInt(txt_srk8)
 	//Dim zs = CInt(txt_srk81)
 	//If IsNumeric(n4) = True And IsNumeric(zs) = True And zs > 0 And n4 > 0 Then
 	If IsNumeric(n4) = True And n4 > 0 Then
 		//
+		
+		ShowMessage "妖气封印", 1000
 		
 		If inProbe() = 1 Then 
 			Tap  55,55 // 进入庭院
@@ -1586,10 +1611,14 @@ End Sub
 Function yuhunStart() // 是否正在御魂开始面板
 	//yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
 	Dim intX, intY
-	FindPic 860, 430, 1000, 550, "Attachment:tiaozhan.png", "000000", 0, 0.8, intX, intY
+	//FindPic 860, 430, 1000, 550, "Attachment:tiaozhan.png", "000000", 0, 0.8, intX, intY
 	//If intX = -1 Then 
 	//	FindPic 610, 480, 670, 520, "Attachment:tiaozhan3.png", "000000", 0, 0.7, intX, intY
 	//End If
+	FindPic 590, 100, 655, 125, "Attachment:yuhundlg.png", "000000", 0, 0.8, intX, intY
+	If intX = -1 Then 
+		FindPic 560, 100, 635, 125, "Attachment:juexingdlg.png", "000000", 0, 0.7, intX, intY
+	End If
 	If intX > -1 Then 
 		yuhunStart = 1
 	Else 
@@ -1607,7 +1636,14 @@ Function inChapter()
 End Function
 
 Function inProbe()
-	inProbe = CmpColorEx("590|30|0c1c35,965|30|0c1c35,550|710|13131c,10|710|13131c,1145|20|a2c4d5,179|677|e0f3f8", 0.8)
+	//inProbe = CmpColorEx("590|30|0c1c35,965|30|0c1c35,550|710|13131c,10|710|13131c,1145|20|a2c4d5,179|677|e0f3f8", 0.8)
+	Dim intX, intY
+	FindPic 65, 660, 110, 700, "Attachment:inprobe.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		inProbe = 1
+	Else 
+		inProbe = -1
+	End If
 End Function
 
 Function inTingYuan() // 是否正在御魂开始面板
