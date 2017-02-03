@@ -57,7 +57,9 @@ val_srk11=ReadUIConfig("输入框11")
 Dim val_srk12
 val_srk12=ReadUIConfig("输入框12")
 Dim val_srk121
-val_srk121=ReadUIConfig("下拉框寮结界")
+val_srk121 = ReadUIConfig("下拉框寮结界")
+
+Delay 3000
 
 If Trim(txt_srk1) <> "" Then 
 	ShowMessage "御魂", 1000
@@ -902,15 +904,15 @@ End If
 				End If
 				
 				//FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
-				FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.6, nX, nY
+				FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.7, nX, nY
 				If nX = -1 Then 
-					FindPic 560, 111, 1150, 650, picname2, "000000", 0, 0.6, nX, nY
+					FindPic 560, 111, 1150, 650, picname2, "000000", 0, 0.7, nX, nY
 				End If
 				If nX = -1 Then 
-					FindPic 560, 111, 1150, 650, picname3, "000000", 0, 0.6, nX, nY
+					FindPic 560, 111, 1150, 650, picname3, "000000", 0, 0.7, nX, nY
 				End If
 				If nX = -1 Then 
-					FindPic 560, 111, 1150, 650, picname4, "000000", 0, 0.6, nX, nY
+					FindPic 560, 111, 1150, 650, picname4, "000000", 0, 0.7, nX, nY
 				End If
 				If nX > -1 Then 
 					Tap nX, nY
@@ -924,7 +926,16 @@ End If
 					Swipe 815, 651, 815, 112, 5000
 					Delay 1000
 					//FindPic 560, 111, 1150, 650, "Attachment:zerostar.png", "000000", 0, 0.8, nX, nY // 找零星的结界
-					FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.6, nX, nY
+					FindPic 560, 111, 1150, 650, picname, "000000", 0, 0.7, nX, nY
+					If nX = -1 Then 
+						FindPic 560, 111, 1150, 650, picname2, "000000", 0, 0.7, nX, nY
+					End If
+					If nX = -1 Then 
+						FindPic 560, 111, 1150, 650, picname3, "000000", 0, 0.7, nX, nY
+					End If
+					If nX = -1 Then 
+						FindPic 560, 111, 1150, 650, picname4, "000000", 0, 0.7, nX, nY
+					End If
 					If nX > -1 Then 
 						Tap nX, nY
 						Delay 1000
@@ -1635,7 +1646,7 @@ Function inChapter()
 	inChapter = CmpColorEx("44|65|fef6ee,1150|20|a2c4d5,1070|670|1d161a", 0.8)
 End Function
 
-Function inProbe()
+Function inProbe() // 在探索界面
 	//inProbe = CmpColorEx("590|30|0c1c35,965|30|0c1c35,550|710|13131c,10|710|13131c,1145|20|a2c4d5,179|677|e0f3f8", 0.8)
 	Dim intX, intY
 	FindPic 65, 660, 110, 700, "Attachment:inprobe.png", "000000", 0, 0.8, intX, intY
@@ -1646,7 +1657,7 @@ Function inProbe()
 	End If
 End Function
 
-Function inTingYuan() // 是否正在御魂开始面板
+Function inTingYuan() // 是否在庭院
 	//yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
 	Dim intX, intY
 	FindPic 1100, 550, 1280, 700, "Attachment:juanzhou.png", "000000", 0, 0.8, intX, intY
