@@ -495,7 +495,13 @@ Do
 		//If mannal() > -1 Then 
 		//	Tap 49, 670 // 点自动
 		//End If
-		fighting()
+		FindPic 1010, 110, 1065, 150, "Attachment:tansuokaping.png", "000000", 0, 0.8, nX, nY // 防止卡屏
+		If nX > -1 Then 
+			Tap nX, nY
+		Else 
+			fighting()
+		End If
+		//fighting()
 	End If
 	
 Rem doNoThing
@@ -1143,7 +1149,13 @@ Do
 		//If mannal() > -1 Then 
 		//	Tap 49, 670 // 点自动
 		//End If
-		fighting()
+		FindPic 1010, 110, 1065, 150, "Attachment:tansuokaping.png", "000000", 0, 0.8, nX, nY // 防止卡屏
+		If nX > -1 Then 
+			Tap nX, nY
+		Else 
+			fighting()
+		End If
+		//fighting()
 	End If
 	
 Rem doNoThing
