@@ -1036,9 +1036,9 @@ If Trim(txt_srk7) <> "" and Trim(txt_srk71) Then
 			// 找章beg
 	
 			// 普通困难beg
-			If txt_srk62 = 0 Then 
+			If txt_srk72 = 0 Then 
 				Tap 345, 220 // "普通"
-			ElseIf txt_srk62 = 1 Then
+			ElseIf txt_srk72 = 1 Then
 				Tap 480, 220 // "困难"
 			Else 
 				//Tap 345, 220 //
@@ -1681,7 +1681,8 @@ Function fighting()
 	End If
 	
 	ShowMessage "战斗中", 1000
-	Tap 1100,505 // 准备的位置
+	//Tap 1100,505 // 准备的位置
+	Tap 1077,550 // 准备的位置
 	If mannal() > -1 Then 
 		Delay 500
 		Tap 49, 670 // 点自动

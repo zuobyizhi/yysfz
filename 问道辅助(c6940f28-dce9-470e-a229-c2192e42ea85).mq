@@ -6,7 +6,7 @@ If input1 = 0 Then
 ElseIf input1 = 1 Then
 	//
 	GuoZhuXian()
-ElseIf input1 = 1 Then
+ElseIf input1 = 2 Then
 	//
 	ShiMen()
 Else 
@@ -61,6 +61,80 @@ Sub GuoZhuXian() // 主线剧情
 End Sub
 
 Sub ShiMen() // 师门任务
+	Do
+		Dim intX, intY
+		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
+		If intX > -1 Then 
+			Tap intX, intY
+			ShowMessage "1", 1000
+		Else 
+			FindPic 800, 250, 1120, 700, "Attachment:shimen2.png", "000000", 0, 0.6, intX, intY
+			If intX > -1 Then 
+				//
+				Tap intX, intY
+			ShowMessage "2", 1000
+			Else 
+				//
+				FindPic 1000, 160, 1250, 300, "Attachment:shimen.png", "000000", 0, 0.6, intX, intY
+				If intX > -1 Then 
+					Tap intX, intY
+					ShowMessage "3", 1000
+				Else 
+					// 战斗中？
+					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.6, intX, intY // 开自动
+					If intX > -1 Then 
+						Tap intX, intY
+						ShowMessage "4", 1000
+					Else 
+					
+						ShowMessage "5", 1000
+					End If
+				End If
+			End If
+		End If
+		
+		Delay 3000
+	Loop
+End Sub
+
+Sub LiLian() // 历练 // todo
+	Do
+		Dim intX, intY
+		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
+		If intX > -1 Then 
+			Tap intX, intY
+			ShowMessage "1", 1000
+		Else 
+			FindPic 800, 250, 1120, 700, "Attachment:shimen2.png", "000000", 0, 0.6, intX, intY
+			If intX > -1 Then 
+				//
+				Tap intX, intY
+			ShowMessage "2", 1000
+			Else 
+				//
+				FindPic 1000, 160, 1250, 300, "Attachment:shimen.png", "000000", 0, 0.6, intX, intY
+				If intX > -1 Then 
+					Tap intX, intY
+					ShowMessage "3", 1000
+				Else 
+					// 战斗中？
+					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.6, intX, intY // 开自动
+					If intX > -1 Then 
+						Tap intX, intY
+						ShowMessage "4", 1000
+					Else 
+					
+						ShowMessage "5", 1000
+					End If
+				End If
+			End If
+		End If
+		
+		Delay 3000
+	Loop
+End Sub
+
+Sub ChuBao() // 除暴 // todo
 	Do
 		Dim intX, intY
 		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
