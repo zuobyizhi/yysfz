@@ -382,19 +382,23 @@ Do
 		
 		//Tap 950,540 // 挑战按钮的位置
 		//Tap 950,500 // 挑战按钮的位置，对应阴阳师161230更新
+		Delay 1000
 		Dim intX, intY
-		FindPic 860, 430, 1000, 550, "Attachment:tiaozhan.png", "000000", 0, 0.6, intX, intY
-		If intX = -1 Then 
-			FindPic 860, 430, 1000, 550, "Attachment:tiaozhan2.png", "000000", 0, 0.6, intX, intY
-		End If
-		If intX > -1 Then 
-			Tap intX, intY
-		Else 
-			Tap 950, 500
-		End If
+		//FindPic 860, 430, 1000, 550, "Attachment:tiaozhan.png", "000000", 0, 0.6, intX, intY
+		//If intX = -1 Then 
+		//	FindPic 860, 430, 1000, 550, "Attachment:tiaozhan2.png", "000000", 0, 0.6, intX, intY
+		//End If
+		//If intX > -1 Then 
+		//	ShowMessage "找到图像 " & intX & " " & intY, 1000
+		//	Tap intX, intY
+		//Else 
+		//	ShowMessage "没有找到图像", 1000
+		//	Tap 950, 500
+		//End If
+		Tap 950, 500
 		
 		Delay 3000
-		If val_dxk3 = true Then 
+		If val_dxk3 = true And (iCycN + 1)=CInt(tx) Then 
 			ShowMessage "30秒准备", 1000
 			Delay 30*1000
 		End If
