@@ -408,7 +408,7 @@ Do
 		//If mannal() > -1 Then 
 		//	Tap 49, 670 // 点自动
 		//End If
-		fighting()
+		fighting(0)
 	End If
 	
 Rem doNoThing
@@ -503,7 +503,7 @@ Do
 		If nX > -1 Then 
 			Tap nX, nY
 		Else 
-			fighting()
+			fighting(1)
 		End If
 		//fighting()
 	End If
@@ -594,7 +594,7 @@ Function JuQing() // 是否正在御魂开始面板
 				//	ShowMessage "开自动。", 1000
 				//	Tap 49, 670 // 点自动
 				//End If
-				fighting()
+				fighting(0)
 			End If
 		End If
 		
@@ -821,7 +821,7 @@ End If
 			//	Tap 49, 670 // 点自动
 			//	Delay 3000
 			//End If
-			fighting()
+			fighting(0)
 		End If
 	Loop While n5 > -1
 		
@@ -987,7 +987,7 @@ End If
 			//	Tap 49, 670 // 点自动
 			//	Delay 3000
 			//End If
-			fighting()
+			fighting(0)
 			Delay 3000
 		End If
 	Loop While n5 > -1 And cannotfind < 90
@@ -1157,7 +1157,7 @@ Do
 		If nX > -1 Then 
 			Tap nX, nY
 		Else 
-			fighting()
+			fighting(1)
 		End If
 		//fighting()
 	End If
@@ -1307,7 +1307,7 @@ Sub YaoQi()
 						//If mannal() > -1 Then 
 						//	Tap 49, 670 // 点自动
 						//End If
-						fighting()
+						fighting(0)
 					End If
 				End If
 				
@@ -1427,7 +1427,7 @@ Sub Zudui()
 						//If mannal() > -1 Then 
 						//	Tap 49, 670 // 点自动
 						//End If
-						fighting()
+						fighting(0)
 					End If
 				End If
 				
@@ -1572,7 +1572,7 @@ Sub Zudui2()
 							Delay 500
 						End If
 						
-						fighting()
+						fighting(0)
 					End If
 				End If
 				
@@ -1625,7 +1625,7 @@ Sub YouYaoQi()
 				Delay 20000
 			End If
 				
-			fighting()
+			fighting(0)
 		End If
 				
 		Delay 3760
@@ -1687,7 +1687,7 @@ Function inTingYuan() // 是否在庭院
 	End If
 End Function
 
-Function fighting()
+Function fighting(typ)
 	// 战斗的处理
 	
 	Dim intX, intY
@@ -1697,8 +1697,13 @@ Function fighting()
 	End If
 	
 	ShowMessage "战斗中", 1000
-	//Tap 1100,505 // 准备的位置
-	Tap 1077,550 // 准备的位置
+	If typ = 1 Then // 妖怪发现和双倍经验专用 
+		Tap 1077,550 // 准备的位置
+	Else 
+		Tap 1100,505 // 准备的位置
+	End If
+	//
+	//Tap 1077,550 // 准备的位置
 	If mannal() > -1 Then 
 		Delay 500
 		Tap 49, 670 // 点自动

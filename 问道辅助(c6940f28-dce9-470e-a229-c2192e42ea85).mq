@@ -28,23 +28,7 @@ If dxk_shimen = true Then
 	gY = -1
 End If
 
-If dxk_zhuren = true Then 
-	//
-	Delay 2000
-	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, gX, gY
-	If gX > -1 Then 
-		Tap gX, gY
-	Else 
-		Tap 340, 40
-	End If
-	
-	Delay 2000
-	Tap 570, 180
-	ShiMen()
-	
-	gX = -1 // 全局变量清零
-	gY = -1
-End If
+ZhuRen_Wrapper()
 
 If dxk_chubao = true Then 
 	//
@@ -81,6 +65,97 @@ End If
 
 //GuoZhuXian()
 //ShiMen()
+
+Sub ZhuRen_Wrapper()
+	
+If dxk_zhuren = true Then 
+	//
+	Delay 2000
+	ShowMessage "助人", 1000
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+	Else 
+		Tap 340, 40
+	End If
+	
+	Delay 2000
+	//Tap 570, 180
+	FindPic 220, 0, 560, 80, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX + 260, intY + 20
+		Delay 2000
+		ZhuRen()
+	Else 
+		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
+		Delay 2000
+		FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
+		If intX > -1 Then 
+			Tap intX + 260, intY + 20
+			Delay 2000
+			ZhuRen()
+		Else 
+			// 没有找到
+			ShowMessage "没有找到:助人", 1000
+		End If
+	End If
+End If
+
+End Sub
+
+Sub ZhuRen() // 助人 // todo
+	Do
+		Dim intX, intY
+		Dim goon = True
+		
+		FindPic 1016, 165, 1190, 650, "Attachment:bl_zhuren.png", "000000", 0, 0.8, intX, intY // 点边栏的助人按钮
+		If intX > -1 Then 
+			Tap intX, intY
+			goon = False
+		End If
+		
+		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
+		If intX > -1 And goon Then 
+			Tap intX, intY
+			ShowMessage "1", 1000
+		Else 
+			FindPic 800, 250, 1120, 700, "Attachment:zhuren2.png", "000000", 0, 0.7, intX, intY // 帮助开始
+			If intX > -1 Then 
+				//
+				Tap intX, intY
+			ShowMessage "2", 1000
+			Else 
+				//
+				FindPic 870, 390, 1190, 650, "Attachment:bangzhu.png", "000000", 0, 0.7, intX, intY // 选帮助项目
+				If intX > -1 Then 
+					Tap intX, intY
+					ShowMessage "3", 1000
+				Else 
+					// 战斗中？
+					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
+					If intX > -1 Then 
+						Tap intX, intY
+						ShowMessage "4", 1000
+					Else 
+						FindPic 790, 360, 885, 570, "Attachment:zhuren3.png", "000000", 0, 0.7, intX, intY // 其他按钮情况选第一个
+						If intX > -1 Then 
+							//
+							Tap intX+30, intY+15
+						Else 
+							ShowMessage "5", 1000
+						End If
+						
+					End If
+				End If
+			End If
+		End If
+		
+		Delay 3000
+	Loop
+End Sub
 
 Sub GuoZhuXian() // 主线剧情
 	Do
