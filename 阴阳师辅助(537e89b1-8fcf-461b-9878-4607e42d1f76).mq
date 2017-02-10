@@ -1245,42 +1245,55 @@ Sub YaoQi()
 		
 			Dim firefrist = 1	
 			Dim bfinish = 0
+			Dim nnn = 0
 			Do
 				Dim intX, intY
 				FindPic 400, 100, 450, 150, "Attachment:yaoqi.png", "000000", 0, 0.8, intX, intY
 				If intX > -1 Then 
 					//FindPic 530, 160, 650, 580, picname, "000000", 0, 0.8, intX, intY
 					
+					//Dim bFind = True
+					intX = -1 // 清零
+					intY = -1
+					
+					Dim xiangsidu = 0.7
+					
 					If ReadUIConfig("鬼使黑") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_xiaohei.png", "000000", 0, 0.8, intX, intY
-					ElseIf intX = -1 And ReadUIConfig("经验妖怪") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_exp.png", "000000", 0, 0.8, intX, intY
-					ElseIf intX = -1 And ReadUIConfig("金币妖怪") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_jinbi.png", "000000", 0, 0.8, intX, intY
+						FindPic 530, 160, 650, 580, "Attachment:yq_xiaohei.png", "000000", 0, xiangsidu, intX, intY
 					ElseIf intX = -1 And ReadUIConfig("海坊主") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_haifangzhu.png", "000000", 0, 0.8, intX, intY
+						FindPic 530, 160, 650, 580, "Attachment:yq_haifangzhu.png", "000000", 0, xiangsidu, intX, intY
 					ElseIf intX = -1 And ReadUIConfig("跳跳哥哥") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_tiaoge.png", "000000", 0, 0.8, intX, intY
+						FindPic 530, 160, 650, 580, "Attachment:yq_tiaoge.png", "000000", 0, xiangsidu, intX, intY
 					ElseIf intX = -1 And ReadUIConfig("骨女") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_gunv.png", "000000", 0, 0.8, intX, intY
+						FindPic 530, 160, 650, 580, "Attachment:yq_gunv.png", "000000", 0, xiangsidu, intX, intY
 					ElseIf intX = -1 And ReadUIConfig("饿鬼") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_egui.png", "000000", 0, 0.8, intX, intY
+						FindPic 530, 160, 650, 580, "Attachment:yq_egui.png", "000000", 0, xiangsidu, intX, intY
 					ElseIf intX = -1 And ReadUIConfig("椒图") = True Then 
-						FindPic 530, 160, 650, 580, "Attachment:yq_jiaotu.png", "000000", 0, 0.8, intX, intY
+						FindPic 530, 160, 650, 580, "Attachment:yq_jiaotu.png", "000000", 0, xiangsidu, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("二口女") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_erkounv.png", "000000", 0, xiangsidu, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("经验妖怪") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_exp.png", "000000", 0, xiangsidu, intX, intY
+					ElseIf intX = -1 And ReadUIConfig("金币妖怪") = True Then 
+						FindPic 530, 160, 650, 580, "Attachment:yq_jinbi.png", "000000", 0, xiangsidu, intX, intY
 					Else 
-						FindPic 530, 160, 650, 580, "Attachment:yq_jiaotu.png", "000000", 0, 0.8, intX, intY
+						//FindPic 530, 160, 650, 580, "Attachment:yq_jiaotu.png", "000000", 0, 0.8, intX, intY
 					End If
 					
 					If intX > -1 Then 
 						// 点战斗
 						ShowMessage "找到该妖怪", 1000
-						Tap intX + 470, intY + 30
+						//Tap intX + 470, intY + 30
+						Tap intX + 500, intY + 30
 					Else 
 						ShowMessage "没有找到该妖怪", 1000
 						Tap 760, 630 // 刷新按钮
 					End If
 				Else 
 					FindPic 400, 100, 450, 150, "Attachment:duiwu.png", "000000", 0, 0.8, intX, intY
+					If intX = -1 Then 
+						FindPic 249, 580, 260, 615, "Attachment:duiwu2.png", "000000", 0, 0.8, intX, intY
+					End If
 					If intX > -1 Then
 						// 队伍中
 						//FindPic 600, 40, 680, 60, picname, "000000", 0, 0.8, intX, intY
@@ -1311,7 +1324,11 @@ Sub YaoQi()
 					End If
 				End If
 				
-				Delay 3760
+				Delay 2760
+				nnn = nnn + 1
+				If (nnn Mod 12) = 0 Then 
+					Delay 12760
+				End If
 			Loop While bfinish = 0
 		
 			n_yq = n_yq + 1
@@ -1508,7 +1525,7 @@ Sub Zudui2()
 			
 			// 进入队伍界面
 			// TODO
-			Dim bFull = 0
+			Dim bFull = 0 // 三个人再开打
 			Do
 				Delay 2000
 				If CmpColor(520, 270, "bdc6ce", 0.8)>-1 And CmpColor(850, 270, "bdc6ce", 0.8)>-1 Then 
@@ -1676,10 +1693,11 @@ End Function
 Function inTingYuan() // 是否在庭院
 	//yuhunStart = CmpColorEx("605|535|5fb2f4,685|535|5fb2f4,905|535|5fb2f4,1000|535|5fb2f4,890|120|202939,333|120|202939", 0.9)
 	Dim intX, intY
-	FindPic 1100, 550, 1280, 700, "Attachment:juanzhou.png", "000000", 0, 0.8, intX, intY
-	If intX = -1 Then 
-		FindPic 1100, 550, 1280, 700, "Attachment:juanzhou_close.png", "000000", 0, 0.8, intX, intY
-	End If
+	//FindPic 1100, 550, 1280, 700, "Attachment:juanzhou.png", "000000", 0, 0.7, intX, intY
+	//If intX = -1 Then 
+	//	FindPic 1100, 550, 1280, 700, "Attachment:juanzhou_close.png", "000000", 0, 0.7, intX, intY
+	//End If
+	FindPic 1140, 5, 1180, 50, "Attachment:intingyuan.png", "000000", 0, 0.8, intX, intY
 	If intX > -1 Then 
 		inTingYuan = 1
 	Else 

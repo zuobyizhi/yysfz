@@ -30,23 +30,7 @@ End If
 
 ZhuRen_Wrapper()
 
-If dxk_chubao = true Then 
-	//
-	Delay 2000
-	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, gX, gY
-	If gX > -1 Then 
-		Tap gX, gY
-	Else 
-		Tap 340, 40
-	End If
-	
-	Delay 2000
-	Tap 570, 180
-	ChuBao() 
-	
-	gX = -1 // 全局变量清零
-	gY = -1
-End If
+ChuBao_Wrapper()
 
 If input1 = 0 Then 
 	//
@@ -66,6 +50,7 @@ End If
 //GuoZhuXian()
 //ShiMen()
 
+//------------------助人beg---------------------//
 Sub ZhuRen_Wrapper()
 	
 If dxk_zhuren = true Then 
@@ -84,7 +69,7 @@ If dxk_zhuren = true Then
 	
 	Delay 2000
 	//Tap 570, 180
-	FindPic 220, 0, 560, 80, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
+	FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
 	If intX > -1 Then 
 		Tap intX + 260, intY + 20
 		Delay 2000
@@ -156,6 +141,85 @@ Sub ZhuRen() // 助人 // todo
 		Delay 3000
 	Loop
 End Sub
+//------------------助人end---------------------//
+
+//------------------除暴beg---------------------//
+Sub ChuBao_Wrapper()
+If dxk_chubao = true Then 
+	//
+	Delay 2000
+	ShowMessage "除暴", 1000
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+	Else 
+		Tap 340, 40
+	End If
+	
+	Delay 2000
+	//Tap 570, 180
+	FindPic 220, 140, 1090, 510, "Attachment:hd_chubao.png", "000000", 0, 0.7, intX, intY
+	If intX > -1 Then 
+		Tap intX + 260, intY + 20
+		Delay 2000*30
+		ChuBao()
+	Else 
+		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
+		Delay 2000
+		FindPic 220, 140, 1090, 510, "Attachment:hd_chubao.png", "000000", 0, 0.7, intX, intY
+		If intX > -1 Then 
+			Tap intX + 260, intY + 20
+			Delay 2000*30
+			ChuBao()
+		Else 
+			// 没有找到
+			ShowMessage "没有找到:除暴", 1000
+			Tap 1100, 50
+		End If
+	End If
+End If
+End Sub
+
+Sub ChuBao() // 除暴 // todo
+	Do
+		Dim intX, intY
+		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY // 对话中
+		If intX > -1 Then 
+			Tap intX, intY
+			ShowMessage "1", 1000
+		Else 
+			FindPic 800, 250, 1120, 700, "Attachment:chubao2.png", "000000", 0, 0.6, intX, intY // 边栏
+			If intX > -1 Then 
+				//
+				Tap intX, intY
+			ShowMessage "2", 1000
+			Else 
+				//
+				FindPic 1000, 160, 1250, 300, "Attachment:xx_chubao.png", "000000", 0, 0.6, intX, intY // 选项
+				If intX > -1 Then 
+					Tap intX, intY
+					ShowMessage "3", 1000
+				Else 
+					// 战斗中？
+					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.6, intX, intY // 开自动
+					If intX > -1 Then 
+						Tap intX, intY
+						ShowMessage "4", 1000
+					Else 
+					
+						ShowMessage "5", 1000
+					End If
+				End If
+			End If
+		End If
+		
+		Delay 3000
+	Loop
+End Sub
+//------------------除暴beg---------------------//
 
 Sub GuoZhuXian() // 主线剧情
 	Do
@@ -254,43 +318,6 @@ Sub ShiMen() // 师门任务
 End Sub
 
 Sub LiLian() // 历练 // todo
-	Do
-		Dim intX, intY
-		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
-		If intX > -1 Then 
-			Tap intX, intY
-			ShowMessage "1", 1000
-		Else 
-			FindPic 800, 250, 1120, 700, "Attachment:shimen2.png", "000000", 0, 0.6, intX, intY
-			If intX > -1 Then 
-				//
-				Tap intX, intY
-			ShowMessage "2", 1000
-			Else 
-				//
-				FindPic 1000, 160, 1250, 300, "Attachment:shimen.png", "000000", 0, 0.6, intX, intY
-				If intX > -1 Then 
-					Tap intX, intY
-					ShowMessage "3", 1000
-				Else 
-					// 战斗中？
-					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.6, intX, intY // 开自动
-					If intX > -1 Then 
-						Tap intX, intY
-						ShowMessage "4", 1000
-					Else 
-					
-						ShowMessage "5", 1000
-					End If
-				End If
-			End If
-		End If
-		
-		Delay 3000
-	Loop
-End Sub
-
-Sub ChuBao() // 除暴 // todo
 	Do
 		Dim intX, intY
 		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
