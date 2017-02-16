@@ -12,6 +12,8 @@ Dim gX, gY
 gX = -1
 gY = -1
 
+fuli()
+
 ShiMen_Wrapper()
 
 ZhuRen_Wrapper()
@@ -79,6 +81,95 @@ If dxk_shimen = true Then
 	gY = -1
 End If
 End Sub
+
+Sub ShiMen() // 师门任务
+
+	Dim intX, intY
+
+	Dim bFinish = 0
+	//Do
+	//	FindPic 855, 400, 1180, 600, "Attachment:shimen2.png", "000000", 0, 0.8, intX, intY // 选项
+	//	If intX > -1 Then 
+	//		ShowMessage "接受师门任务", 1000
+	//		Tap intX, intY
+	//		bFinish = 1
+	//	Else 
+	//		ShowMessage "接受师门任务2", 1000
+	//	End If
+	//	
+	//	Delay 3000
+	//Loop While bFinish = 0
+
+	bFinish = 0
+	
+	Do
+		//Dim intX, intY
+		//FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
+		//If intX > -1 Then 
+		//	Tap intX, intY
+		//	ShowMessage "1: " & intX & " " & intY, 1000
+		//Else 
+		If inDlg() = -1 Then
+			
+			FindPic 950, 380, 1110, 590, "Attachment:maishangyike.png", "000000", 0, 0.7, intX, intY // 买
+			If intX > -1 Then 
+				Tap intX, intY
+				ShowMessage "6", 1000
+				Delay 2000
+			Else 
+				FindPic 1060, 550, 1140, 600, "Attachment:shiyong.png", "000000", 0, 0.7, intX, intY
+				If intX > -1 Then 
+					Tap intX, intY
+					ShowMessage "7", 1000
+					Delay 2000
+				Else 
+					
+					FindPic 790, 360, 885, 570, "Attachment:zhuren3.png", "000000", 0, 0.8, intX, intY // 其他按钮情况选第一个
+					If intX > -1 Then 
+						Tap intX+30, intY+90
+						ShowMessage "6 " & intX+30 & " " & intY+30, 1000
+					Else 
+						//ShowMessage "51", 1000
+					End If
+					//ShowMessage "51", 1000
+					//Delay 2000
+				End If	
+			End If
+						
+			FindPic 800, 250, 1120, 700, "Attachment:shimen2.png", "000000", 0, 0.7, intX, intY
+			If intX > -1 Then 
+				//
+				Tap intX, intY
+			ShowMessage "2", 1000
+			Else 
+				//
+				FindPic 1000, 160, 1250, 300, "Attachment:shimen.png", "000000", 0, 0.7, intX, intY
+				If intX > -1 Then 
+					Tap intX, intY
+					ShowMessage "3", 1000
+				Else 
+					// 战斗中？
+					//FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
+					//If intX > -1 Then 
+					//	Tap intX, intY
+					//	ShowMessage "4", 1000
+					//Else 
+					If fighting() = -1 Then 
+						If keyOK() = -1 Then 
+							If BuyBuyBuy() = -1 Then 
+								If handOn() = -1 Then 
+									//ShowMessage "52", 1000	
+								End If
+							End If	
+						End If
+					End If
+				End If
+			End If
+		End If
+		
+		Delay 5000
+	Loop
+End Sub
 //------------------师门end---------------------//
 
 //------------------帮派beg---------------------//
@@ -101,7 +192,7 @@ If dxk_bangpai = true Then
 	If intX > -1 Then 
 		//
 		Tap intX + 260, intY + 20
-		Delay 2000
+		Delay 2000*5
 		BangPai()
 	Else 
 		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
@@ -109,7 +200,7 @@ If dxk_bangpai = true Then
 		FindPic 220, 140, 1090, 510, "Attachment:hd_bangpai.png", "000000", 0, 0.7, intX, intY
 		If intX > -1 Then 
 			Tap intX + 260, intY + 20
-			Delay 2000
+			Delay 2000*5
 			BangPai()
 		Else 
 			// 没有找到
@@ -124,6 +215,10 @@ End If
 End Sub
 
 Sub BangPai() // 帮派 // todo
+
+	Dim n = 0 // 循环次数
+	Dim nNoFound = 0 // 没有找到的次数
+
 	Do
 		Dim intX, intY
 		Dim goon = True
@@ -155,11 +250,12 @@ Sub BangPai() // 帮派 // todo
 					ShowMessage "3", 1000
 				Else 
 					// 战斗中？
-					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
-					If intX > -1 Then 
-						Tap intX, intY
-						ShowMessage "4", 1000
-					Else 
+					//FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
+					//If intX > -1 Then 
+					//	Tap intX, intY
+					//	ShowMessage "4", 1000
+					//Else 
+					If fighting() = -1 Then
 						FindPic 790, 360, 885, 570, "Attachment:zhuren3.png", "000000", 0, 0.8, intX, intY // 其他按钮情况选第一个
 						If intX > -1 Then 
 							//
@@ -174,11 +270,25 @@ Sub BangPai() // 帮派 // todo
 								If intX = -1 Then 
 									FindPic 0, 0, 0, 0, "Attachment:handon.png", "000000", 0, 0.8, intX, intY // 提交按钮
 								End If
+								If intX = -1 Then 
+									FindPic 640, 360, 1280, 720, "Attachment:bug2.png", "000000", 0, 0.8, intX, intY // 提交按钮
+									ShowMessage "9 " & intX & " " & intY
+								End If
 								If intX > -1 Then 
 									// 购买
 									Tap intX, intY
 								Else 
+									nNoFound = nNoFound + 1
 									ShowMessage "5", 1000
+									
+									If (n Mod 100) = 0 Then 
+										fuli()
+									End If
+									
+									If nNoFound > 100 Then 
+										BangPai_Wrapper()
+										nNoFound = 0
+									End If
 								End If
 								
 							End If
@@ -189,6 +299,7 @@ Sub BangPai() // 帮派 // todo
 			End If
 		End If
 		
+		n=n+1
 		Delay 3000
 	Loop
 End Sub
@@ -346,6 +457,8 @@ TracePrint UseDict(0)
 		FindPic 855, 400, 1180, 600, "Attachment:xx_chubao.png", "000000", 0, 0.6, intX, intY // 选项
 		If intX > -1 Then 
 			Tap intX, intY
+			Delay 20000
+			Tap 1120, 200
 			bFinish = 1
 		End If
 		
@@ -356,11 +469,12 @@ TracePrint UseDict(0)
 
 	Do
 		Dim intX, intY
-		FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY // 对话中
-		If intX > -1 Then 
-			Tap intX, intY
-			ShowMessage "1", 1000
-		Else 
+		//FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY // 对话中
+		//If intX > -1 Then 
+		//	Tap intX, intY
+		//	ShowMessage "1", 1000
+		//Else 
+		If inDlg() = -1 Then
 			FindPic 800, 250, 1120, 700, "Attachment:chubao2.png", "000000", 0, 0.6, intX, intY // 边栏
 			If intX > -1 Then 
 				//
@@ -374,11 +488,12 @@ TracePrint UseDict(0)
 					ShowMessage "3", 1000
 				Else 
 					// 战斗中？
-					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
-					If intX > -1 Then 
-						Tap intX, intY
-						ShowMessage "4", 1000
-					Else 
+					//FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
+					//If intX > -1 Then 
+					//	Tap intX, intY
+					//	ShowMessage "4", 1000
+					//Else 
+					If fighting() = -1 Then
 					
 						//FindStr(1019,169,1115,199,"","FFFFFF-333333",0.9,intX,intY)
 						FindPic 1016, 166, 1115, 194, "Attachment:bl_chubao.png", "000000", 0, 0.7, intX, intY
@@ -408,11 +523,12 @@ Sub GuoZhuXian() // 主线剧情
 		//	FindPic 20, 60, 70, 100, "Attachment:duihuazhong2.png", "000000", 0, 0.8, intX, intY
 		//End If
 		
-		FindPic 1090, 60, 1170, 95, "Attachment:duihuazhong3.png", "000000", 0, 0.8, intX, intY
-		If intX > -1 Then 
-			Tap intX, intY
-			ShowMessage "1", 1000
-		Else 
+		//FindPic 1090, 60, 1170, 95, "Attachment:duihuazhong3.png", "000000", 0, 0.8, intX, intY
+		//If intX > -1 Then 
+		//	Tap intX, intY
+		//	ShowMessage "1", 1000
+		//Else 
+		If inDlg() = -1 Then
 			FindPic 800, 250, 1120, 700, "Attachment:zhuxian2.png", "000000", 0, 0.7, intX, intY
 			If intX > -1 Then 
 				//
@@ -438,88 +554,6 @@ Sub GuoZhuXian() // 主线剧情
 						End If
 					
 						ShowMessage "5", 1000
-					End If
-				End If
-			End If
-		End If
-		
-		Delay 3000
-	Loop
-End Sub
-
-Sub ShiMen() // 师门任务
-
-	Dim intX, intY
-
-	Dim bFinish = 0
-	Do
-		FindPic 855, 400, 1180, 600, "Attachment:shimen2.png", "000000", 0, 0.8, intX, intY // 选项
-		If intX > -1 Then 
-			ShowMessage "接受师门任务", 1000
-			Tap intX, intY
-			bFinish = 1
-		Else 
-			ShowMessage "接受师门任务2", 1000
-		End If
-		
-		Delay 3000
-	Loop While bFinish = 0
-
-	bFinish = 0
-	
-	Do
-		//Dim intX, intY
-		//FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
-		//If intX > -1 Then 
-		//	Tap intX, intY
-		//	ShowMessage "1: " & intX & " " & intY, 1000
-		//Else 
-		If inDlg() = -1 Then
-			
-			FindPic 950, 380, 1110, 590, "Attachment:maishangyike.png", "000000", 0, 0.7, intX, intY // 买
-			If intX > -1 Then 
-				Tap intX, intY
-				ShowMessage "6", 1000
-				Delay 2000
-			Else 
-				FindPic 1060, 550, 1140, 600, "Attachment:shiyong.png", "000000", 0, 0.7, intX, intY
-				If intX > -1 Then 
-					Tap intX, intY
-					ShowMessage "7", 1000
-					Delay 2000
-				Else 
-					
-					FindPic 790, 360, 885, 570, "Attachment:zhuren3.png", "000000", 0, 0.8, intX, intY // 其他按钮情况选第一个
-					If intX > -1 Then 
-						Tap intX+30, intY+90
-						ShowMessage "6 " & intX+30 & " " & intY+30, 1000
-					Else 
-						ShowMessage "51", 1000
-					End If
-					//ShowMessage "51", 1000
-					//Delay 2000
-				End If	
-			End If
-						
-			FindPic 800, 250, 1120, 700, "Attachment:shimen2.png", "000000", 0, 0.7, intX, intY
-			If intX > -1 Then 
-				//
-				Tap intX, intY
-			ShowMessage "2", 1000
-			Else 
-				//
-				FindPic 1000, 160, 1250, 300, "Attachment:shimen.png", "000000", 0, 0.7, intX, intY
-				If intX > -1 Then 
-					Tap intX, intY
-					ShowMessage "3", 1000
-				Else 
-					// 战斗中？
-					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
-					If intX > -1 Then 
-						Tap intX, intY
-						ShowMessage "4", 1000
-					Else 
-						ShowMessage "51", 1000
 					End If
 				End If
 			End If
@@ -566,12 +600,15 @@ Sub LiLian() // 历练 // todo
 	Loop
 End Sub
 
+//==================功能函数begin=====================//
+
 Function inDlg() // 对话中
 	Dim intX = -1
 	Dim intY = -1
 	FindPic 1090, 60, 1170, 95, "Attachment:duihuazhong3.png", "000000", 0, 0.8, intX, intY // 标志：跳过
 	If intX > -1 Then 
 		Tap 110, 80
+		ShowMessage "对话中", 1000
 		inDlg = 0
 	Else 
 		inDlg = -1
@@ -587,11 +624,113 @@ Function fighting() // 战斗中
 		FindPic 1180, 660, 1270, 700, "Attachment:zidong.png", "000000", 0, 0.8, intX, intY // 开自动
 		If intX > -1 Then 
 			Tap intX, intY
-			ShowMessage "战斗中", 1000
 		End If
+		
+		ShowMessage "战斗中", 1000
 		
 		fighting = 0
 	Else 
 		fighting = -1
+	End If
+End Function
+
+Function keyOK() // 确认按钮
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 0, 0, 0, 0, "Attachment:zhuren_ok.png", "000000", 0, 0.8, intX, intY // 确认按钮
+	If intX > -1 Then 
+		//
+		Tap intX, intY
+		
+		keyOK = 0
+	Else 
+		keyOK = -1
+	End If
+End Function
+
+Function keyClose() // 红叉按钮
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 680, 0, 1280, 360, "Attachment:closebtn.png", "000000", 0, 0.8, intX, intY // 红叉按钮
+	If intX > -1 Then 
+		//
+		Tap intX, intY
+		
+		keyClose = 0
+	Else 
+		keyClose = -1
+	End If
+End Function
+
+Function handOn() // 提交按钮
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 0, 360, 1280, 720, "Attachment:handon.png", "000000", 0, 0.8, intX, intY // 提交按钮
+	If intX = -1 Then 
+		FindPic 0, 360, 1280, 720, "Attachment:handon2.png", "000000", 0, 0.8, intX, intY
+	End If
+	If intX > -1 Then 
+		//
+		Tap intX, intY
+		
+		handOn = 0
+	Else 
+		handOn = -1
+	End If
+End Function
+
+Function BuyBuyBuy() // 购买
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 0, 0, 0, 0, "Attachment:bug.png", "000000", 0, 0.8, intX, intY // 购买按钮
+	//If intX = -1 Then 
+	//	FindPic 0, 0, 0, 0, "Attachment:handon.png", "000000", 0, 0.8, intX, intY // 提交按钮
+	//End If
+	If intX = -1 Then 
+		FindPic 640, 360, 1280, 720, "Attachment:bug2.png", "000000", 0, 0.8, intX, intY // 提交按钮
+		ShowMessage "9 " & intX & " " & intY
+	End If
+	If intX > -1 Then 
+		//
+		Tap intX, intY
+		
+		Delay 2000
+		keyClose()
+		
+		BuyBuyBuy = 0
+	Else 
+		BuyBuyBuy = -1
+	End If
+End Function
+
+Function fuli() // 福利处理函数
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 5, 250, 80, 500, "Attachment:fuli.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+		Delay 2000
+		
+		Tap 320, 450
+		Delay 2000
+		
+		// 每日签到
+		// TODO
+		
+		//神秘大奖
+		FindPic 350, 335, 420, 375, "Attachment:redpoint.png", "000000", 0, 0.8, intX, intY // 开自动
+		If intX > -1 Then 
+			Tap intX, intY
+			ShowMessage "神秘大奖", 1000
+			Delay 2000
+			Tap 760, 400 // 点神秘大奖
+			Delay 20 * 1000
+		End If
+		
+		Tap 1080, 90 // 关闭福利对话框
+		
+		fuli = 0
+	Else 
+		fuli = -1
 	End If
 End Function
