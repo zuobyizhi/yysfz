@@ -1,4 +1,6 @@
-Dim input1 = ReadUIConfig("下拉框1",0)
+//Dim input1 = ReadUIConfig("下拉框1",0)
+
+Dim dxk_zhuxian = ReadUIConfig("主线",0)
 
 Dim dxk_shimen = ReadUIConfig("师门",0)
 
@@ -14,6 +16,10 @@ gY = -1
 
 fuli()
 
+Sub Main()
+
+ZhuXian_Wrapper()
+
 ShiMen_Wrapper()
 
 ZhuRen_Wrapper()
@@ -22,19 +28,24 @@ ChuBao_Wrapper()
 
 BangPai_Wrapper()
 
-If input1 = 0 Then 
-	//
-	GuoZhuXian()
-ElseIf input1 = 1 Then
-	//
-	GuoZhuXian()
-ElseIf input1 = 2 Then
-	//
-	ShiMen()
-Else 
-	//
-	//GuoZhuXian()
-End If
+EndScript // 退出点
+End Sub
+
+Main()
+
+//If input1 = 0 Then 
+//	//
+//	GuoZhuXian()
+//ElseIf input1 = 1 Then
+//	//
+//	GuoZhuXian()
+//ElseIf input1 = 2 Then
+//	//
+//	ShiMen()
+//Else 
+//	//
+//	//GuoZhuXian()
+//End If
 
 
 //GuoZhuXian()
@@ -73,6 +84,10 @@ If dxk_shimen = true Then
 		Else 
 			// 没有找到
 			ShowMessage "没有找到:师门", 1000
+			dxk_shimen = false
+			Tap 1100, 50
+			Delay 2000
+			Main()
 		End If
 	End If
 	//ShiMen()
@@ -86,6 +101,7 @@ Sub ShiMen() // 师门任务
 
 	Dim intX, intY
 
+	Dim nNoFound = 0
 	Dim bFinish = 0
 	//Do
 	//	FindPic 855, 400, 1180, 600, "Attachment:shimen2.png", "000000", 0, 0.8, intX, intY // 选项
@@ -159,6 +175,10 @@ Sub ShiMen() // 师门任务
 							If BuyBuyBuy() = -1 Then 
 								If handOn() = -1 Then 
 									//ShowMessage "52", 1000	
+									nNoFound = nNoFound + 1
+									If nNoFound > 100 Then 
+										ShiMen_Wrapper()
+									End If
 								End If
 							End If	
 						End If
@@ -205,6 +225,10 @@ If dxk_bangpai = true Then
 		Else 
 			// 没有找到
 			ShowMessage "没有找到:帮派", 1000
+			dxk_bangpai = False
+			Tap 1100, 50
+			Delay 2000
+			Main()
 		End If
 	End If
 	//ShiMen()
@@ -340,6 +364,10 @@ If dxk_zhuren = true Then
 		Else 
 			// 没有找到
 			ShowMessage "没有找到:助人", 1000
+			Tap 1100, 50
+			dxk_zhuren = False
+			Delay 2000
+			Main()
 		End If
 	End If
 End If
@@ -350,6 +378,7 @@ Sub ZhuRen() // 助人 // todo
 	Do
 		Dim intX, intY
 		Dim goon = True
+		Dim nNoFound = 0
 		
 		FindPic 1016, 165, 1190, 650, "Attachment:bl_zhuren.png", "000000", 0, 0.8, intX, intY // 点边栏的助人按钮
 		If intX > -1 Then 
@@ -358,11 +387,12 @@ Sub ZhuRen() // 助人 // todo
 		End If
 		
 		//FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
-		FindPic 1090, 60, 1170, 95, "Attachment:duihuazhong3.png", "000000", 0, 0.8, intX, intY
-		If intX > -1 And goon Then 
-			Tap intX, intY
-			ShowMessage "1", 1000
-		Else 
+		//FindPic 1090, 60, 1170, 95, "Attachment:duihuazhong3.png", "000000", 0, 0.8, intX, intY
+		//If intX > -1 And goon Then 
+		//	Tap intX, intY
+		//	ShowMessage "1", 1000
+		//Else 
+		If inDlg() = -1 Then
 			FindPic 800, 250, 1120, 700, "Attachment:zhuren2.png", "000000", 0, 0.7, intX, intY // 帮助开始
 			If intX > -1 Then 
 				//
@@ -376,11 +406,12 @@ Sub ZhuRen() // 助人 // todo
 					ShowMessage "3", 1000
 				Else 
 					// 战斗中？
-					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
-					If intX > -1 Then 
-						Tap intX, intY
-						ShowMessage "4", 1000
-					Else 
+					//FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
+					//If intX > -1 Then 
+					//	Tap intX, intY
+					//	ShowMessage "4", 1000
+					//Else 
+					If fighting() = -1 Then
 						FindPic 790, 360, 885, 570, "Attachment:zhuren3.png", "000000", 0, 0.8, intX, intY // 其他按钮情况选第一个
 						If intX > -1 Then 
 							//
@@ -392,6 +423,12 @@ Sub ZhuRen() // 助人 // todo
 								Tap intX, intY
 							Else 
 								ShowMessage "5", 1000
+								
+								//
+								nNoFound = nNoFound + 1
+								If nNoFound > 100 Then 
+									ShiMen_Wrapper()
+								End If
 							End If
 						End If
 						
@@ -440,6 +477,9 @@ If dxk_chubao = true Then
 			// 没有找到
 			ShowMessage "没有找到:除暴", 1000
 			Tap 1100, 50
+			dxk_chubao = False
+			Delay 2000
+			Main()
 		End If
 	End If
 End If
@@ -467,13 +507,11 @@ TracePrint UseDict(0)
 
 	bFinish = 0
 
+	Dim n = 0 // 循环次数
+	Dim nNoFound = 0 // 没有找到的次数
+
 	Do
 		Dim intX, intY
-		//FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY // 对话中
-		//If intX > -1 Then 
-		//	Tap intX, intY
-		//	ShowMessage "1", 1000
-		//Else 
 		If inDlg() = -1 Then
 			FindPic 800, 250, 1120, 700, "Attachment:chubao2.png", "000000", 0, 0.6, intX, intY // 边栏
 			If intX > -1 Then 
@@ -487,12 +525,6 @@ TracePrint UseDict(0)
 					Tap intX, intY
 					ShowMessage "3", 1000
 				Else 
-					// 战斗中？
-					//FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
-					//If intX > -1 Then 
-					//	Tap intX, intY
-					//	ShowMessage "4", 1000
-					//Else 
 					If fighting() = -1 Then
 					
 						//FindStr(1019,169,1115,199,"","FFFFFF-333333",0.9,intX,intY)
@@ -501,6 +533,13 @@ TracePrint UseDict(0)
 							Tap intX, intY
 							ShowMessage "6", 1000
 						Else 
+							nNoFound = nNoFound + 1
+							
+							If nNoFound > 200 Then 
+								nNoFound = 0
+								ChuBao_Wrapper()
+							End If
+							
 							ShowMessage "5", 1000
 						End If
 
@@ -514,20 +553,16 @@ TracePrint UseDict(0)
 End Sub
 //------------------除暴beg---------------------//
 
+Sub ZhuXian_Wrapper()
+If dxk_zhuxian = True Then 
+	GuoZhuXian()
+End If
+End Sub
+
 Sub GuoZhuXian() // 主线剧情
 	Do
 		Dim intX, intY
-		//FindPic 20, 60, 70, 100, "Attachment:duihuazhong.png", "000000", 0, 0.8, intX, intY
 		
-		//If intX = -1 Then 
-		//	FindPic 20, 60, 70, 100, "Attachment:duihuazhong2.png", "000000", 0, 0.8, intX, intY
-		//End If
-		
-		//FindPic 1090, 60, 1170, 95, "Attachment:duihuazhong3.png", "000000", 0, 0.8, intX, intY
-		//If intX > -1 Then 
-		//	Tap intX, intY
-		//	ShowMessage "1", 1000
-		//Else 
 		If inDlg() = -1 Then
 			FindPic 800, 250, 1120, 700, "Attachment:zhuxian2.png", "000000", 0, 0.7, intX, intY
 			If intX > -1 Then 
@@ -542,11 +577,7 @@ Sub GuoZhuXian() // 主线剧情
 					ShowMessage "3", 1000
 				Else 
 					// 战斗中？
-					FindPic 1100, 620, 1230, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
-					If intX > -1 Then 
-						Tap intX, intY
-						ShowMessage "4", 1000
-					Else 
+					If fighting() = -1 Then
 					
 						FindPic 1070, 125, 1130, 160, "Attachment:renwulan.png", "000000", 0, 0.8, intX, intY
 						If intX > -1 Then 
@@ -662,6 +693,25 @@ Function keyClose() // 红叉按钮
 	End If
 End Function
 
+Function qianWang(picName) // 前往按钮
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 680, 0, 1280, 360, "Attachment:" & picName & ".png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		//
+		//Tap intX + 260, intY + 20
+		FindPic intX + 240, intX + 340, intY + 10, intY + 40, "Attachment:qianwang.png", "000000", 0, 0.8, intX, intY
+		If intX > -1 Then 
+			Tap intX, intY
+			qianWang = 0
+		Else 
+			qianWang = -1
+		End If	
+	Else 
+		qianWang = -1
+	End If
+End Function
+
 Function handOn() // 提交按钮
 	Dim intX = -1
 	Dim intY = -1
@@ -688,7 +738,7 @@ Function BuyBuyBuy() // 购买
 	//End If
 	If intX = -1 Then 
 		FindPic 640, 360, 1280, 720, "Attachment:bug2.png", "000000", 0, 0.8, intX, intY // 提交按钮
-		ShowMessage "9 " & intX & " " & intY
+		//ShowMessage "9 " & intX & " " & intY
 	End If
 	If intX > -1 Then 
 		//
