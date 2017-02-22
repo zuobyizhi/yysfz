@@ -14,7 +14,7 @@ Dim gX, gY
 gX = -1
 gY = -1
 
-fuli()
+//fuli()
 
 Sub Main()
 
@@ -67,18 +67,20 @@ If dxk_shimen = true Then
 	
 	Delay 2000
 	//Tap 570, 180
-	FindPic 220, 140, 1090, 510, "Attachment:hd_shimen.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
+	//FindPic 220, 140, 1090, 510, "Attachment:hd_shimen.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	If qianWang("hd_shimen") > -1 Then
 		//
-		Tap intX + 260, intY + 20
+		//Tap intX + 260, intY + 20
 		Delay 2000
 		ShiMen()
 	Else 
 		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
 		Delay 2000
-		FindPic 220, 140, 1090, 510, "Attachment:hd_shimen.png", "000000", 0, 0.7, intX, intY
-		If intX > -1 Then 
-			Tap intX + 260, intY + 20
+		//FindPic 220, 140, 1090, 510, "Attachment:hd_shimen.png", "000000", 0, 0.7, intX, intY
+		//If intX > -1 Then 
+		If qianWang("hd_shimen") > -1 Then
+			//Tap intX + 260, intY + 20
 			Delay 2000
 			ShiMen()
 		Else 
@@ -208,18 +210,20 @@ If dxk_bangpai = true Then
 	
 	Delay 2000
 	//Tap 570, 180
-	FindPic 220, 140, 1090, 510, "Attachment:hd_bangpai.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
+	//FindPic 220, 140, 1090, 510, "Attachment:hd_bangpai.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	If qianWang("hd_bangpai") > -1 Then
 		//
-		Tap intX + 260, intY + 20
+		//Tap intX + 260, intY + 20
 		Delay 2000*5
 		BangPai()
 	Else 
 		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
 		Delay 2000
-		FindPic 220, 140, 1090, 510, "Attachment:hd_bangpai.png", "000000", 0, 0.7, intX, intY
-		If intX > -1 Then 
-			Tap intX + 260, intY + 20
+		//FindPic 220, 140, 1090, 510, "Attachment:hd_bangpai.png", "000000", 0, 0.7, intX, intY
+		//If intX > -1 Then 
+			//Tap intX + 260, intY + 20
+		If qianWang("hd_bangpai") > -1 Then
 			Delay 2000*5
 			BangPai()
 		Else 
@@ -303,7 +307,13 @@ Sub BangPai() // 帮派 // todo
 									Tap intX, intY
 								Else 
 									nNoFound = nNoFound + 1
-									ShowMessage "5", 1000
+									
+									If keyOK() = -1 Then 
+										ShowMessage "5", 1000
+									Else 
+										ShowMessage "52", 1000
+									End If
+									//ShowMessage "5", 1000
 									
 									If (n Mod 100) = 0 Then 
 										fuli()
@@ -348,17 +358,19 @@ If dxk_zhuren = true Then
 	
 	Delay 2000
 	//Tap 570, 180
-	FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
-		Tap intX + 260, intY + 20
+	//FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	//	Tap intX + 260, intY + 20
+	If qianWang("zhuren") > -1 Then
 		Delay 2000*5
 		ZhuRen()
 	Else 
 		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
 		Delay 2000
-		FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
-		If intX > -1 Then 
-			Tap intX + 260, intY + 20
+		//FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
+		//If intX > -1 Then 
+		//	Tap intX + 260, intY + 20
+		If qianWang("zhuren") > -1 Then
 			Delay 2000*5
 			ZhuRen()
 		Else 
@@ -419,7 +431,7 @@ Sub ZhuRen() // 助人 // todo
 							ShowMessage "6 " & intX+30 & " " & intY+30, 1000
 						Else 
 							FindPic 693, 383, 788, 482, "Attachment:zhuren_ok.png", "000000", 0, 0.8, intX, intY // 确定
-							If intX > -1 Then 
+							If intX > -1 And keyOK()=-1 Then 
 								Tap intX, intY
 							Else 
 								ShowMessage "5", 1000
@@ -460,17 +472,19 @@ If dxk_chubao = true Then
 	
 	Delay 2000
 	//Tap 570, 180
-	FindPic 220, 140, 1090, 510, "Attachment:hd_chubao.png", "000000", 0, 0.7, intX, intY
-	If intX > -1 Then 
-		Tap intX + 260, intY + 20
+	//FindPic 220, 140, 1090, 510, "Attachment:hd_chubao.png", "000000", 0, 0.7, intX, intY
+	//If intX > -1 Then 
+	//	Tap intX + 260, intY + 20
+	If qianWang("hd_chubao") > -1 Then
 		//Delay 2000*10
 		ChuBao()
 	Else 
 		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
 		Delay 2000
-		FindPic 220, 140, 1090, 510, "Attachment:hd_chubao.png", "000000", 0, 0.7, intX, intY
-		If intX > -1 Then 
-			Tap intX + 260, intY + 20
+		//FindPic 220, 140, 1090, 510, "Attachment:hd_chubao.png", "000000", 0, 0.7, intX, intY
+		//If intX > -1 Then 
+		//	Tap intX + 260, intY + 20
+		If qianWang("hd_chubao") > -1 Then
 			//Delay 2000*10
 			ChuBao()
 		Else 
@@ -533,14 +547,18 @@ TracePrint UseDict(0)
 							Tap intX, intY
 							ShowMessage "6", 1000
 						Else 
-							nNoFound = nNoFound + 1
 							
-							If nNoFound > 200 Then 
-								nNoFound = 0
-								ChuBao_Wrapper()
+							If keyOK() = -1 Then 
+								ShowMessage "5", 1000
+								
+								nNoFound = nNoFound + 1
+							
+								If nNoFound > 100 Then 
+									nNoFound = 0
+									ChuBao_Wrapper()
+								End If
 							End If
 							
-							ShowMessage "5", 1000
 						End If
 
 					End If
@@ -577,7 +595,7 @@ Sub GuoZhuXian() // 主线剧情
 					ShowMessage "3", 1000
 				Else 
 					// 战斗中？
-					If fighting() = -1 Then
+					If fighting() = -1 And keyOK()=-1 Then
 					
 						FindPic 1070, 125, 1130, 160, "Attachment:renwulan.png", "000000", 0, 0.8, intX, intY
 						If intX > -1 Then 
@@ -696,11 +714,16 @@ End Function
 Function qianWang(picName) // 前往按钮
 	Dim intX = -1
 	Dim intY = -1
-	FindPic 680, 0, 1280, 360, "Attachment:" & picName & ".png", "000000", 0, 0.8, intX, intY
+	FindPic 220, 140, 1090, 510, "Attachment:" & picName & ".png", "000000", 0, 0.8, intX, intY
 	If intX > -1 Then 
 		//
 		//Tap intX + 260, intY + 20
-		FindPic intX + 240, intX + 340, intY + 10, intY + 40, "Attachment:qianwang.png", "000000", 0, 0.8, intX, intY
+		ShowMessage "121: " & intX & " " & intY, 1000
+		Delay 2000
+		FindPic intX + 220, intY - 10, intX + 330, intY + 30, "Attachment:qianwang.png", "000000", 0, 0.7, intX, intY
+		If intX = -1 Then 
+			FindPic intX + 220, intY - 10, intX + 370, intY + 30, "Attachment:qianwang2.png", "000000", 0, 0.7, intX, intY
+		End If
 		If intX > -1 Then 
 			Tap intX, intY
 			qianWang = 0
