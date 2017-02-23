@@ -10,6 +10,8 @@ Dim dxk_zhuren = ReadUIConfig("助人",0)
 
 Dim dxk_bangpai = ReadUIConfig("帮派",0)
 
+Dim dxk_jjc = ReadUIConfig("竞技场",0)
+
 Dim gX, gY
 gX = -1
 gY = -1
@@ -27,6 +29,8 @@ ZhuRen_Wrapper()
 ChuBao_Wrapper()
 
 BangPai_Wrapper()
+
+JJC_Wrapper()
 
 EndScript // 退出点
 End Sub
@@ -569,8 +573,9 @@ TracePrint UseDict(0)
 		Delay 3000
 	Loop
 End Sub
-//------------------除暴beg---------------------//
+//------------------除暴end---------------------//
 
+//------------------主线beg---------------------//
 Sub ZhuXian_Wrapper()
 If dxk_zhuxian = True Then 
 	GuoZhuXian()
@@ -611,6 +616,82 @@ Sub GuoZhuXian() // 主线剧情
 		Delay 3000
 	Loop
 End Sub
+
+//------------------主线end---------------------//
+
+//------------------竞技场beg---------------------//
+Sub JJC_Wrapper()
+If dxk_jjc = True Then 
+	//
+	Delay 2000
+	ShowMessage "竞技场", 1000
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+	Else 
+		Tap 340, 40
+	End If
+	
+	Delay 2000
+	If qianWang("hd_jjc") > -1 Then 
+		Delay 20*1000
+		JJC()
+	Else 
+		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
+		Delay 2000
+		If qianWang("hd_jjc") > -1 Then
+			Delay 20*1000
+			JJC()
+		Else 
+			// 没有找到
+			ShowMessage "没有找到:竞技场", 1000
+			Tap 1100, 50
+			dxk_jjc = False
+			Delay 2000
+			Main()
+		End If
+	End If
+End If
+End Sub
+
+Sub JJC()
+	//
+	Do
+		Dim intX = -1
+		Dim intY = -1
+		
+		If fighting() = -1 And keyOK() = -1 Then 
+			FindPic 985, 435, 1065, 470, "Attachment:xx_jjc.png", "000000", 0, 0.8, intX, intY // 竞技场选项
+			If intX = -1 Then 
+				FindPic 250, 540, 300, 575, "Attachment:jjc_fire.png", "000000", 0, 0.8, intX, intY // 挑战按钮
+				If intX > -1 Then 
+					//
+					Tap intX, intY
+				Else 
+					// 都没有找到
+				End If
+			Else 
+				//
+				Tap intX, intY
+			End If
+		Else 
+			// DoNothing
+		End If
+		
+		Delay 3000
+	Loop
+End Sub
+//------------------竞技场end---------------------//
+
+//------------------刷道beg---------------------//
+
+Sub ShuaDao()
+	//
+End Sub
+//------------------刷道end---------------------//
 
 Sub LiLian() // 历练 // todo
 	Do
