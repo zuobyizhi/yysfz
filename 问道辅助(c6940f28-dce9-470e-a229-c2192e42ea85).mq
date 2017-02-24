@@ -12,6 +12,8 @@ Dim dxk_bangpai = ReadUIConfig("帮派",0)
 
 Dim dxk_jjc = ReadUIConfig("竞技场",0)
 
+Dim dxk_shuadao = ReadUIConfig("刷道",0)
+
 Dim gX, gY
 gX = -1
 gY = -1
@@ -31,6 +33,8 @@ ChuBao_Wrapper()
 BangPai_Wrapper()
 
 JJC_Wrapper()
+
+ShuaDao_Wrapper()
 
 EndScript // 退出点
 End Sub
@@ -687,9 +691,51 @@ End Sub
 //------------------竞技场end---------------------//
 
 //------------------刷道beg---------------------//
+Sub ShuaDao_Wrapper()
+	If dxk_shuadao = True Then 
+        //
+        Delay 2000
+        ShowMessage "刷道", 1000
+        Dim intX, intY
+        intX = -1
+        intY = -1
+        FindPic 220, 0, 560, 80, "Attachment:shuadao.png", "000000", 0, 0.7, intX, intY
+        If intX > -1 Then 
+            Tap intX, intY
+            Delay 2000
+            ShuaDao()
+        Else 
+            //没有找到的处理：
+        	ShowMessage "刷道3", 1000
+        	Delay 2000
+        End If
+    Else 
+    	//
+        ShowMessage "刷道2", 1000
+        Delay 2000
+	End If
+End Sub
 
 Sub ShuaDao()
 	//
+	Delay 2000
+	Tap 450, 500 // 前往降妖45级以上
+    Do
+    	ShowMessage "刷道运行中", 1000
+        Dim intX, intY
+        intX = -1
+        intY = -1
+        FindPic 980, 500, 1070, 550, "Attachment:zudui_shuadao.png", "000000", 0, 0.7, intX, intY
+        If intX > -1 Then 
+        	Tap intX, intY
+            Delay 2000
+            Tap 1000, 640 //点自动匹配
+        Else
+        	//
+        End If
+        
+        Delay 10*1000
+    Loop
 End Sub
 //------------------刷道end---------------------//
 

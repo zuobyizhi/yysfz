@@ -1585,6 +1585,7 @@ Sub Zudui2()
 						If intX > -1 Then 
 							ShowMessage "邀请队友界面。", 3000
 							Tap intX, intY
+							//Tap 760, 430 // 选择邀请
 							bfinish = 1
 							Delay 500
 						End If
