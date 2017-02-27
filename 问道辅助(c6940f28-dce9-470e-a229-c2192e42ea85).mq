@@ -14,6 +14,12 @@ Dim dxk_jjc = ReadUIConfig("竞技场",0)
 
 Dim dxk_shuadao = ReadUIConfig("刷道",0)
 
+Dim dxk_xunluo = ReadUIConfig("巡逻",0)
+
+Dim dxk_fuben = ReadUIConfig("副本",0)
+
+Dim dxk_xiuxing = ReadUIConfig("修行",0)
+
 Dim gX, gY
 gX = -1
 gY = -1
@@ -22,8 +28,7 @@ gY = -1
 
 Sub Main()
 
-ZhuXian_Wrapper()
-
+// 非组队
 ShiMen_Wrapper()
 
 ZhuRen_Wrapper()
@@ -34,7 +39,17 @@ BangPai_Wrapper()
 
 JJC_Wrapper()
 
+XunLuo_Wrapper()
+
+// 主线
+ZhuXian_Wrapper()
+
+// 组队
 ShuaDao_Wrapper()
+
+FuBen_Wrapper()
+
+XiuXing_Wrapper()
 
 EndScript // 退出点
 End Sub
@@ -66,12 +81,13 @@ If dxk_shimen = true Then
 	Delay 2000
 	Dim intX = -1
 	Dim intY = -1
-	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
-		Tap intX, intY
-	Else 
-		Tap 340, 40
-	End If
+	//FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	//	Tap intX, intY
+	//Else 
+	//	Tap 340, 40
+	//End If
+	keyHuoDong()
 	
 	Delay 2000
 	//Tap 570, 180
@@ -166,7 +182,7 @@ Sub ShiMen() // 师门任务
 			If intX > -1 Then 
 				//
 				Tap intX, intY
-			ShowMessage "2", 1000
+				ShowMessage "2", 1000
 			Else 
 				//
 				FindPic 1000, 160, 1250, 300, "Attachment:shimen.png", "000000", 0, 0.7, intX, intY
@@ -209,12 +225,13 @@ If dxk_bangpai = true Then
 	Delay 2000
 	Dim intX = -1
 	Dim intY = -1
-	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
-		Tap intX, intY
-	Else 
-		Tap 340, 40
-	End If
+	//FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	//	Tap intX, intY
+	//Else 
+	//	Tap 340, 40
+	//End If
+	keyHuoDong()
 	
 	Delay 2000
 	//Tap 570, 180
@@ -357,12 +374,13 @@ If dxk_zhuren = true Then
 	Dim intX, intY
 	intX = -1
 	intY = -1
-	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
-		Tap intX, intY
-	Else 
-		Tap 340, 40
-	End If
+	//FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	//	Tap intX, intY
+	//Else 
+	//	Tap 340, 40
+	//End If
+	keyHuoDong()
 	
 	Delay 2000
 	//Tap 570, 180
@@ -471,12 +489,13 @@ If dxk_chubao = true Then
 	Dim intX, intY
 	intX = -1
 	intY = -1
-	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
-		Tap intX, intY
-	Else 
-		Tap 340, 40
-	End If
+	//FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	//	Tap intX, intY
+	//Else 
+	//	Tap 340, 40
+	//End If
+	keyHuoDong()
 	
 	Delay 2000
 	//Tap 570, 180
@@ -632,12 +651,13 @@ If dxk_jjc = True Then
 	Dim intX, intY
 	intX = -1
 	intY = -1
-	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
-	If intX > -1 Then 
-		Tap intX, intY
-	Else 
-		Tap 340, 40
-	End If
+	//FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.8, intX, intY
+	//If intX > -1 Then 
+	//	Tap intX, intY
+	//Else 
+	//	Tap 340, 40
+	//End If
+	keyHuoDong()
 	
 	Delay 2000
 	If qianWang("hd_jjc") > -1 Then 
@@ -732,12 +752,193 @@ Sub ShuaDao()
             Tap 1000, 640 //点自动匹配
         Else
         	//
+        	If fighting() = -1 Then // 战斗中就开自动
+        		//
+        	End If
         End If
         
         Delay 10*1000
     Loop
 End Sub
 //------------------刷道end---------------------//
+
+//------------------副本beg---------------------//
+Sub FuBen_Wrapper()
+	If dxk_fuben = True Then 
+        //
+        Delay 2000
+        ShowMessage "副本", 1000
+        Dim intX, intY
+        intX = -1
+        intY = -1
+        keyHuoDong()
+	
+        Delay 2000
+        If qianWang("hd_fuben") > -1 Then 
+            Delay 20*1000
+            FuBen()
+        Else 
+            Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
+            Delay 2000
+            If qianWang("hd_fuben") > -1 Then
+                Delay 20*1000
+                FuBen()
+            Else 
+                // 没有找到
+                ShowMessage "没有找到:竞技场", 1000
+                Tap 1100, 50
+                dxk_jjc = False
+                Delay 2000
+                Main()
+            End If
+        End If
+    Else 
+    	//
+        ShowMessage "副本2", 1000
+        Delay 2000
+	End If
+End Sub
+
+Sub FuBen()
+	//
+	Delay 2000
+	Tap 450, 500 // 前往降妖45级以上
+    Do
+        If fighting() = -1 And keyOK()=-1 Then // 战斗中就开自动
+            //
+            Dim intX, intY
+            intX = -1
+            intY = -1
+            FindPic 980, 500, 1070, 550, "Attachment:zudui_shuadao.png", "000000", 0, 0.7, intX, intY
+            If intX > -1 Then 
+                //
+                Tap intX, intY
+                Delay 2000
+                Tap 780, 640 //点自动匹配
+            Else 
+            	//
+            End If
+        End If
+        
+        Delay 5*1000
+    Loop
+End Sub
+//------------------副本end---------------------//
+
+//------------------修行beg---------------------//
+Sub XiuXing_Wrapper()
+	If dxk_xiuxing = True Then 
+        //
+        Delay 2000
+        ShowMessage "修行", 1000
+        Dim intX, intY
+        intX = -1
+        intY = -1
+        keyHuoDong()
+	
+        Delay 2000
+        If qianWang("hd_xiuxing") > -1 Then 
+            Delay 20*1000
+            XiuXing()
+        Else 
+            Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
+            Delay 2000
+            If qianWang("hd_xiuxing") > -1 Then
+                Delay 20*1000
+                XiuXing()
+            Else 
+                // 没有找到
+                ShowMessage "没有找到:修行", 1000
+                Tap 1100, 50
+                dxk_jjc = False
+                Delay 2000
+                Main()
+            End If
+        End If
+    Else 
+    	//
+        ShowMessage "修行2", 1000
+        Delay 2000
+	End If
+End Sub
+
+Sub XiuXing()
+	//
+	Delay 2000
+	Tap 450, 500 // 前往降妖45级以上
+    Do
+        If fighting() = -1 And keyOK()=-1 Then // 战斗中就开自动
+            //
+            Dim intX, intY
+            intX = -1
+            intY = -1
+            FindPic 980, 500, 1070, 550, "Attachment:zudui_shuadao.png", "000000", 0, 0.7, intX, intY
+            If intX > -1 Then 
+                //
+                Tap intX, intY
+                Delay 2000
+                Tap 780, 640 //点自动匹配
+            Else 
+            	//
+            End If
+        End If
+        
+        Delay 5*1000
+    Loop
+End Sub
+//------------------修行end---------------------//
+
+//------------------巡逻beg---------------------//
+Sub XunLuo_Wrapper()
+	If dxk_xunluo = True Then 
+        //
+        Delay 2000
+        ShowMessage "巡逻", 1000
+        Dim intX, intY
+        intX = -1
+        intY = -1
+        FindPic 220, 0, 560, 80, "Attachment:xunluo.png", "000000", 0, 0.7, intX, intY
+        If intX > -1 Then 
+            Tap intX, intY
+            Delay 2000
+            XunLuo()
+        Else 
+            //没有找到的处理：
+        	ShowMessage "巡逻3", 1000
+        	Delay 2000
+        End If
+    Else 
+    	//
+        ShowMessage "巡逻2", 1000
+        Delay 2000
+	End If
+End Sub
+
+Sub XunLuo()
+	//
+	Delay 2000
+	Tap 450, 500 // 前往降妖45级以上
+    Do
+    	ShowMessage "巡逻运行中", 1000
+        Dim intX, intY
+        intX = -1
+        intY = -1
+        FindPic 980, 500, 1070, 550, "Attachment:zudui_shuadao.png", "000000", 0, 0.7, intX, intY
+        If intX > -1 Then 
+        	Tap intX, intY
+            Delay 2000
+            Tap 1000, 640 //点自动匹配
+        Else
+        	//
+        	If fighting()=-1 And keyOK()=-1 Then // 战斗中就开自动
+        		//
+        	End If
+        End If
+        
+        Delay 10*1000
+    Loop
+End Sub
+//------------------巡逻end---------------------//
 
 Sub LiLian() // 历练 // todo
 	Do
@@ -836,6 +1037,19 @@ Function keyClose() // 红叉按钮
 	Else 
 		keyClose = -1
 	End If
+End Function
+
+Function keyHuoDong() // 点活动
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 220, 0, 560, 80, "Attachment:huodong.png", "000000", 0, 0.7, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+	Else 
+		ShowMessage "222"
+		Tap 410, 40
+	End If	
 End Function
 
 Function qianWang(picName) // 前往按钮
