@@ -24,7 +24,9 @@ Dim gX, gY
 gX = -1
 gY = -1
 
-//fuli()
+Delay 2000
+
+fuli()
 
 Sub Main()
 
@@ -383,19 +385,19 @@ If dxk_zhuren = true Then
 	keyHuoDong()
 	
 	Delay 2000
-	//Tap 570, 180
-	//FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
-	//If intX > -1 Then 
-	//	Tap intX + 260, intY + 20
+	/*FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX + 260, intY + 20*/
 	If qianWang("zhuren") > -1 Then
 		Delay 2000*5
 		ZhuRen()
 	Else 
-		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
+		//Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
+		Swipe 640, 480, 640, 145, 2000 // 上拉任务列表
 		Delay 2000
-		//FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
-		//If intX > -1 Then 
-		//	Tap intX + 260, intY + 20
+		/*FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
+		If intX > -1 Then 
+			Tap intX + 260, intY + 20*/
 		If qianWang("zhuren") > -1 Then
 			Delay 2000*5
 			ZhuRen()
@@ -781,11 +783,11 @@ Sub FuBen_Wrapper()
             Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
             Delay 2000
             If qianWang("hd_fuben") > -1 Then
-                Delay 20*1000
+                Delay 5*1000
                 FuBen()
             Else 
                 // 没有找到
-                ShowMessage "没有找到:竞技场", 1000
+                ShowMessage "没有找到:副本", 1000
                 Tap 1100, 50
                 dxk_jjc = False
                 Delay 2000
@@ -802,11 +804,11 @@ End Sub
 Sub FuBen()
 	//
 	Delay 2000
-	Tap 450, 500 // 前往降妖45级以上
+	//Tap 450, 500 // 前往降妖45级以上
     Do
         If fighting() = -1 And keyOK()=-1 Then // 战斗中就开自动
             //
-            Dim intX, intY
+            /*Dim intX, intY
             intX = -1
             intY = -1
             FindPic 980, 500, 1070, 550, "Attachment:zudui_shuadao.png", "000000", 0, 0.7, intX, intY
@@ -814,9 +816,14 @@ Sub FuBen()
                 //
                 Tap intX, intY
                 Delay 2000
-                Tap 780, 640 //点自动匹配
+                //Tap 780, 640 //点自动匹配
+                Tap 1000, 650 //点自动匹配
             Else 
             	//
+            End If*/
+            If keyXXZuDui() = -1 And keyAutoMatch() = -1 And keyStartMatch() = -1 Then 
+            	//
+            	ShowMessage "副本运行中", 1000
             End If
         End If
         
@@ -869,7 +876,7 @@ Sub XiuXing()
     Do
         If fighting() = -1 And keyOK()=-1 Then // 战斗中就开自动
             //
-            Dim intX, intY
+            /*Dim intX, intY
             intX = -1
             intY = -1
             FindPic 980, 500, 1070, 550, "Attachment:zudui_shuadao.png", "000000", 0, 0.7, intX, intY
@@ -880,6 +887,10 @@ Sub XiuXing()
                 Tap 780, 640 //点自动匹配
             Else 
             	//
+            End If*/
+            If keyXXZuDui() = -1 And keyAutoMatch() = -1 And keyStartMatch() = -1 Then 
+            	//
+            	ShowMessage "修行运行中", 1000
             End If
         End If
         
@@ -1052,6 +1063,45 @@ Function keyHuoDong() // 点活动
 	End If	
 End Function
 
+Function keyXXZuDui() // 点选项便捷组队
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 980, 500, 1070, 550, "Attachment:zudui_shuadao.png", "000000", 0, 0.7, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+		keyXXZuDui = 1
+	Else 
+		keyXXZuDui = -1
+	End If	
+End Function
+
+Function keyAutoMatch() // 点自动匹配
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 940, 630, 1070, 660, "Attachment:automatch.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+		keyAutoMatch = 1
+	Else 
+		keyAutoMatch = -1
+	End If	
+End Function
+
+Function keyStartMatch() // 点开始匹配
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 730, 620, 840, 660, "Attachment:startmatch.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX, intY
+		keyStartMatch = 1
+	Else 
+		keyStartMatch = -1
+	End If	
+End Function
+
 Function qianWang(picName) // 前往按钮
 	Dim intX = -1
 	Dim intY = -1
@@ -1061,9 +1111,15 @@ Function qianWang(picName) // 前往按钮
 		//Tap intX + 260, intY + 20
 		ShowMessage "121: " & intX & " " & intY, 1000
 		Delay 2000
-		FindPic intX + 220, intY - 10, intX + 330, intY + 30, "Attachment:qianwang.png", "000000", 0, 0.7, intX, intY
+		//FindPic intX + 220, intY - 10, intX + 330, intY + 30, "Attachment:qianwang.png", "000000", 0, 0.7, intX, intY
+		FindPic intX + 210, intY - 20, intX + 360, intY + 40, "Attachment:qianwang.png", "000000", 0, 0.7, intX, intY
 		If intX = -1 Then 
-			FindPic intX + 220, intY - 10, intX + 370, intY + 30, "Attachment:qianwang2.png", "000000", 0, 0.7, intX, intY
+			//FindPic intX + 220, intY - 10, intX + 370, intY + 30, "Attachment:qianwang2.png", "000000", 0, 0.7, intX, intY
+			FindPic intX + 210, intY - 20, intX + 370, intY + 40, "Attachment:qianwang2.png", "000000", 0, 0.7, intX, intY
+		End If
+		If intX = -1 Then 
+			//FindPic intX + 220, intY - 10, intX + 370, intY + 30, "Attachment:qianwang2.png", "000000", 0, 0.7, intX, intY
+			FindPic intX + 210, intY - 20, intX + 370, intY + 40, "Attachment:qianwang4.png", "000000", 0, 0.7, intX, intY
 		End If
 		If intX > -1 Then 
 			Tap intX, intY
@@ -1120,7 +1176,8 @@ End Function
 Function fuli() // 福利处理函数
 	Dim intX = -1
 	Dim intY = -1
-	FindPic 5, 250, 80, 500, "Attachment:fuli.png", "000000", 0, 0.8, intX, intY
+	ShowMessage "福利", 1000
+	FindPic 5, 250, 80, 500, "Attachment:fuli.png", "000000", 0, 0.7, intX, intY
 	If intX > -1 Then 
 		Tap intX, intY
 		Delay 2000
@@ -1132,13 +1189,17 @@ Function fuli() // 福利处理函数
 		// TODO
 		
 		//神秘大奖
-		FindPic 350, 335, 420, 375, "Attachment:redpoint.png", "000000", 0, 0.8, intX, intY // 开自动
+		//FindPic 350, 335, 420, 375, "Attachment:redpoint.png", "000000", 0, 0.8, intX, intY
+		FindPic 200, 250, 400, 560, "Attachment:fuli_shenmidali.png", "000000", 0, 0.8, intX, intY
 		If intX > -1 Then 
 			Tap intX, intY
 			ShowMessage "神秘大奖", 1000
 			Delay 2000
 			Tap 760, 400 // 点神秘大奖
 			Delay 20 * 1000
+		Else 
+			ShowMessage "神秘大奖2", 1000
+			Delay 1000
 		End If
 		
 		Tap 1080, 90 // 关闭福利对话框
@@ -1146,5 +1207,7 @@ Function fuli() // 福利处理函数
 		fuli = 0
 	Else 
 		fuli = -1
+		ShowMessage "福利2", 1000
+		Delay 1000
 	End If
 End Function
