@@ -1472,6 +1472,9 @@ Sub Zudui2()
 		End If
 		
 		Dim n_yq = 0
+		
+Rem startInTingYuan
+		
 		Do
 			Tap 250, 640 // 组队按钮
 			Delay 3000
@@ -1531,7 +1534,20 @@ Rem yaoQingDuiYou
 			// TODO
 			Dim bFull = 0 // 三个人再开打
 			Do
+				ShowMessage "31", 1000
 				Delay 2000
+				
+				If inTingYuan() > -1 Then 
+					Goto startInTingYuan
+				End If
+				
+				If inBuild() > -1 Then 
+					//Goto startInTingYuan
+					ShowMessage "inBuild"
+					Delay 2000
+					Goto yaoQingDuiYou
+				End If
+				
 				If CmpColor(520, 270, "bdc6ce", 0.8)>-1 And CmpColor(850, 270, "bdc6ce", 0.8)>-1 Then 
 					bFull = 1
 				End If
@@ -1570,6 +1586,7 @@ Rem yaoQingDuiYou
 						//	// 点战斗
 						//	Tap 1000, 600
 						//End If
+						ShowMessage "32", 1000
 						Tap 1000, 600 // 点战斗
 					Else 
 						// 战斗中
@@ -1605,11 +1622,15 @@ Rem yaoQingDuiYou
 							If n_yq < n4 Then 
 								//
 								Tap 760, 430 // 选择邀请
+								
+								ShowMessage "33", 1000
 								Delay 5000
+								
 								Goto yaoQingDuiYou
 							Else 
 								// 够次数不邀请，回庭院
 								Tap 520, 430
+								ShowMessage "34", 1000
 								Delay 2000
 							End If
 						Else 
@@ -1719,6 +1740,17 @@ Function inProbe() // 在探索界面
 		inProbe = 1
 	Else 
 		inProbe = -1
+	End If
+End Function
+
+Function inBuild() // 在创建界面
+	Dim intX, intY
+	FindPic 840, 560, 880, 590, "Attachment:zuidui_chuangjian.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+	 	Tap intX, intY
+		inBuild = 1
+	Else 
+		inBuild = -1
 	End If
 End Function
 

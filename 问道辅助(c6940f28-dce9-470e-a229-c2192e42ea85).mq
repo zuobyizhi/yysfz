@@ -388,7 +388,7 @@ If dxk_zhuren = true Then
 	/*FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
 	If intX > -1 Then 
 		Tap intX + 260, intY + 20*/
-	If qianWang("zhuren") > -1 Then
+	If qianWang("hd_zhuren") > -1 Then
 		Delay 2000*5
 		ZhuRen()
 	Else 
@@ -398,7 +398,7 @@ If dxk_zhuren = true Then
 		/*FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
 		If intX > -1 Then 
 			Tap intX + 260, intY + 20*/
-		If qianWang("zhuren") > -1 Then
+		If qianWang("hd_zhuren") > -1 Then
 			Delay 2000*5
 			ZhuRen()
 		Else 
