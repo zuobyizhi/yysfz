@@ -20,6 +20,8 @@ Dim dxk_fuben = ReadUIConfig("副本",0)
 
 Dim dxk_xiuxing = ReadUIConfig("修行",0)
 
+Dim dxk_tzzm = ReadUIConfig("挑战掌门",0)
+
 Dim gX, gY
 gX = -1
 gY = -1
@@ -33,15 +35,17 @@ Sub Main()
 // 非组队
 ShiMen_Wrapper()
 
-ZhuRen_Wrapper()
-
 ChuBao_Wrapper()
 
 BangPai_Wrapper()
 
+ZhuRen_Wrapper()
+
 JJC_Wrapper()
 
 XunLuo_Wrapper()
+
+TZZM_Wrapper()
 
 // 主线
 ZhuXian_Wrapper()
@@ -290,7 +294,7 @@ Sub BangPai() // 帮派 // todo
 		//	Tap intX, intY
 		//	ShowMessage "1", 1000
 		//Else 
-		If inDlg() = -1 Then
+		If BuyBuyBuy()=-1 and inDlg()=-1 Then
 			FindPic 800, 250, 1120, 700, "Attachment:bl_bangpai.png", "000000", 0, 0.7, intX, intY // 帮助开始
 			If intX > -1 Then 
 				//
@@ -321,14 +325,15 @@ Sub BangPai() // 帮派 // todo
 							If intX > -1 Then 
 								Tap intX, intY
 							Else 
-								FindPic 0, 0, 0, 0, "Attachment:bug.png", "000000", 0, 0.8, intX, intY // 购买按钮
+								/*FindPic 0, 0, 0, 0, "Attachment:bug.png", "000000", 0, 0.8, intX, intY // 购买按钮
 								If intX = -1 Then 
 									FindPic 0, 0, 0, 0, "Attachment:handon.png", "000000", 0, 0.8, intX, intY // 提交按钮
 								End If
 								If intX = -1 Then 
 									FindPic 640, 360, 1280, 720, "Attachment:bug2.png", "000000", 0, 0.8, intX, intY // 提交按钮
 									ShowMessage "9 " & intX & " " & intY
-								End If
+								End If*/
+								FindPic 0, 0, 0, 0, "Attachment:handon.png", "000000", 0, 0.8, intX, intY // 提交按钮
 								If intX > -1 Then 
 									// 购买
 									Tap intX, intY
@@ -394,7 +399,7 @@ If dxk_zhuren = true Then
 	Else 
 		//Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
 		Swipe 640, 480, 640, 145, 2000 // 上拉任务列表
-		Delay 2000
+		Delay 4000
 		/*FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
 		If intX > -1 Then 
 			Tap intX + 260, intY + 20*/
@@ -698,6 +703,12 @@ Sub JJC()
 					Tap intX, intY
 				Else 
 					// 都没有找到
+					FindPic 988, 74, 1094, 123, "Attachment:jjc_over.png", "000000", 0, 0.8, intX, intY // 余下次数0
+					If intX > -1 Then 
+						Tap 1094, 44 // 关闭对话框
+						Delay 2000
+						Main()
+					End If
 				End If
 			Else 
 				//
@@ -951,6 +962,84 @@ Sub XunLuo()
 End Sub
 //------------------巡逻end---------------------//
 
+//------------------挑战掌门beg---------------------//
+Sub TZZM_Wrapper()
+	If dxk_tzzm = True Then 
+        //
+        Delay 2000
+        ShowMessage "挑战掌门", 1000
+        Dim intX, intY
+        intX = -1
+        intY = -1
+        keyHuoDong()
+	
+        Delay 2000
+        If qianWang("hd_tzzm") > -1 Then 
+            Delay 20*1000
+            TZZM()
+        Else 
+            Swipe 640, 480, 640, 145, 2000 // 上拉任务列表
+            Delay 4000
+            If qianWang("hd_tzzm") > -1 Then
+                Delay 20*1000
+                TZZM()
+            Else 
+                // 没有找到
+                ShowMessage "没有找到:挑战掌门", 1000
+                Tap 1100, 50
+                dxk_jjc = False
+                Delay 2000
+                Main()
+            End If
+        End If
+    Else 
+    	//
+        ShowMessage "挑战掌门2", 1000
+        Delay 2000
+	End If
+End Sub
+
+Sub TZZM()
+	//
+	Delay 2000
+	Dim nn= 0
+    Do
+    	Dim intX = -1
+    	Dim intY = -1
+        If fighting() = -1 And keyOK()=-1 Then // 战斗中就开自动
+            //
+            FindPic 800, 250, 1120, 700, "Attachment:xx_tzzm.png", "000000", 0, 0.7, intX, intY
+            If intX > -1 Then
+            //If keyFirstItem() = -1 Then 
+            	//
+            	//FindPic 800, 250, 1120, 700, "Attachment:xx_tzzm.png", "000000", 0, 0.7, intX, intY
+            	//If intX > -1 Then 
+            	
+            	Tap intX, intY
+            	ShowMessage "点击挑战: " & intX & " " & intY, 1000
+            Else
+            	If keyFirstItem() = -1 Then
+            		//
+            		//Tap intX, intY
+            		//ShowMessage "点击挑战: " & intX & " " & intY, 1000
+            		Delay 2000
+            	Else 
+            		nn = nn + 1
+            		ShowMessage "挑战掌门运行中", 1000
+            		
+            		If nn > 100 Then 
+            			Main()
+            		End If
+            	End If
+            	
+            End If
+        End If
+        
+        Delay 4*1000
+    Loop
+End Sub
+//------------------挑战掌门end---------------------//
+
 Sub LiLian() // 历练 // todo
 	Do
 		Dim intX, intY
@@ -1009,7 +1098,7 @@ Function fighting() // 战斗中
 	FindPic 75, 30, 125, 60, "Attachment:fighting.png", "000000", 0, 0.8, intX, intY // 是否战斗中，标志：第n回合
 	If intX > -1 Then 
 		//
-		FindPic 1180, 660, 1270, 700, "Attachment:zidong.png", "000000", 0, 0.8, intX, intY // 开自动
+		FindPic 1180, 660, 1270, 700, "Attachment:zidong.png", "000000", 0, 0.7, intX, intY // 开自动
 		If intX > -1 Then 
 			Tap intX, intY
 		End If
@@ -1029,6 +1118,8 @@ Function keyOK() // 确认按钮
 	If intX > -1 Then 
 		//
 		Tap intX, intY
+		
+		ShowMessage "keyOK: " & intX & " " & intY, 1000
 		
 		keyOK = 0
 	Else 
@@ -1099,6 +1190,20 @@ Function keyStartMatch() // 点开始匹配
 		keyStartMatch = 1
 	Else 
 		keyStartMatch = -1
+	End If	
+End Function
+
+Function keyFirstItem() // 点第一个选项
+	Dim intX, intY
+	intX = -1
+	intY = -1
+	FindPic 790, 320, 885, 570, "Attachment:zhuren3.png", "000000", 0, 0.8, intX, intY
+	If intX > -1 Then 
+		Tap intX+30, intY+90
+		ShowMessage "keyFirstItem: " & intX & " " & intY, 1000
+		keyFirstItem = 1
+	Else 
+		keyFirstItem = -1
 	End If	
 End Function
 
