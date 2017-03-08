@@ -697,7 +697,7 @@ Sub JJC()
 		If fighting() = -1 And keyOK() = -1 Then 
 			FindPic 985, 435, 1065, 470, "Attachment:xx_jjc.png", "000000", 0, 0.8, intX, intY // 竞技场选项
 			If intX = -1 Then 
-				FindPic 250, 540, 300, 575, "Attachment:jjc_fire.png", "000000", 0, 0.8, intX, intY // 挑战按钮
+				/*FindPic 250, 540, 300, 575, "Attachment:jjc_fire.png", "000000", 0, 0.8, intX, intY // 挑战按钮
 				If intX > -1 Then 
 					//
 					Tap intX, intY
@@ -708,6 +708,20 @@ Sub JJC()
 						Tap 1094, 44 // 关闭对话框
 						Delay 2000
 						Main()
+					End If
+				End If*/
+				
+				FindPic 988, 74, 1094, 123, "Attachment:jjc_over.png", "000000", 0, 0.8, intX, intY // 余下次数0
+				If intX > -1 Then 
+					//
+					Tap 1094, 44 // 关闭对话框
+					Delay 2000
+					Main()
+				Else 
+					// 都没有找到
+					FindPic 250, 540, 300, 575, "Attachment:jjc_fire.png", "000000", 0, 0.8, intX, intY // 挑战按钮
+					If intX > -1 Then 
+						Tap intX, intY
 					End If
 				End If
 			Else 
@@ -855,13 +869,13 @@ Sub XiuXing_Wrapper()
         keyHuoDong()
 	
         Delay 2000
-        If qianWang("hd_xiuxing") > -1 Then 
+        If qianWang("hd_xiuxing2") > -1 Then 
             Delay 20*1000
             XiuXing()
         Else 
             Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
             Delay 2000
-            If qianWang("hd_xiuxing") > -1 Then
+            If qianWang("hd_xiuxing2") > -1 Then
                 Delay 20*1000
                 XiuXing()
             Else 
@@ -940,6 +954,7 @@ Sub XunLuo()
 	//
 	Delay 2000
 	Tap 450, 500 // 前往降妖45级以上
+	Dim n3 = 0
     Do
     	ShowMessage "巡逻运行中", 1000
         Dim intX, intY
@@ -954,6 +969,10 @@ Sub XunLuo()
         	//
         	If fighting()=-1 And keyOK()=-1 Then // 战斗中就开自动
         		//
+        		n3 = n3 + 1
+        		If (n3 Mod 100) = 0 Then 
+        			Main()
+        		End If
         	End If
         End If
         
@@ -1251,6 +1270,38 @@ Function handOn() // 提交按钮
 		handOn = 0
 	Else 
 		handOn = -1
+	End If
+End Function
+
+Function blOpen() // 若边栏关闭则打开它
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 1245, 110, 1273, 163, "Attachment:bl_close.png", "000000", 0, 0.8, intX, intY // 
+	If intX > -1 Then 
+		//
+		Tap intX, intY
+		
+		blOpen = 0
+	Else 
+		FindPic 1066, 123, 11263, 160, "Attachment:bl_taskclose.png", "000000", 0, 0.8, intX, intY //
+		If intX > -1 Then 
+			Tap intX, intY
+		End If
+		blOpen = -1
+	End If
+End Function
+
+Function xinShouLiBao() // 新手礼包
+	Dim intX = -1
+	Dim intY = -1
+	FindPic 1000, 500, 1200, 600, "Attachment:xinshoulibao.png", "000000", 0, 0.8, intX, intY // 
+	If intX > -1 Then 
+		//
+		Tap intX, intY
+		
+		xinShouLiBao = 0
+	Else 
+		xinShouLiBao = -1
 	End If
 End Function
 
