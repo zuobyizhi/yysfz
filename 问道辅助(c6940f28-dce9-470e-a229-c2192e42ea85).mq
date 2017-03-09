@@ -28,9 +28,11 @@ gY = -1
 
 Delay 2000
 
+Sub Main()
+
 fuli()
 
-Sub Main()
+blOpen()
 
 // 非组队
 ShiMen_Wrapper()
@@ -184,7 +186,7 @@ Sub ShiMen() // 师门任务
 				End If	
 			End If
 						
-			FindPic 800, 250, 1120, 700, "Attachment:shimen2.png", "000000", 0, 0.7, intX, intY
+			FindPic 800, 250, 1120, 700, "Attachment:shimen2.png", "000000", 0, 0.7, intX, intY // 师门按钮
 			If intX > -1 Then 
 				//
 				Tap intX, intY
@@ -1006,7 +1008,7 @@ Sub TZZM_Wrapper()
                 // 没有找到
                 ShowMessage "没有找到:挑战掌门", 1000
                 Tap 1100, 50
-                dxk_jjc = False
+                dxk_tzzm = False
                 Delay 2000
                 Main()
             End If
@@ -1047,6 +1049,7 @@ Sub TZZM()
             		ShowMessage "挑战掌门运行中", 1000
             		
             		If nn > 100 Then 
+            			nn = 0
             			Main()
             		End If
             	End If
@@ -1071,7 +1074,7 @@ Sub LiLian() // 历练 // todo
 			If intX > -1 Then 
 				//
 				Tap intX, intY
-			ShowMessage "2", 1000
+				ShowMessage "2", 1000
 			Else 
 				//
 				FindPic 1000, 160, 1250, 300, "Attachment:shimen.png", "000000", 0, 0.6, intX, intY
@@ -1274,6 +1277,9 @@ Function handOn() // 提交按钮
 End Function
 
 Function blOpen() // 若边栏关闭则打开它
+
+	Delay 2000
+
 	Dim intX = -1
 	Dim intY = -1
 	FindPic 1245, 110, 1273, 163, "Attachment:bl_close.png", "000000", 0, 0.8, intX, intY // 

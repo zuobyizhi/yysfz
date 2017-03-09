@@ -70,11 +70,16 @@
 			<h2>脚本使用步骤</h2>
 		          </div><ol id="usePic"><li class="item"><!--##Template Begin#-->
 				<h6>第一步</h6>
-				<p><!--##P Begin#--><!--#P End##--></p>
+				<p><!--##P Begin#-->请在设置里面设置好要跑的功能之后，在问道的主界面启动本辅助。<!--#P End##--></p>
 				<div class="usePicBox"><span class="clickLeft">向左</span>
 					<ul class="usePic clearfix"><!--##Img Begin#--><!--#Img End##--></ul>
 				<span class="clickRight">向右</span></div>
-			<!--#Template End##--></li></ol></div>
+			<!--#Template End##--></li></ol><div class="scriptInfo">
+					<div class="title titleExp clearfix">
+						<i class="scriptExp"></i>
+						<h2>其他说明</h2>
+					</div>
+					<p><!--##exp Begin#-->1.本脚本仅支持1280*760分辨率。<br>2.个人功能可一键执行几个；而组队功能和主线功能目前只能执行单个。<br>3.如果脚本运行过程中遇到宠物满了导致卡住，请停止脚本再手动放生之后再重新运行脚本。<!--#exp End##--></p></div></div>
 <script type='text/javascript'>(function() {
 	var Slide = function(ele, leftClick, rightClick) {
 		this.index = 0;
