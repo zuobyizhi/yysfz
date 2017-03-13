@@ -70,7 +70,19 @@
 			<h2>脚本使用步骤</h2>
 		          </div><ol id="usePic"><li class="item"><!--##Template Begin#-->
 				<h6>第一步</h6>
-				<p><!--##P Begin#-->请在设置里面设置好要跑的功能之后，在问道的主界面启动本辅助。<!--#P End##--></p>
+				<p><!--##P Begin#-->先将模拟器调成1280*720分辨率。<!--#P End##--></p>
+				<div class="usePicBox"><span class="clickLeft">向左</span>
+					<ul class="usePic clearfix"><!--##Img Begin#--><!--#Img End##--></ul>
+				<span class="clickRight">向右</span></div>
+			<!--#Template End##--></li><li class="item"><!--##Template Begin#-->
+				<h6>第二步</h6>
+				<p><!--##P Begin#-->在【功能设置】里面进行设置，然后点击【保存设置】按钮。<!--#P End##--></p>
+				<div class="usePicBox"><span class="clickLeft">向左</span>
+					<ul class="usePic clearfix"><!--##Img Begin#--><!--#Img End##--></ul>
+				<span class="clickRight">向右</span></div>
+			<!--#Template End##--></li><li class="item"><!--##Template Begin#-->
+				<h6>第三步</h6>
+				<p><!--##P Begin#-->在问道的主界面启动本辅助。<!--#P End##--></p>
 				<div class="usePicBox"><span class="clickLeft">向左</span>
 					<ul class="usePic clearfix"><!--##Img Begin#--><!--#Img End##--></ul>
 				<span class="clickRight">向右</span></div>

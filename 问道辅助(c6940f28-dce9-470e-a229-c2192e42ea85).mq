@@ -22,6 +22,8 @@ Dim dxk_xiuxing = ReadUIConfig("修行",0)
 
 Dim dxk_tzzm = ReadUIConfig("挑战掌门",0)
 
+Dim dxk_yaomodao = ReadUIConfig("妖魔道",0)
+
 Dim gX, gY
 gX = -1
 gY = -1
@@ -41,16 +43,18 @@ ChuBao_Wrapper()
 
 BangPai_Wrapper()
 
-ZhuRen_Wrapper()
-
 JJC_Wrapper()
 
-XunLuo_Wrapper()
+ZhuRen_Wrapper()
 
 TZZM_Wrapper()
 
+XunLuo_Wrapper()
+
 // 主线
 ZhuXian_Wrapper()
+
+YaoMoDao_Wrapper()
 
 // 组队
 ShuaDao_Wrapper()
@@ -108,7 +112,7 @@ If dxk_shimen = true Then
 		ShiMen()
 	Else 
 		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
-		Delay 2000
+		Delay 4000
 		//FindPic 220, 140, 1090, 510, "Attachment:hd_shimen.png", "000000", 0, 0.7, intX, intY
 		//If intX > -1 Then 
 		If qianWang("hd_shimen") > -1 Then
@@ -252,7 +256,7 @@ If dxk_bangpai = true Then
 		BangPai()
 	Else 
 		Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
-		Delay 2000
+		Delay 4000
 		//FindPic 220, 140, 1090, 510, "Attachment:hd_bangpai.png", "000000", 0, 0.7, intX, intY
 		//If intX > -1 Then 
 			//Tap intX + 260, intY + 20
@@ -395,7 +399,7 @@ If dxk_zhuren = true Then
 	/*FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.8, intX, intY
 	If intX > -1 Then 
 		Tap intX + 260, intY + 20*/
-	If qianWang("hd_zhuren") > -1 Then
+	If qianWang("hd_zhuren1")>-1 or qianWang("hd_zhuren2")>-1 Then
 		Delay 2000*5
 		ZhuRen()
 	Else 
@@ -405,7 +409,7 @@ If dxk_zhuren = true Then
 		/*FindPic 220, 140, 1090, 510, "Attachment:zhuren.png", "000000", 0, 0.7, intX, intY
 		If intX > -1 Then 
 			Tap intX + 260, intY + 20*/
-		If qianWang("hd_zhuren") > -1 Then
+		If qianWang("hd_zhuren1")>-1 or qianWang("hd_zhuren2") > -1 Then
 			Delay 2000*5
 			ZhuRen()
 		Else 
@@ -619,14 +623,14 @@ Sub GuoZhuXian() // 主线剧情
 		Dim intX, intY
 		
 		If inDlg() = -1 Then
-			FindPic 800, 250, 1120, 700, "Attachment:zhuxian2.png", "000000", 0, 0.7, intX, intY
+			FindPic 800, 250, 1120, 700, "Attachment:zhuxian2.png", "000000", 0, 0.7, intX, intY // 选项
 			If intX > -1 Then 
 				//
 				Tap intX, intY
 				ShowMessage "2", 1000
 			Else 
 				//
-				FindPic 1000, 160, 1250, 300, "Attachment:zhuxian.png", "000000", 0, 0.7, intX, intY
+				FindPic 1000, 160, 1250, 300, "Attachment:zhuxian.png", "000000", 0, 0.7, intX, intY // 边栏
 				If intX > -1 Then 
 					Tap intX, intY
 					ShowMessage "3", 1000
@@ -650,6 +654,72 @@ Sub GuoZhuXian() // 主线剧情
 End Sub
 
 //------------------主线end---------------------//
+
+//------------------妖魔道beg---------------------//
+Sub YaoMoDao_Wrapper()
+If dxk_yaomodao = True Then 
+	ShowMessage "妖魔道", 1000
+	YaoMoDao()
+End If
+End Sub
+
+Sub YaoMoDao() // 妖魔道
+	Do
+		Dim intX, intY
+		
+		If inDlg() = -1 Then
+			FindPic 800, 250, 1120, 700, "Attachment:xx_yaomodao.png", "000000", 0, 0.7, intX, intY // 选项
+			If intX = -1 Then 
+				FindPic 800, 250, 1120, 700, "Attachment:xx_yaomodao2.png", "000000", 0, 0.7, intX, intY
+			End If
+			If intX > -1 Then 
+				//
+				Tap intX, intY
+				ShowMessage "2", 1000
+			Else 
+				//
+				Dim n7 = 0
+				
+				Do
+					FindPic 1000, 160, 1250, 510, "Attachment:bl_yaomodao.png", "000000", 0, 0.7, intX, intY // 边栏
+					If intX = -1 Then 
+						FindPic 1000, 160, 1250, 510, "Attachment:bl_yaomodao2.png", "000000", 0, 0.7, intX, intY
+					End If
+					If intX = -1 Then 
+					
+						If n7 < 3 Then 
+							Swipe 1100, 500, 1100, 180, 2000
+						Else 
+							Swipe 1100, 180, 1100, 500, 2000
+						End If
+						
+						Delay 2000
+					End If
+					n7 = n7 + 1
+				Loop While n7 < 6 And intX = -1 // 找不到的情况下最多拖三次
+				
+				If intX > -1 Then 
+					Tap intX, intY
+					ShowMessage "3", 1000
+				Else 
+					// 战斗中？
+					If fighting() = -1 And keyOK()=-1 Then
+					
+						FindPic 1070, 125, 1130, 160, "Attachment:renwulan.png", "000000", 0, 0.8, intX, intY
+						If intX > -1 Then 
+							Tap 1100, 200
+						End If
+					
+						ShowMessage "5", 1000
+					End If
+				End If
+			End If
+		End If
+		
+		Delay 3000
+	Loop
+End Sub
+//------------------妖魔道end---------------------//
 
 //------------------竞技场beg---------------------//
 Sub JJC_Wrapper()
@@ -760,8 +830,8 @@ Sub ShuaDao_Wrapper()
         End If
     Else 
     	//
-        ShowMessage "刷道2", 1000
-        Delay 2000
+        //ShowMessage "刷道2", 1000
+        //Delay 2000
 	End If
 End Sub
 
@@ -816,15 +886,15 @@ Sub FuBen_Wrapper()
                 // 没有找到
                 ShowMessage "没有找到:副本", 1000
                 Tap 1100, 50
-                dxk_jjc = False
+                dxk_fuben = False
                 Delay 2000
                 Main()
             End If
         End If
     Else 
     	//
-        ShowMessage "副本2", 1000
-        Delay 2000
+        //ShowMessage "副本2", 1000
+        //Delay 2000
 	End If
 End Sub
 
@@ -863,7 +933,7 @@ End Sub
 Sub XiuXing_Wrapper()
 	If dxk_xiuxing = True Then 
         //
-        Delay 2000
+        Delay 4000
         ShowMessage "修行", 1000
         Dim intX, intY
         intX = -1
@@ -871,35 +941,36 @@ Sub XiuXing_Wrapper()
         keyHuoDong()
 	
         Delay 2000
-        If qianWang("hd_xiuxing2") > -1 Then 
+        If qianWang("hd_xiuxing")>-1 or qianWang("hd_xiuxing2")>-1 or qianWang("hd_xiuxing3")>-1 Then 
             Delay 20*1000
             XiuXing()
         Else 
             Swipe 640, 480, 640, 145, 1000 // 上拉任务列表
-            Delay 2000
-            If qianWang("hd_xiuxing2") > -1 Then
+            Delay 4000
+            If qianWang("hd_xiuxing")>-1 or qianWang("hd_xiuxing2")>-1 or qianWang("hd_xiuxing3")>-1 Then
                 Delay 20*1000
                 XiuXing()
             Else 
                 // 没有找到
                 ShowMessage "没有找到:修行", 1000
                 Tap 1100, 50
-                dxk_jjc = False
+                dxk_xiuxing = False
                 Delay 2000
                 Main()
             End If
         End If
     Else 
     	//
-        ShowMessage "修行2", 1000
-        Delay 2000
+        //ShowMessage "修行2", 1000
+        //Delay 2000
 	End If
 End Sub
 
 Sub XiuXing()
 	//
 	Delay 2000
-	Tap 450, 500 // 前往降妖45级以上
+	//Tap 450, 500 // 前往降妖45级以上
+	Dim n3 = 0
     Do
         If fighting() = -1 And keyOK()=-1 Then // 战斗中就开自动
             //
@@ -947,15 +1018,15 @@ Sub XunLuo_Wrapper()
         End If
     Else 
     	//
-        ShowMessage "巡逻2", 1000
-        Delay 2000
+        //ShowMessage "巡逻2", 1000
+        //Delay 2000
 	End If
 End Sub
 
 Sub XunLuo()
 	//
 	Delay 2000
-	Tap 450, 500 // 前往降妖45级以上
+	Tap 990, 270 // 最右边是最合适的
 	Dim n3 = 0
     Do
     	ShowMessage "巡逻运行中", 1000
@@ -1015,8 +1086,8 @@ Sub TZZM_Wrapper()
         End If
     Else 
     	//
-        ShowMessage "挑战掌门2", 1000
-        Delay 2000
+        //ShowMessage "挑战掌门2", 1000
+        //Delay 2000
 	End If
 End Sub
 
@@ -1360,8 +1431,8 @@ Function fuli() // 福利处理函数
 			Tap 760, 400 // 点神秘大奖
 			Delay 20 * 1000
 		Else 
-			ShowMessage "神秘大奖2", 1000
-			Delay 1000
+			//ShowMessage "神秘大奖2", 1000
+			//Delay 1000
 		End If
 		
 		Tap 1080, 90 // 关闭福利对话框
@@ -1369,7 +1440,7 @@ Function fuli() // 福利处理函数
 		fuli = 0
 	Else 
 		fuli = -1
-		ShowMessage "福利2", 1000
-		Delay 1000
+		//ShowMessage "福利2", 1000
+		//Delay 1000
 	End If
 End Function
